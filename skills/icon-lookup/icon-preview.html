@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IKSERP 按鈕圖示對照表（Icon Lookup）</title>
+  <!-- Tabler Icons webfont -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3/dist/tabler-icons.min.css">
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --card: #ffffff;
+      --border: #e2e6ef;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #2563eb;
+      --a-tint: #eef4ff;
+      --b-tint: #f0fbf4;
+      --c-tint: #fdf6ec;
+      --d-tint: #f3f0fb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Microsoft JhengHei", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #fff;
+      padding: 28px 32px;
+    }
+    header h1 { margin: 0 0 6px; font-size: 22px; }
+    header p { margin: 0; opacity: .85; font-size: 13px; }
+    .toolbar {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 32px;
+      display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+    }
+    .toolbar input {
+      flex: 1; min-width: 220px;
+      padding: 9px 14px;
+      border: 1px solid var(--border); border-radius: 8px;
+      font-size: 14px; outline: none;
+    }
+    .toolbar input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,.15); }
+    .count { font-size: 12px; color: var(--muted); white-space: nowrap; }
+    main { padding: 24px 32px 60px; max-width: 1200px; margin: 0 auto; }
+    section { margin-bottom: 36px; }
+    .sec-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+    .sec-head h2 { margin: 0; font-size: 17px; }
+    .sec-head .tag {
+      font-size: 11px; font-family: Consolas, monospace;
+      background: #eef1f6; color: #475569; padding: 2px 8px; border-radius: 6px;
+    }
+    .sec-note { font-size: 12.5px; color: var(--muted); margin: 0 0 16px; }
+    .subgroup { margin-bottom: 20px; }
+    .sub-head {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 12.5px; color: var(--muted);
+      margin: 0 0 10px; padding-bottom: 6px;
+      border-bottom: 1px dashed var(--border);
+    }
+    .badge {
+      font-size: 12px; font-weight: 600;
+      padding: 2px 10px; border-radius: 999px;
+    }
+    .badge-basic { background: #dbeafe; color: #1d4ed8; }
+    .badge-special { background: #fef3c7; color: #b45309; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex; align-items: center; gap: 14px;
+      transition: transform .12s, box-shadow .12s;
+      cursor: pointer;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(30,41,59,.10); }
+    .card.copied { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.15); }
+    .ico {
+      width: 46px; height: 46px; flex: 0 0 46px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; color: var(--accent);
+    }
+    .sec-a .ico { background: var(--a-tint); }
+    .sec-b .ico { background: var(--b-tint); color: #16a34a; }
+    .sec-c .ico { background: var(--c-tint); color: #d97706; }
+    .sec-d .ico { background: var(--d-tint); color: #7c3aed; }
+    .meta { min-width: 0; }
+    .meta .name { font-weight: 600; font-size: 14px; }
+    .meta .cls {
+      font-family: Consolas, monospace; font-size: 12px; color: var(--muted);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .meta .mode { font-size: 11px; color: #94a3b8; }
+    .warn {
+      background: #fff7ed; border: 1px solid #fed7aa; color: #9a3412;
+      padding: 12px 16px; border-radius: 10px; font-size: 12.5px; margin: 0 0 16px;
+    }
+    .hidden { display: none !important; }
+    footer { text-align: center; color: var(--muted); font-size: 12px; padding: 20px; }
+    .hint { font-size: 12px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><i class="ti ti-icons"></i> IKSERP 按鈕圖示對照表</h1>
+    <p>功能名稱 → Tabler 圖示 class + Title｜資料來源：icon-lookup SKILL.md（.claude/Icon.xlsx）</p>
+  </header>
+
+  <div class="toolbar">
+    <input id="search" type="text" placeholder="🔍 搜尋功能名稱或 class（例：新增、pencil、trash）…" autocomplete="off">
+    <span class="count" id="count"></span>
+    <span class="hint">點卡片可複製 class</span>
+  </div>
+
+  <main>
+    <section class="sec-a" data-section>
+      <div class="sec-head">
+        <h2>A. Toolbar 頁面頂端 ribbon</h2>
+        <span class="tag">&lt;ToolbarButton FontIcon="ti ti-xxx" Title="…" /&gt;</span>
+      </div>
+      <p class="sec-note">元件 <code>ToolbarButton</code>，寫法 <code>FontIcon="ti ti-xxx" Title="功能名"</code></p>
+
+      <div class="subgroup">
+        <div class="sub-head"><span class="badge badge-basic">基本類</span>各頁通用的標準操作</div>
+        <div class="grid" data-grid="a_basic"></div>
+      </div>
+
+      <div class="subgroup">
+        <div class="sub-head"><span class="badge badge-special">特殊類</span>特定功能才會出現，後續新增皆歸此類</div>
+        <div class="grid" data-grid="a_special"></div>
+      </div>
+    </section>
+
+    <section class="sec-b" data-section>
+      <div class="sec-head">
+        <h2>B. Grid 指令欄（針對單一資料列）</h2>
+        <span class="tag">&lt;GridCommandButton Icon="@(&quot;ti ti-xxx&quot;)" Title="…" /&gt;</span>
+      </div>
+      <p class="sec-note">元件 <code>GridCommandButton</code>，寫法 <code>Icon="@(&quot;ti ti-xxx&quot;)"</code> + <code>Title="功能名"</code></p>
+      <div class="grid" data-grid="b"></div>
+    </section>
+
+    <section class="sec-c" data-section>
+      <div class="sec-head">
+        <h2>C. 編輯 Window 內列導覽 / 其他 TelerikButton</h2>
+        <span class="tag">待後續統一處理</span>
+      </div>
+      <p class="warn">
+        ✅ <strong>存檔／取消已改用 Tabler 寫法</strong>（`ti ti-device-floppy`／`ti ti-circle-x`，見 A 區基本類，明細模式為 <code>ToolbarButton</code>）。
+        剩下的 <strong>上/下一筆列導覽、Grid 欄內更多操作鈕</strong> 仍用 Telerik 內建 <code>SvgIcon</code>，
+        <strong>目前先跳過，後續統一處理</strong>，先維持原樣、勿自行改動。
+      </p>
+    </section>
+
+    <section class="sec-d" data-section>
+      <div class="sec-head">
+        <h2>D. UI 慣例圖示（模式膠囊／穿梭／狀態切換）</h2>
+        <span class="tag">非 ToolbarButton / GridCommandButton</span>
+      </div>
+      <p class="sec-note">
+        主檔明細模式膠囊（<code>iks-mode-switch</code>）、多選 picker 穿梭鈕（<code>iks-fbtn</code>）、
+        toggle 狀態等**跨頁重用的慣例圖示**，非工具列/指令欄按鈕。選這類圖示時沿用本區，避免各頁自創。
+      </p>
+      <div class="grid" data-grid="ui"></div>
+    </section>
+  </main>
+
+  <footer>Tabler Icons v3 · 若圖示未顯示請確認可連上 cdn.jsdelivr.net</footer>
+
+  <script>
+    const data = {
+      a_basic: [
+        ["新增", "ti ti-plus"],
+        ["修改", "ti ti-pencil", "明細模式主檔"],
+        ["刪除", "ti ti-trash", "明細模式主檔"],
+        ["存檔", "ti ti-device-floppy", "明細模式主檔工具列"],
+        ["取消", "ti ti-circle-x", "明細模式主檔工具列"],
+        ["查詢", "ti ti-search"],
+        ["明細顯示/隱藏", "ti ti-list-details"],
+        ["資料匯入", "ti ti-file-import"],
+        ["確認", "ti ti-circle-check"],
+        ["取消確認", "ti ti-arrow-back-up"],
+        ["作廢", "ti ti-ban"],
+        ["列印", "ti ti-printer"],
+      ],
+      a_special: [
+        ["異動查詢", "ti ti-history"],
+        ["製程維護", "ti ti-route"],
+        ["圖文維護", "ti ti-photo"],
+        ["代用維護", "ti ti-replace"],
+        ["預設儲區", "ti ti-building-warehouse"],
+        ["電子郵件", "ti ti-mail"],
+        ["換算裝櫃量", "ti ti-calculator", "SAL027"],
+        ["批次處理", "ti ti-list-check", "SAL027"],
+        ["專案帶明細", "ti ti-table-import", "SAL055"],
+        ["選擇檔案", "ti ti-file-spreadsheet", "Excel 匯入頭列"],
+        ["重新檢查", "ti ti-refresh", "Excel 匯入"],
+      ],
+      b: [
+        ["拷貝", "ti ti-copy"],
+        ["修改", "ti ti-pencil", "單檔模式"],
+        ["刪除", "ti ti-trash", "單檔模式"],
+        ["詳細資料（查看）", "ti ti-eye"],
+      ],
+      ui: [
+        ["瀏覽（模式膠囊）", "ti ti-eye", "與 B 區「查看」同圖示"],
+        ["詳細資料/表單（模式膠囊）", "ti ti-edit", "主檔明細頁"],
+        ["數量折扣及價格條件（明細膠囊）", "ti ti-discount", "SAL025"],
+        ["對應客戶品號（明細膠囊）", "ti ti-barcode", "SAL025"],
+        ["加入（穿梭移入）", "ti ti-chevron-down", "SAL027A"],
+        ["移除（穿梭移出）", "ti ti-chevron-up", "SAL027A"],
+        ["全選 / 顯示（勾選態）", "ti ti-checkbox", "與 square 成對 toggle"],
+        ["未勾態（toggle 配對）", "ti ti-square", "與 checkbox 成對"],
+        ["取消全選", "ti ti-x", "SAL027A"],
+        ["驗證失敗標題", "ti ti-alert-triangle", "Excel 匯入 / 版面提示"],
+      ],
+    };
+
+    const sections = document.querySelectorAll("[data-section]");
+
+    document.querySelectorAll("[data-grid]").forEach(grid => {
+      const key = grid.dataset.grid;
+      (data[key] || []).forEach(([name, cls, mode]) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.dataset.search = (name + " " + cls + " " + (mode || "")).toLowerCase();
+        card.innerHTML = `
+          <div class="ico"><i class="${cls}"></i></div>
+          <div class="meta">
+            <div class="name">${name}</div>
+            <div class="cls">${cls}</div>
+            ${mode ? `<div class="mode">${mode}</div>` : ""}
+          </div>`;
+        card.addEventListener("click", () => {
+          navigator.clipboard?.writeText(cls);
+          card.classList.add("copied");
+          setTimeout(() => card.classList.remove("copied"), 900);
+        });
+        grid.appendChild(card);
+      });
+    });
+
+    const allCards = () => document.querySelectorAll(".card");
+    const totalEl = document.getElementById("count");
+    const search = document.getElementById("search");
+
+    function applyFilter() {
+      const q = search.value.trim().toLowerCase();
+      let visible = 0;
+      allCards().forEach(c => {
+        const show = !q || c.dataset.search.includes(q);
+        c.classList.toggle("hidden", !show);
+        if (show) visible++;
+      });
+      sections.forEach(sec => {
+        const anyVisible = [...sec.querySelectorAll(".card")].some(c => !c.classList.contains("hidden"));
+        sec.classList.toggle("hidden", !anyVisible);
+        sec.querySelectorAll(".subgroup").forEach(sg => {
+          const sgVisible = [...sg.querySelectorAll(".card")].some(c => !c.classList.contains("hidden"));
+          sg.classList.toggle("hidden", !sgVisible);
+        });
+      });
+      totalEl.textContent = `顯示 ${visible} 個圖示`;
+    }
+
+    search.addEventListener("input", applyFilter);
+    applyFilter();
+  </script>
+</body>
+</html>

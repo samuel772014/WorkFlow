@@ -1,0 +1,4971 @@
+{
+  "meta": {
+    "generated_at": "2026-09-30T04:00:49+00:00",
+    "generator": "graph-engine/tools/build_index.py",
+    "repo_root": "D:\\demo_repository",
+    "note": "事實地基，供 extract.fact-resolve 查詢；勿手改，重跑本 script 重建。"
+  },
+  "programs": [
+    {
+      "sal": "SAL001",
+      "b_code": "B101",
+      "name": "業務人員維護",
+      "parent": "基本資料",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL002",
+      "b_code": "B102",
+      "name": "訂單別維護",
+      "parent": "基本資料",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL003",
+      "b_code": "B103",
+      "name": "出貨別維護",
+      "parent": "基本資料",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL004",
+      "b_code": "B104",
+      "name": "銷貨別維護",
+      "parent": "基本資料",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL005",
+      "b_code": "B105",
+      "name": "退貨別維護",
+      "parent": "基本資料",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL006",
+      "b_code": "B133",
+      "name": "結案原因維護",
+      "parent": "基本資料",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL007",
+      "b_code": "B10601",
+      "name": "地區別維護",
+      "parent": "區域資料維護",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL008",
+      "b_code": "B10603",
+      "name": "國別碼維護",
+      "parent": "區域資料維護",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL009",
+      "b_code": "B10602",
+      "name": "城市碼維護",
+      "parent": "區域資料維護",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL010",
+      "b_code": "B108",
+      "name": "價格條件維護",
+      "parent": "基本資料",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL011",
+      "b_code": "B109",
+      "name": "付款條件維護",
+      "parent": "基本資料",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL012",
+      "b_code": "B128",
+      "name": "期款項目維護",
+      "parent": "基本資料",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL013",
+      "b_code": "B131",
+      "name": "備註類別維護",
+      "parent": "基本資料",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL014",
+      "b_code": "B11001",
+      "name": "貨運方式維護",
+      "parent": "出貨資料維護",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL015",
+      "b_code": "B11002",
+      "name": "貨櫃形式維護",
+      "parent": "出貨資料維護",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL016",
+      "b_code": "B11003",
+      "name": "港埠碼維護",
+      "parent": "出貨資料維護",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL017",
+      "b_code": "B11004",
+      "name": "運保費資料維護",
+      "parent": "出貨資料維護",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL018",
+      "b_code": "B134",
+      "name": "收貨人資料維護",
+      "parent": "出貨資料維護",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL019",
+      "b_code": "B11401",
+      "name": "客戶別維護",
+      "parent": "客戶資料維護",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL020",
+      "b_code": "B11406",
+      "name": "客戶群維護",
+      "parent": "客戶資料維護",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL021",
+      "b_code": "B11402",
+      "name": "客戶資料維護",
+      "parent": "客戶資料維護",
+      "ui_type": "M/D*2"
+    },
+    {
+      "sal": "SAL022",
+      "b_code": "B11403",
+      "name": "客戶品號維護",
+      "parent": "客戶資料維護",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL023",
+      "b_code": "B11407",
+      "name": "專案客戶維護",
+      "parent": "",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL024",
+      "b_code": "B122",
+      "name": "銷售組合套件維護",
+      "parent": "基本資料",
+      "ui_type": "M/D/DD"
+    },
+    {
+      "sal": "SAL025",
+      "b_code": "B117",
+      "name": "產品價格表維護",
+      "parent": "基本資料",
+      "ui_type": "M/D/DD*2"
+    },
+    {
+      "sal": "SAL026",
+      "b_code": "B118",
+      "name": "包裝方式維護",
+      "parent": "包裝資料維護",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL027",
+      "b_code": "B119",
+      "name": "產品包裝方式維護",
+      "parent": "包裝資料維護",
+      "ui_type": "M/D*2"
+    },
+    {
+      "sal": "SAL028",
+      "b_code": "B125",
+      "name": "棧板資料設定",
+      "parent": "包裝資料維護",
+      "ui_type": "M/D"
+    },
+    {
+      "sal": "SAL029",
+      "b_code": "B120",
+      "name": "客戶嘜頭資料",
+      "parent": "包裝資料維護",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL030",
+      "b_code": "B135",
+      "name": "產地標示維護",
+      "parent": "包裝資料維護",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL031",
+      "b_code": "B136",
+      "name": "選配件組配說明",
+      "parent": "包裝資料維護",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL032",
+      "b_code": "B121",
+      "name": "銷項發票設定",
+      "parent": "基本資料",
+      "ui_type": "M/D"
+    },
+    {
+      "sal": "SAL033",
+      "b_code": "B137",
+      "name": "銷項發票總機構取號檔",
+      "parent": "基本資料",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL034",
+      "b_code": "B203",
+      "name": "連絡方式設定",
+      "parent": "代碼設定",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL035",
+      "b_code": "B204",
+      "name": "開發進度設定",
+      "parent": "代碼設定",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL036",
+      "b_code": "B205",
+      "name": "客戶等級設定",
+      "parent": "代碼設定",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL037",
+      "b_code": "B206",
+      "name": "案件重要度設定",
+      "parent": "代碼設定",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL038",
+      "b_code": "B207",
+      "name": "失注原因設定",
+      "parent": "代碼設定",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL039",
+      "b_code": "B208",
+      "name": "營業型態設定",
+      "parent": "代碼設定",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL040",
+      "b_code": "B209",
+      "name": "產業地位設定",
+      "parent": "代碼設定",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL041",
+      "b_code": "B210",
+      "name": "開發客戶維護",
+      "parent": "客戶開發",
+      "ui_type": "M/D*6"
+    },
+    {
+      "sal": "SAL042",
+      "b_code": "B212",
+      "name": "正式客戶維護",
+      "parent": "客戶開發",
+      "ui_type": "M/D*7"
+    },
+    {
+      "sal": "SAL043",
+      "b_code": "B214",
+      "name": "客戶接洽記錄",
+      "parent": "客戶開發",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL044",
+      "b_code": "B216/B216Base",
+      "name": "新開發案件維護",
+      "parent": "客戶開發",
+      "ui_type": "M/D*3"
+    },
+    {
+      "sal": "SAL045",
+      "b_code": "B218",
+      "name": "新案件接洽記錄",
+      "parent": "客戶開發",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL046",
+      "b_code": "B301/B301Base ＋ B302/B301Base",
+      "name": "報價單申請維護 ／ 報價單審核確認",
+      "parent": "報價作業",
+      "ui_type": "M/D*4/DD"
+    },
+    {
+      "sal": "SAL047",
+      "b_code": "B303/B303Base ＋ B304/B303Base",
+      "name": "報價單變更申請維護 ／ 報價單變更審核確認",
+      "parent": "報價作業",
+      "ui_type": "M/D*4/DD"
+    },
+    {
+      "sal": "SAL048",
+      "b_code": "B40104",
+      "name": "報價單拋轉專案處理",
+      "parent": "報價作業",
+      "ui_type": "Selform"
+    },
+    {
+      "sal": "SAL049",
+      "b_code": "B30701",
+      "name": "報價單整合查詢",
+      "parent": "報價作業",
+      "ui_type": "M/D*4"
+    },
+    {
+      "sal": "SAL050",
+      "b_code": "B201Base",
+      "name": "銷售計畫維護",
+      "parent": "",
+      "ui_type": "M/D"
+    },
+    {
+      "sal": "SAL051",
+      "b_code": "B202Base",
+      "name": "銷售計畫變更",
+      "parent": "",
+      "ui_type": "M/D"
+    },
+    {
+      "sal": "SAL052",
+      "b_code": "B40101",
+      "name": "報價單拋轉訂單處理",
+      "parent": "拋轉訂單處理",
+      "ui_type": "selform"
+    },
+    {
+      "sal": "SAL053",
+      "b_code": "B40102",
+      "name": "換貨重出銷退單拋轉訂單處理",
+      "parent": "拋轉訂單處理",
+      "ui_type": "selform"
+    },
+    {
+      "sal": "SAL054",
+      "b_code": "B40103",
+      "name": "專案拋轉訂單處理",
+      "parent": "拋轉訂單處理",
+      "ui_type": "selform"
+    },
+    {
+      "sal": "SAL055",
+      "b_code": "B402/B402Base ＋ B403/B402Base",
+      "name": "訂單申請維護 ／ 訂單審核確認",
+      "parent": "訂單作業",
+      "ui_type": "M/D*5/DD*3"
+    },
+    {
+      "sal": "SAL056",
+      "b_code": "B420/B420Base ＋ B421/B420Base",
+      "name": "核價單申請維護 ／ 核價單審核確認",
+      "parent": "訂單作業",
+      "ui_type": "M/D"
+    },
+    {
+      "sal": "SAL057",
+      "b_code": "B404/B404Base ＋ B405/B404Base",
+      "name": "訂單變更申請維護 ／ 訂單變更審核確認",
+      "parent": "訂單作業",
+      "ui_type": "M/D*4/DD"
+    },
+    {
+      "sal": "SAL058",
+      "b_code": "B407",
+      "name": "訂單轉採購單",
+      "parent": "訂單作業",
+      "ui_type": "dropform"
+    },
+    {
+      "sal": "SAL059",
+      "b_code": "B406",
+      "name": "訂單結案處理",
+      "parent": "訂單作業",
+      "ui_type": "selform"
+    },
+    {
+      "sal": "SAL060",
+      "b_code": "B430",
+      "name": "訂單整合資料查詢",
+      "parent": "查詢",
+      "ui_type": "M/D*10"
+    },
+    {
+      "sal": "SAL061",
+      "b_code": "B431",
+      "name": "接單統計查詢",
+      "parent": "查詢",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL062",
+      "b_code": "B433",
+      "name": "已接單未出貨明細查詢",
+      "parent": "查詢",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL063",
+      "b_code": "B432",
+      "name": "訂單整合資料查詢-無金額",
+      "parent": "查詢",
+      "ui_type": "M/D*10"
+    },
+    {
+      "sal": "SAL064",
+      "b_code": "B434",
+      "name": "訂單變更查詢-無金額",
+      "parent": "查詢",
+      "ui_type": "M/D*3"
+    },
+    {
+      "sal": "SAL065",
+      "b_code": "B435Base",
+      "name": "銷售計劃整合查詢",
+      "parent": "",
+      "ui_type": "M/D*3"
+    },
+    {
+      "sal": "SAL066",
+      "b_code": "B512",
+      "name": "訂單拋轉出貨單",
+      "parent": "出貨作業",
+      "ui_type": "selform-M/D"
+    },
+    {
+      "sal": "SAL067",
+      "b_code": "B507",
+      "name": "出貨單維護",
+      "parent": "出貨作業",
+      "ui_type": "M/D/DD*2"
+    },
+    {
+      "sal": "SAL069",
+      "b_code": "B511",
+      "name": "出貨包裝設定",
+      "parent": "出貨作業",
+      "ui_type": "M/D/DD*6"
+    },
+    {
+      "sal": "SAL070",
+      "b_code": "B520",
+      "name": "客戶簽收登錄",
+      "parent": "出貨作業",
+      "ui_type": "selform-M/D"
+    },
+    {
+      "sal": "SAL071",
+      "b_code": "B508",
+      "name": "出貨退回單維護",
+      "parent": "出貨作業",
+      "ui_type": "M/D/DD"
+    },
+    {
+      "sal": "SAL072",
+      "b_code": "B521",
+      "name": "產品裝櫃試算處理",
+      "parent": "出貨作業",
+      "ui_type": "M/D*2"
+    },
+    {
+      "sal": "SAL073",
+      "b_code": "B513",
+      "name": "船期資料維護",
+      "parent": "出貨作業",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL074",
+      "b_code": "B517",
+      "name": "預計出貨查詢",
+      "parent": "查詢",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL075",
+      "b_code": "B518",
+      "name": "出貨統計查詢",
+      "parent": "查詢",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL076",
+      "b_code": "B519",
+      "name": "出貨明細查詢",
+      "parent": "查詢",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL077",
+      "b_code": "B701",
+      "name": "出貨單拋轉銷貨單處理",
+      "parent": "銷貨作業",
+      "ui_type": "selform"
+    },
+    {
+      "sal": "SAL078",
+      "b_code": "B702/B702Base ＋ B703/B702Base",
+      "name": "銷貨單申請維護 ／ 銷貨單金額審核",
+      "parent": "銷貨作業",
+      "ui_type": "M/D*4"
+    },
+    {
+      "sal": "SAL079",
+      "b_code": "B704",
+      "name": "銷貨退回單申請維護",
+      "parent": "銷貨作業",
+      "ui_type": "M/D/DD"
+    },
+    {
+      "sal": "SAL080",
+      "b_code": "B705",
+      "name": "銷貨退回單金額審核",
+      "parent": "銷貨作業",
+      "ui_type": "M/D/DD"
+    },
+    {
+      "sal": "SAL081",
+      "b_code": "B706",
+      "name": "銷貨折讓單申請維護",
+      "parent": "銷貨作業",
+      "ui_type": "M/D"
+    },
+    {
+      "sal": "SAL082",
+      "b_code": "B710/B701Base",
+      "name": "銷貨發票維護",
+      "parent": "銷貨發票作業",
+      "ui_type": "M/D*4"
+    },
+    {
+      "sal": "SAL083",
+      "b_code": "B714",
+      "name": "發票回沖處理",
+      "parent": "銷貨發票作業",
+      "ui_type": "M/D*4"
+    },
+    {
+      "sal": "SAL084",
+      "b_code": "B715",
+      "name": "銷貨明細查詢",
+      "parent": "查詢",
+      "ui_type": "M*2"
+    },
+    {
+      "sal": "SAL085",
+      "b_code": "B716",
+      "name": "銷貨統計查詢",
+      "parent": "查詢",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL086",
+      "b_code": "B717",
+      "name": "銷貨發票明細查詢",
+      "parent": "查詢",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL095",
+      "b_code": "B901",
+      "name": "接單出貨統計(客戶別)",
+      "parent": "查詢作業",
+      "ui_type": "M*2/D"
+    },
+    {
+      "sal": "SAL096",
+      "b_code": "B902",
+      "name": "接單出貨統計(產品別)",
+      "parent": "查詢作業",
+      "ui_type": "M*2/D"
+    },
+    {
+      "sal": "SAL097",
+      "b_code": "B905",
+      "name": "銷貨統計查詢(客戶別)",
+      "parent": "查詢作業",
+      "ui_type": "M*2/D"
+    },
+    {
+      "sal": "SAL098",
+      "b_code": "B906",
+      "name": "銷貨統計查詢(產品別)",
+      "parent": "查詢作業",
+      "ui_type": "M*2/D"
+    },
+    {
+      "sal": "SAL099",
+      "b_code": "B903",
+      "name": "應收帳款查詢(客戶別)",
+      "parent": "查詢作業",
+      "ui_type": "M"
+    },
+    {
+      "sal": "SAL100",
+      "b_code": "B904",
+      "name": "應收帳款帳齡分析",
+      "parent": "查詢作業",
+      "ui_type": "M"
+    }
+  ],
+  "display_transforms": {
+    "keycode": {
+      "ACC": {
+        "TNTP": {
+          "table": "AC_TN",
+          "field": "TNTP",
+          "note": "性質（AC_TN／AC_ATN 共用）",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "STATUS": {
+          "table": "AC_TN",
+          "field": "STATUS",
+          "note": "單況（製票 AC_TN）",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "ATNSTATUS": {
+          "table": "AC_ATN",
+          "field": "STATUS",
+          "note": "G501 傳票狀況（AC_ATN.STATUS）",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "CD": {
+          "table": "AC_TRNSMPLD",
+          "field": "CD",
+          "note": "ACC008 借貸別",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "SHRTP": {
+          "table": "AC_SHRM",
+          "field": "SHRTP",
+          "note": "ACC009 分攤方式",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "USETP": {
+          "table": "AC_SHRM",
+          "field": "USETP",
+          "note": "ACC009 適用類別",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "TPATRB": {
+          "table": "AC_ROUTACNT",
+          "field": "TPATRB",
+          "note": "ACC016 費用歸屬",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "FDATATYPE": {
+          "table": "AC_TNFLD",
+          "field": "FDATATYPE",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "FLDTP": {
+          "table": "AC_TNFLD",
+          "field": "FLDTP",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "COND": {
+          "table": "AC_TNCOND",
+          "field": "COND",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "CONDITM": {
+          "table": "AC_TNCOND",
+          "field": "CONDITM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "ISCL": {
+          "table": "AP_CASHACNT",
+          "field": "ISCL",
+          "note": "撤銷否",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "CNDTP": {
+          "table": "AC_CND",
+          "field": "CNDTP",
+          "note": "ACC006 立沖帳戶類別",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "DEFTP": {
+          "table": "AC_DEFM",
+          "field": "DEFTP",
+          "note": "ACC010 遞延性質",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "TA_TP": {
+          "table": "TA_INVM",
+          "field": "TP",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "TA_USETP": {
+          "table": "TA_INVM",
+          "field": "USETP",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "TA_CTAXTP": {
+          "table": "TA_INVM",
+          "field": "CTAXTP",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "TA_SPCTP": {
+          "table": "TA_INVM",
+          "field": "SPCTP",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "TA_ISSUM": {
+          "table": "TA_INVM",
+          "field": "ISSUM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "TA_SRC": {
+          "table": "TA_INVM",
+          "field": "SRC",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "TA_CUSTP": {
+          "table": "TA_INVM",
+          "field": "CUSTP",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        }
+      },
+      "BSE": {
+        "SEX": {
+          "table": "HR_EMPLYM",
+          "field": "SEX",
+          "note": "",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "STATUS": {
+          "table": "HR_EMPLYM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "DEGREE": {
+          "table": "HR_EMPLYM",
+          "field": "DEGREE",
+          "note": "",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "MARY": {
+          "table": "HR_EMPLYM",
+          "field": "MARY",
+          "note": "",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "LBRTP": {
+          "table": "HR_EMPLYM",
+          "field": "LBRTP",
+          "note": "",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "OFFTP": {
+          "table": "HR_OFFDAY",
+          "field": "OFFTP",
+          "note": "",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "SHFTTP": {
+          "table": "HR_SHFTID",
+          "field": "SHFTTP",
+          "note": "",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "UNTP": {
+          "table": "SS_UNIT",
+          "field": "UNTP",
+          "note": "",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "DEPTP": {
+          "table": "HR_DEP",
+          "field": "DEPTP",
+          "note": "部門別",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "TPATRB": {
+          "table": "HR_DEP",
+          "field": "TPATRB",
+          "note": "費用歸屬",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "STKTP": {
+          "table": "MM_STKLOCM",
+          "field": "STKTP",
+          "note": "倉庫型態",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "STKLOCM_STATUS": {
+          "table": "MM_STKLOCM",
+          "field": "STATUS",
+          "note": "是否失效（Y=是/N=否）",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "PLANT_STATUS": {
+          "table": "PP_PLANT",
+          "field": "STATUS",
+          "note": "是否失效（Y=是/N=否）",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "INVTP": {
+          "table": "MM_ITMMASTR",
+          "field": "INVTP",
+          "note": "存貨屬性",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "CLAS": {
+          "table": "MM_ITMMASTR",
+          "field": "CLAS",
+          "note": "成本屬性",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "SOURCE": {
+          "table": "MM_ITMMASTR",
+          "field": "SOURCE",
+          "note": "獲得來源",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "SUPPLY": {
+          "table": "MM_ITMMASTR",
+          "field": "SUPPLY",
+          "note": "補貨政策（BSE028 子件明細，Delphi A21502.pas:786 GetKeyCodeDESCPT）",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "WIPCST": {
+          "table": "MM_ITMMASTR",
+          "field": "WIPCST",
+          "note": "生產成本計算法則",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ISPRJ": {
+          "table": "MM_ITMMASTR",
+          "field": "ISPRJ",
+          "note": "專案成本",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "CAPUNIT": {
+          "table": "MM_ITMMASTR",
+          "field": "CAPUNIT",
+          "note": "成本計價單位",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "SAPUNIT": {
+          "table": "MM_ITMMASTR",
+          "field": "SAPUNIT",
+          "note": "業務計價單位",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "PAPUNIT": {
+          "table": "MM_ITMMASTR",
+          "field": "PAPUNIT",
+          "note": "採購計價單位",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "CTRLTP": {
+          "table": "MM_ITMMASTR",
+          "field": "CTRLTP",
+          "note": "管制方式（BSE029 主查詢用）",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ItmstmStatus": {
+          "table": "MM_ITMSTM",
+          "field": "STATUS",
+          "note": "單據狀態 OP/CF/CC",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "TP": {
+          "table": "MM_ITMDWG",
+          "field": "TP",
+          "note": "圖文類型",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "MBOM_ISSUE": {
+          "table": "PP_MBOM",
+          "field": "ISSUE",
+          "note": "發行狀態 Y=發行/R=保留/Z=作廢",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "MBOM_OPTTP": {
+          "table": "PP_MBOM",
+          "field": "OPTTP",
+          "note": "選配型態 A=必選(單選)/B=必選(可多選)",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "QCTP": {
+          "table": "PP_MDOCROUT",
+          "field": "QCTP",
+          "note": "檢驗方式",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "LHRTP": {
+          "table": "PP_MDOCROUT",
+          "field": "LHRTP",
+          "note": "人工時單位",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "MHRTP": {
+          "table": "PP_MDOCROUT",
+          "field": "MHRTP",
+          "note": "機器時單位",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "MUTP": {
+          "table": "PP_MDOCROUT",
+          "field": "MUTP",
+          "note": "副單位型態",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ECNDD1_ECBOM": {
+          "table": "PP_ECNDD1",
+          "field": "ECBOM",
+          "note": "料表處理 ADD=新增子件/MOD=更新子件/DEL=刪除子件",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ECNDD1_ISSUE": {
+          "table": "PP_ECNDD1",
+          "field": "ISSUE",
+          "note": "發行狀態 Y=發行/R=保留/Z=作廢",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ECNDD1_PISSUE": {
+          "table": "PP_ECNDD1",
+          "field": "PISSUE",
+          "note": "原發行狀態（KEYCODE 另有一組 PISSUE，與 ISSUE 同值）",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ECNM_STATUS": {
+          "table": "PP_ECNM",
+          "field": "STATUS",
+          "note": "單況 OP待確認/CF確認/CH變更中/CC作廢/CL結案",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ECND_ECBOM": {
+          "table": "PP_ECND",
+          "field": "ECBOM",
+          "note": "明細 料表處理",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ECND_ISSUE": {
+          "table": "PP_ECND",
+          "field": "ISSUE",
+          "note": "明細 發行狀態",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ECND_PISSUE": {
+          "table": "PP_ECND",
+          "field": "PISSUE",
+          "note": "明細 原發行狀態",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ECND_PRCBOM": {
+          "table": "PP_ECND",
+          "field": "PRCBOM",
+          "note": "明細 料表更新確認（Dq1GetText 有做代碼轉換）",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ECNDD3_STATUS": {
+          "table": "PP_ECNDD3",
+          "field": "STATUS",
+          "note": "採購在途 單況",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ECNDD3_SRCTP": {
+          "table": "PP_ECNDD3",
+          "field": "SRCTP",
+          "note": "採購在途 來源別",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ECNDD4_STATUS": {
+          "table": "PP_ECNDD4",
+          "field": "STATUS",
+          "note": "生產在製 單況",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ECNDD4_SRCTP": {
+          "table": "PP_ECNDD4",
+          "field": "SRCTP",
+          "note": "生產在製 來源別",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ECNDD5_STATUS": {
+          "table": "PP_ECNDD5",
+          "field": "STATUS",
+          "note": "生產領料 單況",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ECNDD5_SRCTP": {
+          "table": "PP_ECNDD5",
+          "field": "SRCTP",
+          "note": "生產領料 來源別",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ECNDD6_TP": {
+          "table": "PP_ECNDD6",
+          "field": "TP",
+          "note": "更換圖面 類別",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ECNDD7_SRCTP": {
+          "table": "PP_ECNDD7",
+          "field": "SRCTP",
+          "note": "不切換批次 來源別",
+          "file": "DisplayTransformService.BSE.cs"
+        }
+      },
+      "BUY": {
+        "SRCTP": {
+          "table": "PO_PRD",
+          "field": "SRCTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "TP": {
+          "table": "PO_POINF",
+          "field": "TP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "CTAXTP": {
+          "table": "PO_POINF",
+          "field": "CTAXTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "SOURCE": {
+          "table": "MM_ITMMASTR",
+          "field": "SOURCE",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "TERMTP": {
+          "table": "SA_PAYTERM",
+          "field": "TERMTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "INITDT": {
+          "table": "SA_PAYTERM",
+          "field": "INITDT",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "QOMTP": {
+          "table": "PO_QOM",
+          "field": "TP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "VDRQ": {
+          "table": "PO_VNDRTP",
+          "field": "VDRQ",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "BUYERSTATUS": {
+          "table": "PO_BUYER",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "STATUS": {
+          "table": "PO_QOM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_POM_CTAXTP": {
+          "table": "PO_POM",
+          "field": "CTAXTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "ARTERM": {
+          "table": "PO_POM",
+          "field": "ARTERM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "UARTERM": {
+          "table": "PO_POM",
+          "field": "ARTERM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "IOTP": {
+          "table": "PO_POM",
+          "field": "IOTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "CUPTP": {
+          "table": "PO_CUPD",
+          "field": "CUPTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PP_CUPD_CUPTP": {
+          "table": "PP_CUPD",
+          "field": "CUPTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "VWOTP": {
+          "table": "PP_CUPD",
+          "field": "VWOTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PP_CUPM_TP": {
+          "table": "PP_CUPM",
+          "field": "TP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "APROVTP": {
+          "table": "SYS_APROVHIS",
+          "field": "TP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_PRM_FMTP": {
+          "table": "PO_PRM",
+          "field": "FMTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_PRM_RFMTP": {
+          "table": "PO_PRM",
+          "field": "RFMTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PRMSTATUS": {
+          "table": "PO_PRM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_POM_FMTP": {
+          "table": "PO_POM",
+          "field": "FMTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_POM_RFMTP": {
+          "table": "PO_POM",
+          "field": "RFMTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "POMSTATUS": {
+          "table": "PO_POM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "RCVMSTATUS": {
+          "table": "PO_RCVM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "ACPTMSTATUS": {
+          "table": "PO_ACPTM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_ACPTM_FMTP": {
+          "table": "PO_ACPTM",
+          "field": "FMTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_ACPTM_IOTP": {
+          "table": "PO_ACPTM",
+          "field": "IOTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "APTERM": {
+          "table": "PO_ACPTM",
+          "field": "APTERM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_ACPTD_SRCTP": {
+          "table": "PO_ACPTD",
+          "field": "SRCTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PP_ACPTM_STATUS": {
+          "table": "PP_ACPTM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PP_ACPTM_APTERM": {
+          "table": "PP_ACPTM",
+          "field": "APTERM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PP_ACPTM_CTAXTP": {
+          "table": "PP_ACPTM",
+          "field": "CTAXTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PP_ACPTD_RFMTP": {
+          "table": "PP_ACPTD",
+          "field": "RFMTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PP_RACPTM_STATUS": {
+          "table": "PP_RACPTM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PP_RACPTM_APTERM": {
+          "table": "PP_RACPTM",
+          "field": "APTERM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PP_RACPTM_CTAXTP": {
+          "table": "PP_RACPTM",
+          "field": "CTAXTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_RTWM_IOTP": {
+          "table": "PO_RTWM",
+          "field": "IOTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_RTWM_STATUS": {
+          "table": "PO_RTWM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_RTWM_CTAXTP": {
+          "table": "PO_RTWM",
+          "field": "CTAXTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "CTRLTP": {
+          "table": "PO_RTWD",
+          "field": "CTRLTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_INVM_CTAXTP": {
+          "table": "PO_INVM",
+          "field": "CTAXTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_INVM_STATUS": {
+          "table": "PO_INVM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_INVM_SUBTP": {
+          "table": "PO_INVM",
+          "field": "SUBTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_INVDD_SRC": {
+          "table": "PO_INVDD",
+          "field": "SRC",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_INVDD_RFMTP": {
+          "table": "PO_INVDD",
+          "field": "RFMTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_INVD_SRC": {
+          "table": "PO_INVD",
+          "field": "SRC",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_INVM_TP": {
+          "table": "PO_INVM",
+          "field": "TP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_INVM_EINVTP": {
+          "table": "PO_INVM",
+          "field": "EINVTP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_INVM_USETP": {
+          "table": "PO_INVM",
+          "field": "USETP",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_INVM_OBJTP": {
+          "table": "PO_INVM",
+          "field": "OBJTP",
+          "note": "E711.pas:1508-1511 MqyGetText OBJTP",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_VNDROM_FMTP": {
+          "table": "PO_VNDROM",
+          "field": "FMTP",
+          "note": "E708.pas:1005-1006 MqyGetText FMTP",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PO_VROD_ISRTW": {
+          "table": "PO_VROD",
+          "field": "ISRTW",
+          "note": "E708.pas:2092-2093 Dq1GetText ISRTW",
+          "file": "DisplayTransformService.BUY.cs"
+        }
+      },
+      "COMMON": {
+        "ARDTP": {
+          "table": "SA_PAYTERM",
+          "field": "ARDTP",
+          "note": "",
+          "file": "DisplayTransformService.cs"
+        },
+        "ACDTP": {
+          "table": "SA_PAYTERM",
+          "field": "ACDTP",
+          "note": "",
+          "file": "DisplayTransformService.cs"
+        },
+        "INITDT1": {
+          "table": "SA_PAYTERM",
+          "field": "INITDT1",
+          "note": "",
+          "file": "DisplayTransformService.cs"
+        }
+      },
+      "MPS": {
+        "STATUS": {
+          "table": "PP_PLNM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "SRC": {
+          "table": "PP_PLNM",
+          "field": "SRC",
+          "note": "",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "MRPTP": {
+          "table": "PP_PLND",
+          "field": "MRPTP",
+          "note": "",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "SOURCE": {
+          "table": "MM_ITMMASTR",
+          "field": "SOURCE",
+          "note": "",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "SUPPLY": {
+          "table": "MM_ITMMASTR",
+          "field": "SUPPLY",
+          "note": "C405/MPS048 主 grid 撥運政策（MqyGetText 'SUPPLY' 分支）",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "ISSUE": {
+          "table": "PP_PLNDD",
+          "field": "ISSUE",
+          "note": "發行狀態（比照 C208 MqyGetText 'ISSUE' 分支）",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "PSDU": {
+          "table": "PM_PRJD1",
+          "field": "PSDU",
+          "note": "虛擬件（比照 C300 MqyGetText 'PSDU' 分支，2026-07-30 補上）",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "PLNCM_STATUS": {
+          "table": "PP_PLNCM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "MRPTP_MM_ITMMASTR": {
+          "table": "MM_ITMMASTR",
+          "field": "MRPTP",
+          "note": "C302 Dq1 備料方式（MqyGetText 'MRPTP' 分支）",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "ISSUE_PP_MINFDD": {
+          "table": "PP_MINFDD",
+          "field": "ISSUE",
+          "note": "C302 Dq1/Dq5 發行狀態（MqyGetText 'ISSUE' 分支，PP_MINFDD 那個，見下方 if-elseif 順序說明）",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "MOM_STATUS": {
+          "table": "PP_MOM",
+          "field": "STATUS",
+          "note": "C302 Dq4 製令單況（MqyGetText 'STATUS' 分支：GetKeyCodeDESCPT(Sender,'PP_MOM',...)）",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "SCHLETP": {
+          "table": "MM_ITMMASTR",
+          "field": "SCHLETP",
+          "note": "C302A 材料表排產方式（MqyGetText 'SCHLETP' 分支）／C302 Dq1 排產方式",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "ISSUE_PP_MBOM": {
+          "table": "PP_MBOM",
+          "field": "ISSUE",
+          "note": "C302A 材料表發行狀態（MqyGetText 'ISSUE' 分支：GetKeyCodeDESCPT(...,'PP_MBOM')），跟本檔 ISSUE_PP_MINFDD 是不同來源表",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "RFMTP": {
+          "table": "MM_ATRFM",
+          "field": "RFMTP",
+          "note": "C311 單據來源",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "FMTP": {
+          "table": "MM_ATRFM",
+          "field": "FMTP",
+          "note": "C311 單據別",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "CTRLTP": {
+          "table": "MM_ATRFD",
+          "field": "CTRLTP",
+          "note": "C311 明細管制方式",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "SRCTP": {
+          "table": "MM_ATRFD",
+          "field": "SRCTP",
+          "note": "C311 明細來源別",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "FORPJ": {
+          "table": "PP_MINFDD",
+          "field": "FORPJ",
+          "note": "C305 備料明細「專案性質」",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "MOD3_STATUS": {
+          "table": "PP_MOD3",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "MOD3_RFMTP": {
+          "table": "PP_MOD3",
+          "field": "RFMTP",
+          "note": "",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "MINFM_STATUS": {
+          "table": "PP_MINFM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "SRCTP_PP_MOD1": {
+          "table": "PP_MOD1",
+          "field": "SRCTP",
+          "note": "",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "MOD3_TP": {
+          "table": "PP_MOD3",
+          "field": "TP",
+          "note": "",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "MOD3_INHOUSE": {
+          "table": "PP_MOD3",
+          "field": "INHOUSE",
+          "note": "",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "WRCID_TP": {
+          "table": "PP_WRCID",
+          "field": "TP",
+          "note": "",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "LHRTP": {
+          "table": "PP_MDOCROUT",
+          "field": "LHRTP",
+          "note": "",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "MHRTP": {
+          "table": "PP_MDOCROUT",
+          "field": "MHRTP",
+          "note": "",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "MSTYPE": {
+          "table": "PP_WRCID",
+          "field": "MSTYPE",
+          "note": "",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "MWM_STATUS": {
+          "table": "PP_MWM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "SRCTP_PP_MOD2": {
+          "table": "PP_MOD2",
+          "field": "SRCTP",
+          "note": "",
+          "file": "DisplayTransformService.MPS.cs"
+        }
+      },
+      "PRJ": {
+        "CO_RATE_TP": {
+          "table": "CO_RATE",
+          "field": "TP",
+          "note": "",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PM_MROUTTP_TP": {
+          "table": "PM_MROUTTP",
+          "field": "TP",
+          "note": "",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PM_MROUTTP_APLYTP": {
+          "table": "PM_MROUTTP",
+          "field": "APLYTP",
+          "note": "",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PM_MROUTTPD_MSTYPE": {
+          "table": "PM_MROUTTPD",
+          "field": "MSTYPE",
+          "note": "",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PM_MROUTTPD_STDBASE": {
+          "table": "PM_MROUTTPD",
+          "field": "STDBASE",
+          "note": "",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PM_VROUTTP_TP": {
+          "table": "PM_VROUTTP",
+          "field": "TP",
+          "note": "",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PM_VROUTTP_APLYTP": {
+          "table": "PM_VROUTTP",
+          "field": "APLYTP",
+          "note": "",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PM_VROUTTP_MAPTP": {
+          "table": "PM_VROUTTP",
+          "field": "MAPTP",
+          "note": "",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PM_PITMTP_TP": {
+          "table": "PM_PITMTP",
+          "field": "TP",
+          "note": "",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PM_PITMTP_APLYTP": {
+          "table": "PM_PITMTP",
+          "field": "APLYTP",
+          "note": "",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PM_PITMTP_MAPTP": {
+          "table": "PM_PITMTP",
+          "field": "MAPTP",
+          "note": "",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PM_ACNTTP_TP": {
+          "table": "PM_ACNTTP",
+          "field": "TP",
+          "note": "",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PM_ACNTTP_APLYTP": {
+          "table": "PM_ACNTTP",
+          "field": "APLYTP",
+          "note": "",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PM_ACNTTP_MAPTP": {
+          "table": "PM_ACNTTP",
+          "field": "MAPTP",
+          "note": "",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PM_PRJM_STATUS": {
+          "table": "PM_PRJM",
+          "field": "STATUS",
+          "note": "主檔單況（I201.pas:720）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PM_PRJDD3_LHRTP": {
+          "table": "PM_PRJDD3",
+          "field": "LHRTP",
+          "note": "派工人時單位（:2014）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PM_PRJDD3_MHRTP": {
+          "table": "PM_PRJDD3",
+          "field": "MHRTP",
+          "note": "派工機時單位（:2016）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PM_WTPROUT_LHRTP": {
+          "table": "PM_WTPROUT",
+          "field": "LHRTP",
+          "note": "工程明細人時單位（:345）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PM_WTPROUT_MHRTP": {
+          "table": "PM_WTPROUT",
+          "field": "MHRTP",
+          "note": "工程明細機時單位（:346）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PM_WTPROUTD_WSEQTP": {
+          "table": "PM_WTPROUTD",
+          "field": "WSEQTP",
+          "note": "作業明細作業類別（:352）",
+          "file": "DisplayTransformService.PRJ.cs"
+        }
+      },
+      "QCS": {
+        "QC_QRIFM_OBJTP": {
+          "table": "QC_QRIFM",
+          "field": "OBJTP",
+          "note": "",
+          "file": "DisplayTransformService.QCS.cs"
+        },
+        "QC_QRIFM_STATUS": {
+          "table": "QC_QRIFM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.QCS.cs"
+        },
+        "QC_QRIFD_RFMTP": {
+          "table": "QC_QRIFD",
+          "field": "RFMTP",
+          "note": "",
+          "file": "DisplayTransformService.QCS.cs"
+        },
+        "QC_QRIFD_OBJTP": {
+          "table": "QC_QRIFD",
+          "field": "OBJTP",
+          "note": "",
+          "file": "DisplayTransformService.QCS.cs"
+        },
+        "QC_QRIFD_CTAXTP": {
+          "table": "QC_QRIFD",
+          "field": "CTAXTP",
+          "note": "",
+          "file": "DisplayTransformService.QCS.cs"
+        },
+        "QC_QRIFDD_OBJTP": {
+          "table": "QC_QRIFDD",
+          "field": "OBJTP",
+          "note": "",
+          "file": "DisplayTransformService.QCS.cs"
+        }
+      },
+      "SAL": {
+        "LOCTP": {
+          "table": "SA_PDGPK",
+          "field": "LOCTP",
+          "note": "置放位置 KeyCode（B119 MqyGetText LOCTP）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "POTP": {
+          "table": "SA_QUOTM",
+          "field": "POTP",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "ORDERCRM_POTP": {
+          "table": "SA_ORDERCRM",
+          "field": "POTP",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "TP": {
+          "table": "SA_ORDTP",
+          "field": "TP",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "STATUS": {
+          "table": "SA_QUOTM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "SALEM_STATUS": {
+          "table": "SA_SALEM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "CTAXTP": {
+          "table": "SA_QUOTM",
+          "field": "CTAXTP",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "ARTERM": {
+          "table": "SA_QUOTM",
+          "field": "ARTERM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "UARTERM": {
+          "table": "SA_QUOTM",
+          "field": "ARTERM",
+          "note": "SAL047 變更付款方式，共用 ARTERM keycode（B303Base MqyGetText UARTERM）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "ISSTK": {
+          "table": "SA_QUOTD",
+          "field": "ISSTK",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "CLAS": {
+          "table": "SA_STKMN",
+          "field": "CLAS",
+          "note": "SAL084（B715 GetKeyCodeDESCPT('CLAS',True,'SA_STKMN')）成本屬性 KeyCode",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "PLNTP": {
+          "table": "SA_SPLND",
+          "field": "PLNTP",
+          "note": "計劃類型 KeyCode（B201/SAL050 KeyCodePick(SA_SPLND,PLNTP)）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "PKINFTP_TP": {
+          "table": "SA_PKINFTP",
+          "field": "TP",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "SALETP_TP": {
+          "table": "SA_SALETP",
+          "field": "TP",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "PORT_TP": {
+          "table": "SA_PORT",
+          "field": "TP",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "ORDERM_TP": {
+          "table": "SA_ORDERM",
+          "field": "TP",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "FMTP": {
+          "table": "MM_ADJM",
+          "field": "FMTP",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "SOURCE": {
+          "table": "MM_ITMMASTR",
+          "field": "SOURCE",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INVTP": {
+          "table": "MM_ITMMASTR",
+          "field": "INVTP",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INVCFG_TP": {
+          "table": "SA_INVCFG",
+          "field": "TP",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "COPIES": {
+          "table": "SA_INVCFG",
+          "field": "COPIES",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "ZOPEN": {
+          "table": "SA_INVCFG",
+          "field": "ZOPEN",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INVCFGM_COPIES": {
+          "table": "SA_INVCFGM",
+          "field": "COPIES",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INVCFGM_STATUS": {
+          "table": "SA_INVCFGM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "CRTP": {
+          "table": "SA_DODCRD",
+          "field": "CRTP",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "CUPTP": {
+          "table": "SA_CUPD",
+          "field": "CUPTP",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "IOTP": {
+          "table": "SA_CUPM",
+          "field": "IOTP",
+          "note": "國內外別",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "CUPM_STATUS": {
+          "table": "SA_CUPM",
+          "field": "STATUS",
+          "note": "單況；別名避開既有 \"STATUS\"(SA_QUOTM)",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "CUPM_CTAXTP": {
+          "table": "SA_CUPM",
+          "field": "CTAXTP",
+          "note": "稅別；別名避開既有 \"CTAXTP\"(SA_QUOTM)",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "SHPSCH_STATUS": {
+          "table": "SA_SHPSCH",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "DOBKM_POTP": {
+          "table": "SA_DOBKM",
+          "field": "POTP",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "DOBKM_STATUS": {
+          "table": "SA_DOBKM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "DOBKD_CTRLTP": {
+          "table": "SA_DOBKD",
+          "field": "CTRLTP",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "DOBKD_RPL": {
+          "table": "SA_DOBKD",
+          "field": "RPL",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "ITM_CTRLTP": {
+          "table": "MM_ITMMASTR",
+          "field": "CTRLTP",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "ZCLOSE": {
+          "table": "SA_ORDERD",
+          "field": "ZCLOSE",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INVM_TP": {
+          "table": "SA_INVM",
+          "field": "TP",
+          "note": "憑證別（GetKeyCodeDESCPT(...,'TP',True)）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INVM_SUBTP": {
+          "table": "SA_INVM",
+          "field": "SUBTP",
+          "note": "收入性質（GetKeyCodeDESCPT(...,'SUBTP',True)）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INVM_CTAXTP": {
+          "table": "SA_INVM",
+          "field": "CTAXTP",
+          "note": "稅別（GetKeyCodeDESCPT(...,'CTAXTP',True)）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INVM_STATUS": {
+          "table": "SA_INVM",
+          "field": "STATUS",
+          "note": "單況（GetKeyCodeDESCPT(...,'STATUS',True)）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INVM_SRC": {
+          "table": "SA_INVCFG",
+          "field": "SRC",
+          "note": "申請單別（GetKeyCodeDESCPT(...,'SRC',True,'SA_INVCFG')）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INVD_FMTP": {
+          "table": "SA_INVD",
+          "field": "FMTP",
+          "note": "明細來源別（Dq1GetText GetKeyCodeDESCPT(...,'FMTP',True)）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INVD1_FMTP": {
+          "table": "SA_INVD1",
+          "field": "FMTP",
+          "note": "預收扣抵 Dq2 來源別（Dq2GetText GetKeyCodeDESCPT(DataSet=SA_INVD1,'FMTP',True)）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "BKREP": {
+          "table": "SA_DOD",
+          "field": "BKREP",
+          "note": "退修品",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "BKPBK": {
+          "table": "SA_DOD",
+          "field": "BKPBK",
+          "note": "保固品",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "RFMTP": {
+          "table": "SA_SALEM",
+          "field": "RFMTP",
+          "note": "單據來源",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "TOAR": {
+          "table": "SA_SALEM",
+          "field": "TOAR",
+          "note": "轉應收",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "TOTAR": {
+          "table": "SA_SALEM",
+          "field": "TOTAR",
+          "note": "轉暫收",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "APTERM": {
+          "table": "SA_SALBKM",
+          "field": "APTERM",
+          "note": "驗收條件（表頭）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "FTP": {
+          "table": "SA_SALBKM",
+          "field": "FTP",
+          "note": "折讓別（表頭）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "CUSBK": {
+          "table": "SA_SALBKM",
+          "field": "CUSBK",
+          "note": "客戶退回別（表頭）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "SALBKD_CTRLTP": {
+          "table": "SA_SALBKD",
+          "field": "CTRLTP",
+          "note": "管制方式（明細）；別名避開 ITM_/DOBKD_CTRLTP",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "SALBKD_RPL": {
+          "table": "SA_SALBKD",
+          "field": "RPL",
+          "note": "補料別（明細）；別名避開 DOBKD_RPL",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "SLINVYM": {
+          "table": "SA_CRNOTEM",
+          "field": "SLINVYM",
+          "note": "銷項稅額所屬年月（表頭）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "ISRTW": {
+          "table": "SA_CRNOTEM",
+          "field": "ISRTW",
+          "note": "是否退稅（表頭）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "TAXTYPE": {
+          "table": "SA_EALWD",
+          "field": "TAXTYPE",
+          "note": "稅別（費用折讓明細 Dq2）",
+          "file": "DisplayTransformService.SAL.cs"
+        }
+      },
+      "STK": {
+        "FMTP": {
+          "table": "MM_ADJM",
+          "field": "FMTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "STATUS": {
+          "table": "MM_ADJM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "CTRLTP": {
+          "table": "MM_ADJD",
+          "field": "CTRLTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "ISSTK": {
+          "table": "SA_QUOTD",
+          "field": "ISSTK",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "STATUS1": {
+          "table": "HR_EMPLYM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "STKTP": {
+          "table": "MM_STKLOCM",
+          "field": "STKTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "RECTP": {
+          "table": "MM_STKREC",
+          "field": "RECTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "TFMTP": {
+          "table": "MM_STKREC",
+          "field": "TFMTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "ABCTP": {
+          "table": "MM_ITMMASTR",
+          "field": "ABCTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "CLAS": {
+          "table": "MM_ITMMASTR",
+          "field": "CLAS",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "ECSTK": {
+          "table": "MM_ITMMASTR",
+          "field": "ECSTK",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "INVTP": {
+          "table": "MM_ITMMASTR",
+          "field": "INVTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "SUPPLY": {
+          "table": "MM_ITMMASTR",
+          "field": "SUPPLY",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "SOURCE": {
+          "table": "MM_ITMMASTR",
+          "field": "SOURCE",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "ISFRZ": {
+          "table": "MM_TAKEM",
+          "field": "ISFRZ",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "ISZERO": {
+          "table": "MM_TAKEM",
+          "field": "ISZERO",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "CTRLTP_RCVD": {
+          "table": "PO_RCVD",
+          "field": "CTRLTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "SRCTP_RCVD": {
+          "table": "PO_RCVD",
+          "field": "SRCTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "RFMTP_RCVD": {
+          "table": "PO_RCVD",
+          "field": "RFMTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "IQC_RCVD": {
+          "table": "PO_RCVD",
+          "field": "IQC",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "INTCHK_RCVD": {
+          "table": "PO_RCVD",
+          "field": "INTCHK",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "PRI_RCVD": {
+          "table": "PO_RCVD",
+          "field": "PRI",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "POTP": {
+          "table": "SA_DOBKM",
+          "field": "POTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "STATUS_DOBKM": {
+          "table": "SA_DOBKM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "STK043_STATUS": {
+          "table": "MM_STKLOCM",
+          "field": "STKSTAT",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "RFMTP": {
+          "table": "PP_RCVM",
+          "field": "RFMTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "CTRLTP_RTWD": {
+          "table": "PO_RTWD",
+          "field": "CTRLTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "RFMTP_RTWD": {
+          "table": "PO_RTWD",
+          "field": "RFMTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "CTRLTP_WMWD": {
+          "table": "PP_WMWD",
+          "field": "CTRLTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "FMTP_WMWM": {
+          "table": "PP_WMWM",
+          "field": "FMTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "CTRLTP_ITMMASTR": {
+          "table": "MM_ITMMASTR",
+          "field": "CTRLTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "CTRLTP_ACPTD": {
+          "table": "PP_ACPTD",
+          "field": "CTRLTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "RFMTP_PO_ACPTD": {
+          "table": "PO_ACPTD",
+          "field": "RFMTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "QCTP": {
+          "table": "PP_VWOM",
+          "field": "QCTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "STATUS_RCVM": {
+          "table": "PO_RCVM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "STATUS_REJM": {
+          "table": "PP_REJM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "CTRLTP_REJD": {
+          "table": "PP_REJD",
+          "field": "CTRLTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "STATUS_TAKEM": {
+          "table": "MM_TAKEM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "CTRLTP_TAKED": {
+          "table": "MM_TAKED",
+          "field": "CTRLTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "STATUS_POREJM": {
+          "table": "PO_REJM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "CTRLTP_POREJD": {
+          "table": "PO_REJD",
+          "field": "CTRLTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "RFMTP_POREJD": {
+          "table": "PO_REJD",
+          "field": "RFMTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "STATUS_PPRCVM": {
+          "table": "PP_RCVM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "STATUS_OTRM": {
+          "table": "MM_OTRM",
+          "field": "STATUS",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "CTRLTP_OTRD": {
+          "table": "MM_OTRD",
+          "field": "CTRLTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "CTRLTP_PPRCVD": {
+          "table": "PP_RCVD",
+          "field": "CTRLTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "RFMTP_PPRCVD": {
+          "table": "PP_RCVD",
+          "field": "RFMTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "PRI_PPRCVD": {
+          "table": "PP_RCVD",
+          "field": "PRI",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "SRCTP_PPRCVD": {
+          "table": "PP_RCVD",
+          "field": "SRCTP",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "IQC_PPRCVD": {
+          "table": "PP_RCVD",
+          "field": "IQC",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "INTCHK_PPRCVD": {
+          "table": "PP_RCVD",
+          "field": "INTCHK",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "RPL": {
+          "table": "SA_DOBKD",
+          "field": "RPL",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        }
+      }
+    },
+    "name": {
+      "ACC": {
+        "PRVAL": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "ACC001 等 PRVAL 沖銷科目顯示用",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "ACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "會計科目",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "CND": {
+          "table": "AC_CND",
+          "keyField": "CND",
+          "nmField": "CNDNM",
+          "note": "立沖帳戶",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "CNDPJ": {
+          "table": "AC_CNPJ",
+          "keyField": "CNDPJ",
+          "nmField": "CNPJNM",
+          "note": "歸屬專案",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "WRC": {
+          "table": "PP_WRCID_PICK",
+          "keyField": "WRC",
+          "nmField": "WRCNM",
+          "note": "工作中心",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "ACDCLNO": {
+          "table": "AC_ACDCLS",
+          "keyField": "ACDCLNO",
+          "nmField": "ACDCLNM",
+          "note": "ACC005 科目大類",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "ACLSNO": {
+          "table": "AC_ACCLS",
+          "keyField": "ACLSNO",
+          "nmField": "ACLSNM",
+          "note": "ACC005 科目類別",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "HCNO": {
+          "table": "AC_ACHGCLS",
+          "keyField": "HCNO",
+          "nmField": "HCNM",
+          "note": "ACC005 會計大類",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "VNDERID": {
+          "table": "PO_VNDRM",
+          "keyField": "VNDERID",
+          "nmField": "STNM",
+          "note": "廠商（G112）",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "CUSTMER": {
+          "table": "SA_CSTM",
+          "keyField": "CUSTMER",
+          "nmField": "STNM",
+          "note": "客戶（G113）",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "NSN": {
+          "table": "AC_NSNACNT",
+          "keyField": "NSN",
+          "nmField": "NSNNM",
+          "note": "NSN",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "SRCTP": {
+          "table": "AC_TNSRC",
+          "keyField": "SRCTP",
+          "nmField": "SRCNM",
+          "note": "來源別",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "ATNTP": {
+          "table": "AC_ATNTP",
+          "keyField": "ATNTP",
+          "nmField": "TPNM",
+          "note": "G501 帳冊別",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "SDEPID": {
+          "table": "HR_DEP",
+          "keyField": "DEPID",
+          "nmField": "DEPNM",
+          "note": "G501 分錄部門",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "DEPID": {
+          "table": "HR_DEP",
+          "keyField": "DEPID",
+          "nmField": "DEPNM",
+          "note": "G501 所屬部門",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "RELID": {
+          "table": "SS_COMPREL",
+          "keyField": "RELID",
+          "nmField": "STNM",
+          "note": "G501 關係人",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "COSTTP": {
+          "table": "AC_COSTTP",
+          "keyField": "COSTTP",
+          "nmField": "TPNM",
+          "note": "G501 產業成本類別",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "FEMPLYID": {
+          "table": "HR_EMPLYM",
+          "keyField": "EMPLYID",
+          "nmField": "EMPLYNM",
+          "note": "G501 會計人員",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "INVID": {
+          "table": "AC_INVID",
+          "keyField": "INVID",
+          "nmField": "INVNM",
+          "note": "ACC059/G704 格式代號",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "CITYID": {
+          "table": "TA_CITY",
+          "keyField": "CITYID",
+          "nmField": "CITYNM",
+          "note": "ACC059/G704 縣市別",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "EXTP": {
+          "table": "TA_EXTP",
+          "keyField": "EXTP",
+          "nmField": "EXTPNM",
+          "note": "ACC060/G705 外銷代號",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "EXCLAS": {
+          "table": "TA_EXCLAS",
+          "keyField": "EXCLAS",
+          "nmField": "EXCLASNM",
+          "note": "ACC060/G705 出口報單類別",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "AEMPLYID": {
+          "table": "HR_EMPLYM",
+          "keyField": "EMPLYID",
+          "nmField": "EMPLYNM",
+          "note": "G518 製票審核人員",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "APACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "PPACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "NPACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "TPACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "TAACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "APEVACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "TAEVACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "BACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "DACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "ARACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "PRACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "SSACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "SRACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "SAACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "NRACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "TRACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "TTACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "TSACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "AREVACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "TSEVACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "PAACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "WIPACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "DOACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        },
+        "SCSTACNTID": {
+          "table": "AC_ACNTID_PICK",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.ACC.cs"
+        }
+      },
+      "BSE": {
+        "WRC": {
+          "table": "PP_WRCID",
+          "keyField": "WRC",
+          "nmField": "WRCNM",
+          "note": "",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "SHFTID": {
+          "table": "HR_SHFTID",
+          "keyField": "SHFTID",
+          "nmField": "SHFTNM",
+          "note": "",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "CstitmtpComboBox": {
+          "table": "MM_ITMTP",
+          "keyField": "ITMTP",
+          "nmField": "TPNM",
+          "note": "BSE017 下方 Grid 成本分類 Display",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "UEMPLYID": {
+          "table": "HR_EMPLYM",
+          "keyField": "EMPLYID",
+          "nmField": "EMPLYNM",
+          "note": "BSE019 明細異動人員 Display，BSE027 通用人員代號:姓名 Display 亦共用",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "MUNIT": {
+          "table": "SS_UNIT",
+          "keyField": "UNIT",
+          "nmField": "UNITNM",
+          "note": "主要單位，對照 SS_UNIT（BSE025 換算單位）",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "TUNIT": {
+          "table": "SS_UNIT",
+          "keyField": "UNIT",
+          "nmField": "UNITNM",
+          "note": "換算單位，對照 SS_UNIT（BSE025 換算單位）",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ADJID": {
+          "table": "MM_ADJID",
+          "keyField": "ADJID",
+          "nmField": "ADJNM",
+          "note": "調整原因（BSE027）",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "GRPID": {
+          "table": "PP_ITMGRP",
+          "keyField": "GRPID",
+          "nmField": "GRPNM",
+          "note": "群組碼",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ROUTID": {
+          "table": "PP_MROUTID",
+          "keyField": "ROUTID",
+          "nmField": "ROUTNM",
+          "note": "投料工程",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "PBOMNO": {
+          "table": "PP_BOMTP",
+          "keyField": "BOMNO",
+          "nmField": "BOMNM",
+          "note": "備料料表（代碼欄位名是 BOMNO）",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "MFGDOCNO": {
+          "table": "PP_MDOCM",
+          "keyField": "MFGDOCNO",
+          "nmField": "DOCNM",
+          "note": "製程文件（唯讀顯示欄）",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "BOMNO": {
+          "table": "PP_BOMTP",
+          "keyField": "BOMNO",
+          "nmField": "BOMNM",
+          "note": "料表編號（PBOMNO 是備料料表，語意不同故分開）",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "VNDERID": {
+          "table": "PO_VNDRM",
+          "keyField": "VNDERID",
+          "nmField": "STNM",
+          "note": "主供應商",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "FACTID": {
+          "table": "PP_PLANT",
+          "keyField": "FACTID",
+          "nmField": "FACTNM",
+          "note": "廠別代號",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "STKNO": {
+          "table": "MM_STKLOCM",
+          "keyField": "STKNO",
+          "nmField": "STKNM",
+          "note": "儲區編號",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "INSPID": {
+          "table": "QC_INSPID",
+          "keyField": "INSPID",
+          "nmField": "INSPNM",
+          "note": "檢驗項目（明細一 檢驗標準）",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "SEQID": {
+          "table": "PP_MSEQID",
+          "keyField": "SEQID",
+          "nmField": "SEQNM",
+          "note": "作業代碼（明細一/明細三）",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "CDEPID": {
+          "table": "HR_DEP",
+          "keyField": "DEPID",
+          "nmField": "DEPNM",
+          "note": "建檔部門",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "PRDTP": {
+          "table": "SA_PRDTP",
+          "keyField": "PRDTP",
+          "nmField": "PRDNM",
+          "note": "產品別",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "CUR": {
+          "table": "SS_CUR",
+          "keyField": "CUR",
+          "nmField": "CURNM",
+          "note": "幣別（BSE018 成本明細 Dq1）",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ECSTK": {
+          "table": "PP_ECNSTK",
+          "keyField": "ECSTK",
+          "nmField": "ECSTKNM",
+          "note": "庫存處理方式（BSE036 維護的那張表）",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "ECNTP": {
+          "table": "PP_ECNTP",
+          "keyField": "ECNTP",
+          "nmField": "TPNM",
+          "note": "變更原因（BSE035 維護）",
+          "file": "DisplayTransformService.BSE.cs"
+        },
+        "DEPID": {
+          "table": "HR_DEP",
+          "keyField": "DEPID",
+          "nmField": "DEPNM",
+          "note": "部門（申請/管制部門共用，CDEPID 是建檔部門語意不同故分開）",
+          "file": "DisplayTransformService.BSE.cs"
+        }
+      },
+      "BUY": {
+        "PORSN": {
+          "table": "PO_REASON",
+          "keyField": "PORSN",
+          "nmField": "PORNSNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "POTP": {
+          "table": "PO_POTP",
+          "keyField": "POTP",
+          "nmField": "POTPNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "VNDERID": {
+          "table": "PO_VNDRM",
+          "keyField": "VNDERID",
+          "nmField": "STNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "ITMTP": {
+          "table": "MM_ITMTP",
+          "keyField": "ITMTP",
+          "nmField": "TPNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "ROUTID": {
+          "table": "PP_MROUTID",
+          "keyField": "ROUTID",
+          "nmField": "ROUTNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "UNIT": {
+          "table": "SS_UNIT",
+          "keyField": "UNIT",
+          "nmField": "UNITNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "CUR": {
+          "table": "SS_CUR",
+          "keyField": "CUR",
+          "nmField": "CURNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "INVITPNO": {
+          "table": "AC_INVITP",
+          "keyField": "INVITPNO",
+          "nmField": "INVITYNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "INVID": {
+          "table": "AC_INVID",
+          "keyField": "INVID",
+          "nmField": "INVNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "CUPID": {
+          "table": "PO_CUPID",
+          "keyField": "CUPID",
+          "nmField": "CUPNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "DEPID": {
+          "table": "HR_DEP",
+          "keyField": "DEPID",
+          "nmField": "DEPNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "EMPLYID": {
+          "table": "HR_EMPLYM",
+          "keyField": "EMPLYID",
+          "nmField": "EMPLYNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "BUYERFEMPLYID": {
+          "table": "PO_BUYER",
+          "keyField": "PEMPLYID",
+          "nmField": "EMPLYNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "STKNO": {
+          "table": "MM_STKLOCM",
+          "keyField": "STKNO",
+          "nmField": "STKNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "BKTP": {
+          "table": "PO_BKTP",
+          "keyField": "BKTP",
+          "nmField": "TPNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "SHPID": {
+          "table": "SA_SHPID",
+          "keyField": "SHPID",
+          "nmField": "SHNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "TRDTERM": {
+          "table": "SS_TRDTRM",
+          "keyField": "TRDTERM",
+          "nmField": "TRDNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PAYTERM": {
+          "table": "SA_PAYTERM",
+          "keyField": "PAYTERM",
+          "nmField": "CTERMNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "NSN": {
+          "table": "MM_ITMMASTR",
+          "keyField": "NSN",
+          "nmField": "ITMCNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "SEQID": {
+          "table": "PP_MSEQID",
+          "keyField": "SEQID",
+          "nmField": "SEQNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "WRC": {
+          "table": "PP_WRCID",
+          "keyField": "WRC",
+          "nmField": "WRCNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "FACTID": {
+          "table": "PP_PLANT",
+          "keyField": "FACTID",
+          "nmField": "FACTNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "PJID": {
+          "table": "PM_PRJM",
+          "keyField": "PJID",
+          "nmField": "PJNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        },
+        "RTPNO": {
+          "table": "PP_ROUTTP",
+          "keyField": "RTPNO",
+          "nmField": "RTPNM",
+          "note": "",
+          "file": "DisplayTransformService.BUY.cs"
+        }
+      },
+      "COMMON": {
+        "DEPID": {
+          "table": "HR_DEP",
+          "keyField": "DEPID",
+          "nmField": "DEPNM",
+          "note": "",
+          "file": "DisplayTransformService.cs"
+        },
+        "CDEPID": {
+          "table": "HR_DEP",
+          "keyField": "DEPID",
+          "nmField": "DEPNM",
+          "note": "損益歸屬部門（同 HR_DEP）",
+          "file": "DisplayTransformService.cs"
+        },
+        "EMPLYID": {
+          "table": "HR_EMPLYM",
+          "keyField": "EMPLYID",
+          "nmField": "EMPLYNM",
+          "note": "",
+          "file": "DisplayTransformService.cs"
+        },
+        "FEMLYID": {
+          "table": "HR_EMPLYM",
+          "keyField": "EMPLYID",
+          "nmField": "EMPLYNM",
+          "note": "",
+          "file": "DisplayTransformService.cs"
+        },
+        "FEMPLYID": {
+          "table": "HR_EMPLYM",
+          "keyField": "EMPLYID",
+          "nmField": "EMPLYNM",
+          "note": "",
+          "file": "DisplayTransformService.cs"
+        },
+        "AEMPLYID": {
+          "table": "HR_EMPLYM",
+          "keyField": "EMPLYID",
+          "nmField": "EMPLYNM",
+          "note": "",
+          "file": "DisplayTransformService.cs"
+        },
+        "SMANAGER": {
+          "table": "HR_EMPLYM",
+          "keyField": "EMPLYID",
+          "nmField": "EMPLYNM",
+          "note": "",
+          "file": "DisplayTransformService.cs"
+        },
+        "FACTID": {
+          "table": "PP_PLANT",
+          "keyField": "FACTID",
+          "nmField": "FACTNM",
+          "note": "",
+          "file": "DisplayTransformService.cs"
+        },
+        "AREAID": {
+          "table": "SA_AREA",
+          "keyField": "AREAID",
+          "nmField": "AREANM",
+          "note": "地區別",
+          "file": "DisplayTransformService.cs"
+        },
+        "STKNO": {
+          "table": "MM_STKLOCM",
+          "keyField": "STKNO",
+          "nmField": "STKNM",
+          "note": "儲區編號（Delphi MqyGetText GetNoDESCPT('STKNO','STKNM','MM_STKLOCM')）",
+          "file": "DisplayTransformService.cs"
+        },
+        "OPTTP": {
+          "table": "SA_OPTTP",
+          "keyField": "OPTTP",
+          "nmField": "TPNM",
+          "note": "配接方式（Delphi MqyGetText GetNoDESCPT('OPTTP','TPNM','SA_OPTTP')；SA_OPTTP BSE/SAL 共用）",
+          "file": "DisplayTransformService.cs"
+        },
+        "CUR": {
+          "table": "SS_CUR",
+          "keyField": "CUR",
+          "nmField": "CURNM",
+          "note": "",
+          "file": "DisplayTransformService.cs"
+        },
+        "UNIT": {
+          "table": "SS_UNIT",
+          "keyField": "UNIT",
+          "nmField": "UNITNM",
+          "note": "",
+          "file": "DisplayTransformService.cs"
+        },
+        "PAYTERM": {
+          "table": "SA_PAYTERM",
+          "keyField": "PAYTERM",
+          "nmField": "CTERMNM",
+          "note": "",
+          "file": "DisplayTransformService.cs"
+        },
+        "UPAYTERM": {
+          "table": "SA_PAYTERM",
+          "keyField": "PAYTERM",
+          "nmField": "CTERMNM",
+          "note": "SAL047 變更付款條件（B303Base MqyGetText UPAYTERM，查表同 PAYTERM）",
+          "file": "DisplayTransformService.cs"
+        },
+        "INVITPNO": {
+          "table": "AC_INVITP",
+          "keyField": "INVITPNO",
+          "nmField": "INVITYNM",
+          "note": "",
+          "file": "DisplayTransformService.cs"
+        },
+        "TRDTERM": {
+          "table": "SS_TRDTRM",
+          "keyField": "TRDTERM",
+          "nmField": "TRDNM",
+          "note": "",
+          "file": "DisplayTransformService.cs"
+        },
+        "UTRDTERM": {
+          "table": "SS_TRDTRM",
+          "keyField": "TRDTERM",
+          "nmField": "TRDNM",
+          "note": "SAL047 變更價格條件（B303Base MqyGetText UTRDTERM，查表同 TRDTERM）",
+          "file": "DisplayTransformService.cs"
+        },
+        "PRDTP": {
+          "table": "SA_PRDTP",
+          "keyField": "PRDTP",
+          "nmField": "PRDNM",
+          "note": "",
+          "file": "DisplayTransformService.cs"
+        },
+        "PRDTPGTP": {
+          "table": "FTW_PRDGTP",
+          "keyField": "PRDTPGTP",
+          "nmField": "PDNM",
+          "note": "機型大類（比照 C207 MqyGetText PRDTPGTP）",
+          "file": "DisplayTransformService.cs"
+        },
+        "BOMNO": {
+          "table": "PP_BOMTP",
+          "keyField": "BOMNO",
+          "nmField": "BOMNM",
+          "note": "",
+          "file": "DisplayTransformService.cs"
+        },
+        "PACKID": {
+          "table": "SA_PACK",
+          "keyField": "PACKID",
+          "nmField": "PACKNM",
+          "note": "",
+          "file": "DisplayTransformService.cs"
+        },
+        "UPACKID": {
+          "table": "SA_PACK",
+          "keyField": "PACKID",
+          "nmField": "PACKNM",
+          "note": "SAL047 變更包裝方式（B303Base Dq1GetText UPACKID，查表同 PACKID）",
+          "file": "DisplayTransformService.cs"
+        },
+        "PACKENM": {
+          "table": "SA_PACK",
+          "keyField": "PACKID",
+          "nmField": "PACKENM",
+          "note": "包裝英文名 PACKING（B402Base PACKENM_，代碼取自 PACKID，僅為 map 路由別名）",
+          "file": "DisplayTransformService.cs"
+        },
+        "WUNIT": {
+          "table": "SS_UNIT",
+          "keyField": "UNIT",
+          "nmField": "UNITNM",
+          "note": "重量單位，對照 SS_UNIT（B119 MqyGetText WUNIT）",
+          "file": "DisplayTransformService.cs"
+        }
+      },
+      "MPS": {
+        "MOTP": {
+          "table": "PP_MOTP",
+          "keyField": "MOTP",
+          "nmField": "TPNM",
+          "note": "",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "ITMTP": {
+          "table": "MM_ITMTP",
+          "keyField": "ITMTP",
+          "nmField": "TPNM",
+          "note": "",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "CUSTMER": {
+          "table": "SA_CSTM",
+          "keyField": "CUSTMER",
+          "nmField": "CUSTNM",
+          "note": "",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "MFGDOCNO": {
+          "table": "PP_MDOCM",
+          "keyField": "MFGDOCNO",
+          "nmField": "DOCNM",
+          "note": "委製文件（比照 C207 Cd2DblClick MFGDOCNO）",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "TISTKNO": {
+          "table": "MM_STKLOCM",
+          "keyField": "STKNO",
+          "nmField": "STKNM",
+          "note": "C311 明細申請儲區",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "TOSTKNO": {
+          "table": "MM_STKLOCM",
+          "keyField": "STKNO",
+          "nmField": "STKNM",
+          "note": "C311 明細撥出儲區",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "PROCID": {
+          "table": "PP_MPROCID",
+          "keyField": "PROCID",
+          "nmField": "PROCNM",
+          "note": "C305 製令單製程代碼",
+          "file": "DisplayTransformService.MPS.cs"
+        },
+        "PRGID": {
+          "table": "PP_PROGRESS",
+          "keyField": "PRGID",
+          "nmField": "PRGNM",
+          "note": "C305A 製程明細生產進度",
+          "file": "DisplayTransformService.MPS.cs"
+        }
+      },
+      "PRJ": {
+        "WBS": {
+          "table": "PM_WBS",
+          "keyField": "WBS",
+          "nmField": "WBSNM",
+          "note": "",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "SEQID": {
+          "table": "PP_MSEQID",
+          "keyField": "SEQID",
+          "nmField": "SEQNM",
+          "note": "",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "ITMTP": {
+          "table": "MM_ITMTP",
+          "keyField": "ITMTP",
+          "nmField": "TPNM",
+          "note": "Dq1 成本分類（I106.pas:256）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "GRPID": {
+          "table": "PP_ITMGRP",
+          "keyField": "GRPID",
+          "nmField": "GRPNM",
+          "note": "Dq1 群組碼  （I106.pas:254）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "ROUTID": {
+          "table": "PP_MROUTID",
+          "keyField": "ROUTID",
+          "nmField": "ROUTNM",
+          "note": "Dq2/Dq3 工程代碼（I106.pas:316/383）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "WRC": {
+          "table": "PP_WRCID",
+          "keyField": "WRC",
+          "nmField": "WRCNM",
+          "note": "Dq2 工作中心（I106.pas:320）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "RTPNO": {
+          "table": "PP_ROUTTP",
+          "keyField": "RTPNO",
+          "nmField": "RTPNM",
+          "note": "Dq3 發包類別（I106.pas:381）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "MACHNO": {
+          "table": "PP_MACHEM",
+          "keyField": "MACHNO",
+          "nmField": "MACHNM",
+          "note": "",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "ACNTID": {
+          "table": "AC_ACNTID",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "Dq4 會計科目（I106.pas:421）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PJTP": {
+          "table": "PM_PJTP",
+          "keyField": "PJTP",
+          "nmField": "TPNM",
+          "note": "專案類別（I201.pas:704）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "CUSTMER": {
+          "table": "SA_CSTM",
+          "keyField": "CUSTMER",
+          "nmField": "CUSTNM",
+          "note": "客戶編號（:706）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "SALEREP": {
+          "table": "SA_SALER",
+          "keyField": "SALEREP",
+          "nmField": "SARPNM",
+          "note": "業務人員（:714）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "AREAID": {
+          "table": "SA_AREA",
+          "keyField": "AREAID",
+          "nmField": "AREANM",
+          "note": "地區（:716）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PROD": {
+          "table": "SA_PROD",
+          "keyField": "PROD",
+          "nmField": "PRODNM",
+          "note": "產品別（:1097）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "WTP": {
+          "table": "PM_WTP",
+          "keyField": "WTP",
+          "nmField": "WTPNM",
+          "note": "工作類別（:1105／:1174）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "STSID": {
+          "table": "PM_STS",
+          "keyField": "STSID",
+          "nmField": "STSNM",
+          "note": "執行狀態（:1093）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "EDSTSID": {
+          "table": "PM_STS",
+          "keyField": "STSID",
+          "nmField": "STSNM",
+          "note": "完工條件（:1095，同表不同欄位別名）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PRDNSN": {
+          "table": "MM_ITMMASTR",
+          "keyField": "NSN",
+          "nmField": "ITMCNM",
+          "note": "總成料號（:1101）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "PWBS": {
+          "table": "PM_WBS",
+          "keyField": "WBS",
+          "nmField": "WBSNM",
+          "note": "工作項目（:1176）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "FDEPID": {
+          "table": "HR_DEP",
+          "keyField": "DEPID",
+          "nmField": "DEPNM",
+          "note": "輸入部門（:1182）",
+          "file": "DisplayTransformService.PRJ.cs"
+        },
+        "VNDERID": {
+          "table": "PO_VNDRM",
+          "keyField": "VNDERID",
+          "nmField": "STNM",
+          "note": "預設廠商（:2018）",
+          "file": "DisplayTransformService.PRJ.cs"
+        }
+      },
+      "SAL": {
+        "SALEREP": {
+          "table": "SA_SALER",
+          "keyField": "SALEREP",
+          "nmField": "SARPNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "SPRCID": {
+          "table": "SA_PRCID",
+          "keyField": "SPRCID",
+          "nmField": "SPRCNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "BPORTID": {
+          "table": "SA_PORT",
+          "keyField": "PORTID",
+          "nmField": "PORTNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "EPORTID": {
+          "table": "SA_PORT",
+          "keyField": "PORTID",
+          "nmField": "PORTNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "DPORTID": {
+          "table": "SA_PORT",
+          "keyField": "PORTID",
+          "nmField": "PORTNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "UBPORTID": {
+          "table": "SA_PORT",
+          "keyField": "PORTID",
+          "nmField": "PORTNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "UEPORTID": {
+          "table": "SA_PORT",
+          "keyField": "PORTID",
+          "nmField": "PORTNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "UDPORTID": {
+          "table": "SA_PORT",
+          "keyField": "PORTID",
+          "nmField": "PORTNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "PJID": {
+          "table": "PM_PRJM",
+          "keyField": "PJID",
+          "nmField": "PJNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "ORGINALID": {
+          "table": "SA_ORIGNAL",
+          "keyField": "ORGINALID",
+          "nmField": "ORGINALNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "UORGINALID": {
+          "table": "SA_ORIGNAL",
+          "keyField": "ORGINALID",
+          "nmField": "ORGINALNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "SHPID": {
+          "table": "SA_SHPID",
+          "keyField": "SHPID",
+          "nmField": "SHNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "USHPID": {
+          "table": "SA_SHPID",
+          "keyField": "SHPID",
+          "nmField": "SHNM",
+          "note": "SAL047 變更貨運方式（B303Base Dq1GetText USHPID，查表同 SHPID）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "CONTNTP": {
+          "table": "SA_CONTNTP",
+          "keyField": "CONTNTP",
+          "nmField": "TPNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "CRVNDERID": {
+          "table": "PO_VNDRM",
+          "keyField": "VNDERID",
+          "nmField": "VNDRNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "VNDERID": {
+          "table": "PO_VNDRM",
+          "keyField": "VNDERID",
+          "nmField": "VNDRNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "VNDERIDSTNM": {
+          "table": "PO_VNDRM",
+          "keyField": "VNDERID",
+          "nmField": "STNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "PKINFTP": {
+          "table": "SA_PKINFTP",
+          "keyField": "PKINFTP",
+          "nmField": "TPNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "SALETP": {
+          "table": "SA_SALETP",
+          "keyField": "SALETP",
+          "nmField": "TPNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "BKTP": {
+          "table": "SA_BKTP",
+          "keyField": "BKTP",
+          "nmField": "TPNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "NATIONID": {
+          "table": "SA_CUNTRY",
+          "keyField": "NATIONID",
+          "nmField": "NATIONNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "AREAID": {
+          "table": "SA_AREA",
+          "keyField": "AREAID",
+          "nmField": "AREANM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "CSTGPID": {
+          "table": "SA_CUSTGP",
+          "keyField": "CSTGPID",
+          "nmField": "GPNM",
+          "note": "客戶別→名稱（B210 MqyGetText CSTGPID）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "CITYID": {
+          "table": "SA_CITY",
+          "keyField": "CITYID",
+          "nmField": "CITYNM",
+          "note": "城市→名稱（B210 MqyGetText CITYID）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "DEVID": {
+          "table": "SA_DEVID",
+          "keyField": "DEVID",
+          "nmField": "DEVNM",
+          "note": "開發型態→名稱（B210 MqyGetText DEVID）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "BUSSID": {
+          "table": "SA_BUSSTP",
+          "keyField": "BUSSID",
+          "nmField": "BUSSNM",
+          "note": "營業型態→名稱（SA_BUSSTP）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "SA_OPTTP": {
+          "table": "SA_OPTTP",
+          "keyField": "OPTTP",
+          "nmField": "TPNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "ORDTP": {
+          "table": "SA_ORDTP",
+          "keyField": "ORDTP",
+          "nmField": "TPNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "CLOSETP": {
+          "table": "SA_CLOSETP",
+          "keyField": "CLOSETP",
+          "nmField": "CLOSENM",
+          "note": "SAL059（B406）結案原因→名稱",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "WBS": {
+          "table": "PM_WBS",
+          "keyField": "WBS",
+          "nmField": "WBSNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "CUSTMER": {
+          "table": "SA_CSTM",
+          "keyField": "CUSTMER",
+          "nmField": "CUSTNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "CUSTMERSTNM": {
+          "table": "SA_CSTM",
+          "keyField": "CUSTMER",
+          "nmField": "STNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "PKCUSTMER": {
+          "table": "SA_CSTM",
+          "keyField": "CUSTMER",
+          "nmField": "STNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "PAYCUSTMER": {
+          "table": "SA_CSTM",
+          "keyField": "CUSTMER",
+          "nmField": "STNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "SALITMTP": {
+          "table": "MM_ITMTP",
+          "keyField": "ITMTP",
+          "nmField": "TPNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "CNSN": {
+          "table": "MM_ITMMASTR",
+          "keyField": "NSN",
+          "nmField": "ITMCNM",
+          "note": "包材料號→料品名稱（SAL027 Dq2）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "CGID": {
+          "table": "SS_COMP",
+          "keyField": "CGID",
+          "nmField": "STNM",
+          "note": "公司別→簡稱（SAL033 B137 CGID）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "RCONTP": {
+          "table": "SA_CONTP",
+          "keyField": "CONTP",
+          "nmField": "TPNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "ACONTP": {
+          "table": "SA_CONTP",
+          "keyField": "CONTP",
+          "nmField": "TPNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "EMPKYID": {
+          "table": "HR_EMPLYM",
+          "keyField": "EMPLYID",
+          "nmField": "EMPLYNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "CUSTNO": {
+          "table": "SA_NCSTM",
+          "keyField": "CUSTNO",
+          "nmField": "STNM",
+          "note": "開發客戶→簡稱（B216 MqyGetText CUSTNO）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "APLYID": {
+          "table": "SA_APLYID",
+          "keyField": "APLYID",
+          "nmField": "APLYNM",
+          "note": "申請人→名稱",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "IMPTTP": {
+          "table": "SA_IMPTTP",
+          "keyField": "IMPTTP",
+          "nmField": "IMPTNM",
+          "note": "重要度→名稱",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "LOSTTP": {
+          "table": "SA_LOSTTP",
+          "keyField": "LOSTTP",
+          "nmField": "LOSTNM",
+          "note": "失單原因→名稱",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "GRPID": {
+          "table": "SS_SPECGRP",
+          "keyField": "GRPID",
+          "nmField": "GRPNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "SPECID": {
+          "table": "SS_SPECID",
+          "keyField": "SPECID",
+          "nmField": "SPECNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "CONSIGNEE": {
+          "table": "SA_CSTM",
+          "keyField": "CUSTMER",
+          "nmField": "STNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "SHPVNDR": {
+          "table": "PO_VNDRM",
+          "keyField": "VNDERID",
+          "nmField": "STNM",
+          "note": "航運公司",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INSUVNDR": {
+          "table": "PO_VNDRM",
+          "keyField": "VNDERID",
+          "nmField": "STNM",
+          "note": "保險公司",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "PVNDERID": {
+          "table": "PO_VNDRM",
+          "keyField": "VNDERID",
+          "nmField": "STNM",
+          "note": "貨運行",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "CVNDERID": {
+          "table": "PO_VNDRM",
+          "keyField": "VNDERID",
+          "nmField": "STNM",
+          "note": "報關行",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "ISTKNO": {
+          "table": "MM_STKLOCM",
+          "keyField": "STKNO",
+          "nmField": "STKNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "DRVID": {
+          "table": "SA_DRIVER",
+          "keyField": "DRVID",
+          "nmField": "DRVNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "PROD": {
+          "table": "SA_PROD",
+          "keyField": "PROD",
+          "nmField": "PRODNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INVID": {
+          "table": "AC_INVID",
+          "keyField": "INVID",
+          "nmField": "INVNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "ORDERCRD_VNDERID": {
+          "table": "PO_VNDRM",
+          "keyField": "VNDERID",
+          "nmField": "STNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "PJCUSTMER": {
+          "table": "SA_PJCSTM",
+          "keyField": "PJCUSTMER",
+          "nmField": "PJCUSTNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        }
+      },
+      "STK": {
+        "DEPID": {
+          "table": "HR_DEP",
+          "keyField": "DEPID",
+          "nmField": "DEPNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "SDEPID": {
+          "table": "HR_DEP",
+          "keyField": "DEPID",
+          "nmField": "DEPNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "PDEPID": {
+          "table": "HR_DEP",
+          "keyField": "DEPID",
+          "nmField": "DEPNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "FDEPID": {
+          "table": "HR_DEP",
+          "keyField": "DEPID",
+          "nmField": "DEPNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "SALEREP": {
+          "table": "SA_SALER",
+          "keyField": "SALEREP",
+          "nmField": "SARPNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "CUR": {
+          "table": "SS_CUR",
+          "keyField": "CUR",
+          "nmField": "CURNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "SPRCID": {
+          "table": "SA_PRCID",
+          "keyField": "SPRCID",
+          "nmField": "SPRCNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "PAYTERM": {
+          "table": "SA_PAYTERM",
+          "keyField": "PAYTERM",
+          "nmField": "CTERMNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "FEMPLYID": {
+          "table": "HR_EMPLYM",
+          "keyField": "EMPLYID",
+          "nmField": "EMPLYNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "AEMPLYID": {
+          "table": "HR_EMPLYM",
+          "keyField": "EMPLYID",
+          "nmField": "EMPLYNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "IEMPLYID": {
+          "table": "HR_EMPLYM",
+          "keyField": "EMPLYID",
+          "nmField": "EMPLYNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "DEMPLYID": {
+          "table": "HR_EMPLYM",
+          "keyField": "EMPLYID",
+          "nmField": "EMPLYNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "CLEMPLYID": {
+          "table": "HR_EMPLYM",
+          "keyField": "EMPLYID",
+          "nmField": "EMPLYNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "PORTID": {
+          "table": "SA_PORT",
+          "keyField": "BPORTID",
+          "nmField": "PORTNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "PJID": {
+          "table": "PM_PRJM",
+          "keyField": "PJID",
+          "nmField": "PJNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "FACTID": {
+          "table": "PP_PLANT",
+          "keyField": "FACTID",
+          "nmField": "FACTNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "TOFACTID": {
+          "table": "PP_PLANT",
+          "keyField": "FACTID",
+          "nmField": "FACTNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "ORGINALID": {
+          "table": "SA_ORIGNAL",
+          "keyField": "ORGINALID",
+          "nmField": "ORGINALNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "INVITPNO": {
+          "table": "AC_INVITP",
+          "keyField": "INVITPNO",
+          "nmField": "INVITYNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "TRDTERM": {
+          "table": "SS_TRDTRM",
+          "keyField": "TRDTERM",
+          "nmField": "TRDNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "PRDTP": {
+          "table": "SA_PRDTP",
+          "keyField": "PRDTP",
+          "nmField": "PRDNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "UNIT": {
+          "table": "SS_UNIT",
+          "keyField": "UNIT",
+          "nmField": "UNITNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "UNIT1": {
+          "table": "SS_UNIT",
+          "keyField": "UNIT",
+          "nmField": "UNITNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "BOMNO": {
+          "table": "PP_BOMTP",
+          "keyField": "BOMNO",
+          "nmField": "BOMNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "PACKID": {
+          "table": "SA_PACK",
+          "keyField": "PACKID",
+          "nmField": "PACKNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "SHPID": {
+          "table": "SA_SHPID",
+          "keyField": "SHPID",
+          "nmField": "SHNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "STKNO": {
+          "table": "MM_STKLOCM",
+          "keyField": "STKNO",
+          "nmField": "STKNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "ISTKNO": {
+          "table": "MM_STKLOCM",
+          "keyField": "STKNO",
+          "nmField": "STKNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "SSTKNO": {
+          "table": "MM_STKLOCM",
+          "keyField": "STKNO",
+          "nmField": "STKNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "ADJID": {
+          "table": "MM_ADJID",
+          "keyField": "ADJID",
+          "nmField": "ADJNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "EMPLYID": {
+          "table": "HR_EMPLYM",
+          "keyField": "EMPLYID",
+          "nmField": "EMPLYNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "SMANAGER": {
+          "table": "HR_EMPLYM",
+          "keyField": "EMPLYID",
+          "nmField": "EMPLYNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "VNDERID": {
+          "table": "PO_VNDRM",
+          "keyField": "VNDERID",
+          "nmField": "STNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "SLOCATION": {
+          "table": "MM_STKLOCD",
+          "keyField": "SLOCATION",
+          "nmField": "REMARK",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "ACNTID": {
+          "table": "AC_ACNTID",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "ACNTID1": {
+          "table": "AC_ACNTID",
+          "keyField": "ACNTID",
+          "nmField": "ACNTNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "TAKEID": {
+          "table": "MM_TAKEID",
+          "keyField": "TAKEID",
+          "nmField": "TAKENM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "NSN": {
+          "table": "MM_ITMMASTR",
+          "keyField": "NSN",
+          "nmField": "ITMCNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "SNSN": {
+          "table": "MM_ITMMASTR",
+          "keyField": "NSN",
+          "nmField": "ITMCNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "ENSN": {
+          "table": "MM_ITMMASTR",
+          "keyField": "NSN",
+          "nmField": "ITMCNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "CUSTMER": {
+          "table": "SA_CSTM",
+          "keyField": "CUSTMER",
+          "nmField": "STNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "WRC": {
+          "table": "PP_WRCID",
+          "keyField": "WRC",
+          "nmField": "WRCNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "CNDID": {
+          "table": "MM_CNDID",
+          "keyField": "CNDID",
+          "nmField": "CNDNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "STKITMTP": {
+          "table": "MM_ITMTP",
+          "keyField": "ITMTP",
+          "nmField": "TPNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "CSTITMTP": {
+          "table": "MM_ITMTP",
+          "keyField": "ITMTP",
+          "nmField": "TPNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "BUYITMTP": {
+          "table": "MM_ITMTP",
+          "keyField": "ITMTP",
+          "nmField": "TPNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "RCVID": {
+          "table": "MM_RCVID",
+          "keyField": "RCVID",
+          "nmField": "RCVNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "BKTP": {
+          "table": "PO_BKTP",
+          "keyField": "BKTP",
+          "nmField": "TPNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "BKTP_SA": {
+          "table": "SA_BKTP",
+          "keyField": "BKTP",
+          "nmField": "TPNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "ROUTID": {
+          "table": "PP_MROUTID",
+          "keyField": "ROUTID",
+          "nmField": "ROUTNM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        },
+        "USEID": {
+          "table": "MM_USEID",
+          "keyField": "USEID",
+          "nmField": "USENM",
+          "note": "",
+          "file": "DisplayTransformService.STK.cs"
+        }
+      }
+    }
+  },
+  "func_reuse": {
+    "ERPFunc.cs": {
+      "methods": [
+        "AprvViewAsync",
+        "CalPlncsdtAsync",
+        "CalcMasterMnyAsync",
+        "CalcNTMNYAsync",
+        "CalcuMnyTaxAsync",
+        "CalcuMnyTaxResult",
+        "CheckCreditAsync",
+        "CheckOffDayAsync",
+        "CheckUnitExistsAsync",
+        "ChkLckFm",
+        "CtrlFiDataCtrlAsync",
+        "CustNsnGetNsnAsync",
+        "CustNsnGetNsnResult",
+        "DigitTransferAsync",
+        "GetAPUnitAsync",
+        "GetAPUnitResult",
+        "GetCURDotAsync",
+        "GetCURIDAsync",
+        "GetCURNMAsync",
+        "GetCustNsnAsync",
+        "GetCustNsnResult",
+        "GetDays",
+        "GetFactidOffDayAsync",
+        "GetMRateAsync",
+        "GetNTDotAsync",
+        "GetNUpAsync",
+        "GetNUpResult",
+        "GetPKVolAsync",
+        "GetPKVolResult",
+        "GetPOREMARK",
+        "GetTaxRateAsync",
+        "GetVUpAsync",
+        "LckFmItem",
+        "ProAprv1ConfirmAsync",
+        "ProcLckFm",
+        "SALGetCRMNYAsync",
+        "SALGetCRMNYResult",
+        "SALGetUpAsync",
+        "SALGetYRQTYAsync",
+        "SALGetYRQTYResult",
+        "SetLckFm",
+        "UpdateCreditAsync",
+        "UpdateLCKQTYAsync",
+        "UpdateOrderdCfopqtyAsync",
+        "UpdateSaArplnOpmnyAsync"
+      ],
+      "records": [
+        "CalcuMnyTaxResult",
+        "CustNsnGetNsnResult",
+        "GetAPUnitResult",
+        "GetCustNsnResult",
+        "GetNUpResult",
+        "GetPKVolResult",
+        "LckFmItem",
+        "SALGetCRMNYResult",
+        "SALGetYRQTYResult"
+      ]
+    },
+    "MPS_GFunc.cs": {
+      "methods": [
+        "CalWorkTimeNAsync",
+        "CalWorkTimeNResult",
+        "Calc_VWOM_MNYAsync",
+        "GetMOPRIAsync",
+        "GetNDDTAsync",
+        "GetPIDTAsync"
+      ],
+      "records": [
+        "CalWorkTimeNResult"
+      ]
+    },
+    "MPSFunc.cs": {
+      "methods": [
+        "ChargeT05Async",
+        "ChargeT07Async",
+        "ExpBomAsync",
+        "ExpBomDAsync",
+        "ExpMBomT05Async",
+        "ExpMBomT07Async",
+        "ExpMinfddMrpAsync",
+        "ExpMrpAsync",
+        "ExpOrderDdAsync",
+        "ExpOrderDdRow",
+        "ExpPlnddMrpAsync",
+        "ExpSimulBomAsync",
+        "GetLeadTimeAsync",
+        "GetPsDuStkAsync",
+        "InsMpsLogAsync",
+        "MinfDdChangeRow",
+        "MrpExpRow",
+        "PlnDdChangeRow",
+        "SwitchMrpAsync",
+        "T01Async",
+        "T02Async",
+        "T02Row",
+        "T03Async",
+        "T03Row",
+        "T05Async",
+        "T05Row",
+        "T06Async",
+        "T06Row",
+        "T07Async",
+        "T07ODAsync",
+        "T07OdRow",
+        "T07Row",
+        "UpdateMoBomAsync",
+        "UpdatePpMpsFromPpMpslogAsync"
+      ],
+      "records": [
+        "ExpOrderDdRow",
+        "MinfDdChangeRow",
+        "MrpExpRow",
+        "PlnDdChangeRow",
+        "T02Row",
+        "T03Row",
+        "T05Row",
+        "T06Row",
+        "T07OdRow",
+        "T07Row"
+      ]
+    },
+    "MPSFunc1.cs": {
+      "methods": [
+        "ExpMoBomAsync",
+        "T08Async",
+        "T08Row",
+        "T09Async",
+        "T09Row",
+        "T10Async",
+        "T10Row",
+        "T11Async",
+        "T11Row",
+        "T12Async",
+        "T12Row",
+        "T13Async",
+        "T13Row",
+        "T14Async",
+        "T14Row",
+        "T15Async",
+        "T15Row",
+        "T16Async",
+        "T16Row",
+        "T20Async",
+        "T20Row",
+        "T21Async",
+        "T21Row",
+        "T22Async",
+        "T22Row",
+        "T23Async",
+        "T23Row",
+        "T24Async",
+        "T24Row",
+        "T25Async",
+        "T25Row",
+        "T25_1Async",
+        "T25_1Row",
+        "T26Async",
+        "T26Row",
+        "T27Async",
+        "T27Row",
+        "T28Async",
+        "T28Row",
+        "T29Async",
+        "T29Row",
+        "T30Async",
+        "T30Row",
+        "T31Async",
+        "T31Row1",
+        "T31Row2",
+        "T32Async",
+        "T32Dq1Row",
+        "T32Dq2Row",
+        "T32_01Async",
+        "T32_01Row",
+        "T32_02Async",
+        "T32_02Row",
+        "T32_03Async",
+        "T32_03Row",
+        "T32_04Async",
+        "T32_04Row",
+        "T32_05Async",
+        "T32_05Row",
+        "T32_06Async",
+        "T32_06Row",
+        "T33Async",
+        "T33Row1",
+        "T33Row2",
+        "T34Async",
+        "T34Row",
+        "T35Async",
+        "T35Row",
+        "T36Async",
+        "T36Row",
+        "T37Async",
+        "T37Row",
+        "T38Async",
+        "T38Row",
+        "T40Async",
+        "T40Row",
+        "T41Async",
+        "T41Row",
+        "T42Async",
+        "T42Row",
+        "T43Async",
+        "T43Row",
+        "T44Async",
+        "T44CAsync",
+        "T44CRow",
+        "T44Row",
+        "T45Async",
+        "T45Row",
+        "T45_1Async",
+        "T45_2Async",
+        "T46Async",
+        "T46Row",
+        "T46_1Async",
+        "T46_2Async",
+        "T47Async",
+        "T47DqRow",
+        "T47_1Async",
+        "T47_2Async",
+        "T47_3Async",
+        "T48Async",
+        "T48Row",
+        "T49Async",
+        "T49Row",
+        "T50Async",
+        "T50Row",
+        "T51Async",
+        "T51Row",
+        "T52Async",
+        "T52Row",
+        "T53Async",
+        "T53Row"
+      ],
+      "records": [
+        "T08Row",
+        "T09Row",
+        "T10Row",
+        "T11Row",
+        "T12Row",
+        "T13Row",
+        "T14Row",
+        "T15Row",
+        "T16Row",
+        "T20Row",
+        "T21Row",
+        "T22Row",
+        "T23Row",
+        "T24Row",
+        "T25Row",
+        "T25_1Row",
+        "T26Row",
+        "T27Row",
+        "T28Row",
+        "T29Row",
+        "T30Row",
+        "T31Row1",
+        "T31Row2",
+        "T32Dq1Row",
+        "T32Dq2Row",
+        "T32_01Row",
+        "T32_02Row",
+        "T32_03Row",
+        "T32_04Row",
+        "T32_05Row",
+        "T32_06Row",
+        "T33Row1",
+        "T33Row2",
+        "T34Row",
+        "T35Row",
+        "T36Row",
+        "T37Row",
+        "T38Row",
+        "T40Row",
+        "T41Row",
+        "T42Row",
+        "T43Row",
+        "T44CRow",
+        "T44Row",
+        "T45Row",
+        "T46Row",
+        "T47DqRow",
+        "T48Row",
+        "T49Row",
+        "T50Row",
+        "T51Row",
+        "T52Row",
+        "T53Row"
+      ]
+    },
+    "MPSFunc2.cs": {
+      "methods": [
+        "AppendPP_MOD2Async",
+        "AppendPP_MOD3DAsync",
+        "AppendWO_VOAsync",
+        "AppendWoVoMod1Row",
+        "AppendWoVoMod3Row",
+        "AppendWoVoMqyRow",
+        "BkfInvAsync",
+        "CancelActionMOAsync",
+        "CloseActionMOAsync",
+        "CloseActionMoRow",
+        "CloseActionWoAsync",
+        "ConfirmActionMOAsync",
+        "ReAlocQtyAsync",
+        "UnPPACPTMAsync",
+        "UnPPVMRMAsync",
+        "UnPPWMRMAsync",
+        "UnPPWMWMAsync",
+        "UnVOSTKRECAsync",
+        "UnWOSTKRECAsync",
+        "UpdatePP_MOD2_OSTKNO_OSLOCAsync",
+        "UpdateUSEDQTYAsync",
+        "VoInStkAsync",
+        "WipMProcAsync",
+        "WipMProcDto",
+        "WipsProcAsync",
+        "WoInStkAsync"
+      ],
+      "records": [
+        "AppendWoVoMod1Row",
+        "AppendWoVoMod3Row",
+        "AppendWoVoMqyRow",
+        "CloseActionMoRow",
+        "WipMProcDto"
+      ]
+    },
+    "MPSFunc3.cs": {
+      "methods": [
+        "AllRoutLeadTmRow",
+        "CrpChkAsync",
+        "CrpPostAsync",
+        "CrpPrepAsync",
+        "CrpPrepRow",
+        "CrpProcAsync",
+        "GetAllRoutLeadTmAsync",
+        "GetLeadTmPrdTmAsync"
+      ],
+      "records": [
+        "AllRoutLeadTmRow",
+        "CrpPrepRow"
+      ]
+    },
+    "MPSFuncP.cs": {
+      "methods": [
+        "ChargeT07PjAsync",
+        "ExpMBomPrjAsync",
+        "ExpOrderDdPjAsync",
+        "ExpOrderDdPjRow",
+        "ExpPrjdd2MrpAsync",
+        "PrjDd2ChangeRow",
+        "T12PjAsync",
+        "T12PjRow",
+        "T13PjAsync",
+        "T13PjRow",
+        "T14PjAsync",
+        "T14PjRow",
+        "T31PjAsync",
+        "T32PjAsync"
+      ],
+      "records": [
+        "ExpOrderDdPjRow",
+        "PrjDd2ChangeRow",
+        "T12PjRow",
+        "T13PjRow",
+        "T14PjRow"
+      ]
+    },
+    "SALFunc.cs": {
+      "methods": [
+        "CalcCriSumNyAsync",
+        "CalcSA_INVMAsync",
+        "Check_CARRIERTPAsync",
+        "CsProcAsync",
+        "UpdateArPrrMnyAsync",
+        "UpdateBkdQtyAsync",
+        "UpdateDodQtyAsync",
+        "UpdateOrdQtyAsync",
+        "UpdateRfmnoMnyAsync",
+        "UpdateSaldQtyAsync",
+        "UpdateSaleNoMnyAsync",
+        "UpdateSdNoMnyAsync",
+        "Update_TOORDAsync"
+      ],
+      "records": []
+    },
+    "STKFunc.cs": {
+      "methods": [
+        "AdjDetailDto",
+        "AdjLotDto",
+        "AdjMasterDto",
+        "AlocChkAsync",
+        "AlocChkDto",
+        "AlocProcAsync",
+        "AlocProcDto",
+        "CheckNullAutoAsync",
+        "ChkAllAsync",
+        "ChkAllAutoAsync",
+        "ChkNSTKYMAsync",
+        "ChkStkMnAsync",
+        "FIFOProcAsync",
+        "GetDefInACNTIDAsync",
+        "GetDefOutACNTIDAsync",
+        "GetDefautFACTIDAsync",
+        "GetMaxRECITMAsync",
+        "GetSLOCAsync",
+        "GetSTKFACTIDAsync",
+        "GetTFMNOFieldAsync",
+        "GetTFMNOSTNMAsync",
+        "IMPAPPTRFAsync",
+        "IMPAPPTRFCFAsync",
+        "InsertMM_STKAsync",
+        "LotValidateAsync",
+        "MVDetailDto",
+        "MVLotDto",
+        "MVMasterDto",
+        "MVOutDetailDto",
+        "MWDetailDto",
+        "MWLotDto",
+        "MWMasterDto",
+        "MWOutDetailDto",
+        "PPMWMCFAsync",
+        "R01DetailDto",
+        "R01LotDto",
+        "R01MasterDto",
+        "R01_ChkAsync",
+        "R01_InAsync",
+        "R02DetailDto",
+        "R02LotDto",
+        "R02MasterDto",
+        "R02_ChkAsync",
+        "R02_InAsync",
+        "R03DetailDto",
+        "R03LotDto",
+        "R03MasterDto",
+        "R03_ChkAsync",
+        "R03_InAsync",
+        "R04DetailDto",
+        "R04LotDto",
+        "R04MasterDto",
+        "R04_ChkAsync",
+        "R04_InAsync",
+        "R05DetailDto",
+        "R05LotDto",
+        "R05MasterDto",
+        "R05_ChkAsync",
+        "R05_InAsync",
+        "R06DetailDto",
+        "R06LotDto",
+        "R06MasterDto",
+        "R06_ChkAsync",
+        "R06_InAsync",
+        "R07DetailDto",
+        "R07LotDto",
+        "R07MasterDto",
+        "R07_ChkAsync",
+        "R07_InAsync",
+        "R08DetailDto",
+        "R08LotDto",
+        "R08MasterDto",
+        "R08_ChkAsync",
+        "R08_InAsync",
+        "R09_ChkAsync",
+        "R09_InAsync",
+        "R0C_InAsync",
+        "R10_ChkAsync",
+        "R10_InAsync",
+        "R11_ChkAsync",
+        "R11_InAsync",
+        "R13_ChkAsync",
+        "R13_InAsync",
+        "R14DetailDto",
+        "R14LotDto",
+        "R14MasterDto",
+        "R14_ChkAsync",
+        "R14_InAsync",
+        "R15_ChkAsync",
+        "R15_InAsync",
+        "R18_ChkAsync",
+        "R18_InAsync",
+        "R19_ChkAsync",
+        "R19_InAsync",
+        "R20_ChkAsync",
+        "R20_InAsync",
+        "SaveToFilesAsync",
+        "SmProcNAsync",
+        "T03_ConfirmAsync",
+        "T04_CloseAsync",
+        "T04_CloseChkAsync",
+        "ToSTLAsync",
+        "UpdateCSTAsync",
+        "UpdateMM_EXGMNAsync",
+        "UpdateMM_ITMSTKAsync",
+        "W01DetailDto",
+        "W01LotDto",
+        "W01MasterDto",
+        "W01_ChkAsync",
+        "W01_OutAsync",
+        "W02DetailDto",
+        "W02LotDto",
+        "W02MasterDto",
+        "W02_ChkAsync",
+        "W02_OutAsync",
+        "W03DetailDto",
+        "W03LotDto",
+        "W03MasterDto",
+        "W03_ChkAsync",
+        "W03_OutAsync",
+        "W05DetailDto",
+        "W05LotDto",
+        "W05MasterDto",
+        "W05_ChkAsync",
+        "W05_OutAsync",
+        "W06DetailDto",
+        "W06LotDto",
+        "W06MasterDto",
+        "W06_ChkAsync",
+        "W06_OutAsync",
+        "W07DetailDto",
+        "W07LotDto",
+        "W07MasterDto",
+        "W07_ChkAsync",
+        "W07_OutAsync",
+        "W08DetailDto",
+        "W08LotDto",
+        "W08MasterDto",
+        "W08_ChkAsync",
+        "W08_OutAsync",
+        "W09R09DetailDto",
+        "W09R09LotDto",
+        "W09R09MasterDto",
+        "W09_ChkAsync",
+        "W09_OutAsync",
+        "W0C_OutAsync",
+        "W10_ChkAsync",
+        "W10_OutAsync",
+        "W11_ChkAsync",
+        "W11_OutAsync",
+        "W13_ChkAsync",
+        "W13_OutAsync",
+        "W14_ChkAsync",
+        "W14_OutAsync",
+        "W18_ChkAsync",
+        "W18_OutAsync",
+        "WDRDetailDto",
+        "WDRMasterDto",
+        "WDWDetailDto",
+        "WDWMasterDto",
+        "WaitToSTLAsync"
+      ],
+      "records": [
+        "AdjDetailDto",
+        "AdjLotDto",
+        "AdjMasterDto",
+        "AlocChkDto",
+        "AlocProcDto",
+        "MVDetailDto",
+        "MVLotDto",
+        "MVMasterDto",
+        "MVOutDetailDto",
+        "MWDetailDto",
+        "MWLotDto",
+        "MWMasterDto",
+        "MWOutDetailDto",
+        "R01DetailDto",
+        "R01LotDto",
+        "R01MasterDto",
+        "R02DetailDto",
+        "R02LotDto",
+        "R02MasterDto",
+        "R03DetailDto",
+        "R03LotDto",
+        "R03MasterDto",
+        "R04DetailDto",
+        "R04LotDto",
+        "R04MasterDto",
+        "R05DetailDto",
+        "R05LotDto",
+        "R05MasterDto",
+        "R06DetailDto",
+        "R06LotDto",
+        "R06MasterDto",
+        "R07DetailDto",
+        "R07LotDto",
+        "R07MasterDto",
+        "R08DetailDto",
+        "R08LotDto",
+        "R08MasterDto",
+        "R14DetailDto",
+        "R14LotDto",
+        "R14MasterDto",
+        "W01DetailDto",
+        "W01LotDto",
+        "W01MasterDto",
+        "W02DetailDto",
+        "W02LotDto",
+        "W02MasterDto",
+        "W03DetailDto",
+        "W03LotDto",
+        "W03MasterDto",
+        "W05DetailDto",
+        "W05LotDto",
+        "W05MasterDto",
+        "W06DetailDto",
+        "W06LotDto",
+        "W06MasterDto",
+        "W07DetailDto",
+        "W07LotDto",
+        "W07MasterDto",
+        "W08DetailDto",
+        "W08LotDto",
+        "W08MasterDto",
+        "W09R09DetailDto",
+        "W09R09LotDto",
+        "W09R09MasterDto",
+        "WDRDetailDto",
+        "WDRMasterDto",
+        "WDWDetailDto",
+        "WDWMasterDto"
+      ]
+    }
+  },
+  "existing_pages": [
+    "SAL001",
+    "SAL002",
+    "SAL003",
+    "SAL004",
+    "SAL005",
+    "SAL006",
+    "SAL007",
+    "SAL008",
+    "SAL009",
+    "SAL010",
+    "SAL011",
+    "SAL012",
+    "SAL013",
+    "SAL014",
+    "SAL015",
+    "SAL016",
+    "SAL017",
+    "SAL017A",
+    "SAL018",
+    "SAL019",
+    "SAL020",
+    "SAL021",
+    "SAL021A",
+    "SAL022",
+    "SAL022A",
+    "SAL023",
+    "SAL024",
+    "SAL025",
+    "SAL025A",
+    "SAL025Import",
+    "SAL026",
+    "SAL027",
+    "SAL027A",
+    "SAL028",
+    "SAL029",
+    "SAL029A",
+    "SAL030",
+    "SAL031",
+    "SAL032",
+    "SAL033",
+    "SAL034",
+    "SAL035",
+    "SAL036",
+    "SAL037",
+    "SAL038",
+    "SAL039",
+    "SAL040",
+    "SAL041",
+    "SAL041A",
+    "SAL042",
+    "SAL042B",
+    "SAL043",
+    "SAL043A",
+    "SAL044",
+    "SAL045",
+    "SAL045A",
+    "SAL046",
+    "SAL046A",
+    "SAL046B",
+    "SAL046D",
+    "SAL046Import",
+    "SAL047",
+    "SAL047A",
+    "SAL047B",
+    "SAL047C",
+    "SAL047D",
+    "SAL047_SPEC",
+    "SAL048",
+    "SAL049",
+    "SAL050",
+    "SAL050Import",
+    "SAL051",
+    "SAL051A",
+    "SAL051B",
+    "SAL052",
+    "SAL053",
+    "SAL054",
+    "SAL055",
+    "SAL055A",
+    "SAL055C",
+    "SAL055D",
+    "SAL055Import",
+    "SAL055_SPEC",
+    "SAL056",
+    "SAL056A",
+    "SAL056B",
+    "SAL056Import",
+    "SAL057",
+    "SAL057A",
+    "SAL057B",
+    "SAL057C",
+    "SAL057_SPEC",
+    "SAL058",
+    "SAL059",
+    "SAL060",
+    "SAL061",
+    "SAL062",
+    "SAL063",
+    "SAL064",
+    "SAL065",
+    "SAL066",
+    "SAL067",
+    "SAL067A",
+    "SAL069",
+    "SAL069B",
+    "SAL070",
+    "SAL071",
+    "SAL072",
+    "SAL073",
+    "SAL074",
+    "SAL075",
+    "SAL076",
+    "SAL077",
+    "SAL078",
+    "SAL079",
+    "SAL080",
+    "SAL081",
+    "SAL082",
+    "SAL082E",
+    "SAL083",
+    "SAL084",
+    "SAL085",
+    "SAL086",
+    "SAL095",
+    "SAL096",
+    "SAL097",
+    "SAL098",
+    "SAL099",
+    "SAL100",
+    "SALHomePage"
+  ]
+}
