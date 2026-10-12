@@ -1,0 +1,12 @@
+{
+  "name": "samuel-workflow",
+  "owner": { "name": "samuel772014" },
+  "description": "samuel772014 的 Claude Code 個人工作流程 mod",
+  "plugins": [
+    {
+      "name": "agent-progress-bar",
+      "source": "./mods/agent-progress-bar",
+      "description": "Agent 進度條：使用 Agent / subagent 時，在輸入框上方以彩色進度條顯示完成情況（可收合／展開）"
+    }
+  ]
+}
