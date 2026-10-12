@@ -6,7 +6,7 @@
     {
       "name": "agent-progress-bar",
       "source": "./mods/agent-progress-bar",
-      "description": "Agent 進度條：使用 Agent / subagent 時，在輸入框上方以彩色進度條顯示完成情況（可收合／展開）"
+      "description": "背景作業進度條：Agent、背景指令、Monitor 等背景作業以彩色進度條顯示完成與執行中數量（可收合／展開）"
     },
     {
       "name": "attention-alert",

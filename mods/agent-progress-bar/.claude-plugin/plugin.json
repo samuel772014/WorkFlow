@@ -1,7 +1,7 @@
 {
   "name": "agent-progress-bar",
-  "version": "1.0.0",
-  "description": "Agent 進度條：使用 Agent / subagent 時，在輸入框上方以彩色進度條顯示完成情況（可收合／展開）",
+  "version": "1.1.0",
+  "description": "背景作業進度條：Agent、背景指令、Monitor 等背景作業以彩色進度條顯示完成與執行中數量（可收合／展開）",
   "author": { "name": "samuel772014" },
   "types": "./types/index.d.ts"
 }
