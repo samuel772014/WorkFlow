@@ -7,6 +7,11 @@
       "name": "agent-progress-bar",
       "source": "./mods/agent-progress-bar",
       "description": "Agent 進度條：使用 Agent / subagent 時，在輸入框上方以彩色進度條顯示完成情況（可收合／展開）"
+    },
+    {
+      "name": "attention-alert",
+      "source": "./mods/attention-alert",
+      "description": "注意提醒：工作完成或需要裁決／核准時，在輸入框上方顯示醒目色塊並推播到手機"
     }
   ]
 }

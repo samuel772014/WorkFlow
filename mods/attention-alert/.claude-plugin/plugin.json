@@ -1,0 +1,7 @@
+{
+  "name": "attention-alert",
+  "version": "1.0.0",
+  "description": "注意提醒：工作完成或需要裁決／核准時，在輸入框上方顯示醒目色塊並推播到手機",
+  "author": { "name": "samuel772014" },
+  "types": "./types/index.d.ts"
+}
