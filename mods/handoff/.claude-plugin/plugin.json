@@ -1,0 +1,1 @@
+{ "name": "handoff", "version": "0.1.0", "description": "context 達 70% 時於輸入框上方出現交接按鈕：產生交接摘要存檔、清空對話、以摘要開新對話", "types": "./types/index.d.ts" }

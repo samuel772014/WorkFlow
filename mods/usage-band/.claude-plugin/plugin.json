@@ -1,0 +1,1 @@
+{ "name": "usage-band", "version": "0.1.1", "description": "輸入框上方細帶：context、五小時額度(含重置時間)、本週額度用量，超過 80% 變紅", "types": "./types/index.d.ts" }

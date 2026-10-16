@@ -12,6 +12,16 @@
       "name": "attention-alert",
       "source": "./mods/attention-alert",
       "description": "注意提醒：工作完成或需要裁決／核准時，在輸入框上方顯示醒目色塊並推播到手機"
+    },
+    {
+      "name": "usage-band",
+      "source": "./mods/usage-band",
+      "description": "用量細帶：輸入框上方顯示 context、五小時額度（含重置時間）與本週額度用量，超過 80% 變紅"
+    },
+    {
+      "name": "handoff",
+      "source": "./mods/handoff",
+      "description": "交接按鈕：context 達 70% 時出現，按下寫交接摘要存檔、清空對話、以摘要開新對話"
     }
   ]
 }
