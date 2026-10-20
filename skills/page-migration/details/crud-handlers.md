@@ -13,24 +13,34 @@
 - 明細：`{form}_{Dq}_Add/Update/Delete`。
 - 連動查詢：`{form}_Get{來源}_{目標}`（見 `details/field-change.md`）。
 
+### GraphQL 呼叫參數
+- `ApiCallAsync`：直接傳真實欄位，不包 `["arg"]=JSON`。
+- 多列／巢狀存檔：`MultipleDataApiCallAsync` + `["arg"]=JSON`（例見 `details/attachment.md`）。
+- 特殊字元（`"` `'` 換行）：前端 `iksUiFunc.GraphQlArg.Encode`、後端 `Modules.FUNC.GraphQlArg.DecodeArg`。
+
 ### 存檔（Save）
 1. **前端先驗必填**：缺必填欄位 → `MsgBox` 警告、`return`，不送後端。
 2. **重複鍵雙重檢查**（新增時）：
    - **第一道（前端）**：存檔前先呼叫後端 pre-check（`KeyExists`）確認主鍵不存在。
    - **第二道（後端）**：mutation 內 `Add/Update` 時再 `KeyExistsAsync` 確認一次（防競態、防直接呼叫繞過前端）。
-   - **不依賴 DB 錯誤碼/例外型別**判重（要導 Oracle，記憶 `db_agnostic_no_errorcode`）。
+   - **不依賴 DB 錯誤碼/例外型別**判重（要導 Oracle）。
 3. **主檔明細一起存 → 用 transaction**：主表 + 各明細在**同一交易**內，全部成功才 `commit`，任一失敗整筆 rollback（原子性）。
 4. 依 `pageStatus` 決定走 `Add` 或 `Update` endpoint。
 5. 成功 → 關窗、`pageStatus="query"`、`btnControl()`、Grid `Rebind()`。失敗 → `MsgBox` 顯示 `result.message`。
+6. **文字欄空字串一律寫 NULL（後端 INSERT/UPDATE 參數）**：前端 `S(x)=x??""`、`ODS`/`A78Str` 類 helper 會把 null 變 `""`；ERP 多個 Y/N 或代碼欄有 CHECK 約束（如 `SA_SALEM.TOTAR`、`SA_SALED.BKPBK`）不收 `''` → 存檔失敗。規則：
+   - 寫入參數：`string.IsNullOrEmpty(v) ? null : v`（Delphi 未指定欄位＝NULL；來源 NULL 照搬仍為 NULL）。
+   - 新增列有 Delphi `NewRecord` 預設值的欄（如 BKPBK/ISSTK='N'、CONSIGNMENT='N'）：**空字串視同未帶 → 套預設**，不可因「鍵存在」就略過預設。
+   - 查詢 WHERE 參數不在此限（`=@X` 以 `''` 或 NULL 結果不同時依原語意）。
+   - 範例：SAL078 `sal078_SaveDoc`（表頭 ISd/S、Dq1SaveStr、Yn 預設）、ImportOrd `ODN`、SAL078A `A78Nul`；SAL079 test-fix-null。
 
 ### 刪除（Delete）
 - 先 `MsgBox.Confirm`（有明細要提示「同時刪除所有明細」）。
-- 刪除與存檔**分開**：刪除直接呼叫 API，不走 Save（記憶 `incell_delete_direct`）。
+- 刪除與存檔**分開**：刪除直接呼叫 API，不走 Save（見 details/grid-incell.md 通則5）。
 - 成功 → 清 `MqySelect`、Grid `Rebind()`。
 
 ### 查詢（Query）
 - 組 `WhereParameters` 字典（只放有值的條件）→ Grid `Rebind()`。
-- SQL 端維持 `SELECT *`，只精簡前端欄位（記憶 `keep_select_star`）。
+- SQL 端維持 `SELECT *`，只精簡前端欄位。
 
 ---
 
@@ -44,11 +54,11 @@
 |----|-----------|------|------|------|
 | 拷貝 | `Add` | 不鎖（存檔才建） | ✅ 唯讀=false | clone 該列、**清主鍵**、當新增預填 |
 | 修改 | `Edit` | `StartEdit` 上鎖 | ✅ 唯讀=false | clone 該列進表單、主鍵唯讀 |
-| 詳細資料 | `View` | 不鎖 | ✅ 唯讀=true | 重用編輯 Window 唯讀開（記憶 `detail_readonly_reuse_edit`）|
+| 詳細資料 | `View` | 不鎖 | ✅ 唯讀=true | 重用編輯 Window 唯讀開（見 details/edit-window.md 通則5）|
 
 **眉角**
 - **clone 一份**再進表單，勿直接綁 grid 列物件（否則取消時 grid 顯示已被改動）。
-- **鎖定**走業務 API（`StartEdit`/`CancelEdit`），存檔/狀態變更由 Service 端嵌入解鎖（記憶 `doc_lock_pattern`）。只有「修改」需要在開窗前上鎖；拷貝/詳細不鎖。
+- **鎖定**走業務 API（`StartEdit`/`CancelEdit`），存檔/狀態變更由 Service 端嵌入解鎖（見下方「單據鎖定」）。只有「修改」需要在開窗前上鎖；拷貝/詳細不鎖。
 
 ```csharp
 private async Task OnRowCopy(GridCommandEventArgs args) {
@@ -75,8 +85,8 @@ private async Task OnRowDetail(GridCommandEventArgs args) {
 }
 ```
 
-> `刪除` 鈕 → 直接呼叫上節 `Delete()`（記憶 `incell_delete_direct`，與存檔分開）。
-> `Clone()` 用淺拷貝即可（`current = new Mqy { ... }` 或 `MemberwiseClone` 包裝），DTO 欄位以繼承 EF Model 為準（記憶 `dto_inherit_model`）。
+> `刪除` 鈕 → 直接呼叫上節 `Delete()`（見 details/grid-incell.md 通則5，與存檔分開）。
+> `Clone()` 用淺拷貝即可（`current = new Mqy { ... }` 或 `MemberwiseClone` 包裝），DTO 欄位以繼承 EF Model 為準（見 details/dto-display.md 通則1）。
 
 ---
 
@@ -134,13 +144,24 @@ private async Task Delete() {
 
 ---
 
-## B101 對應
-- `MqyValidate`(NoValidate 外鍵存在) → 存檔前必填/外鍵驗證。
-- `TfmEditForm` 內建存檔 → `_M_Add/_M_Update`；主鍵 SALEREP 重複走雙重 KeyExists。
-- 刪除主檔連帶 Dq1 明細 → Confirm 提示 + 後端 transaction 一起刪。
-- `MqyNewRecord` 設 `STATUS='A'` → `Add()` 時預設。
+## 單據鎖定（SS_LCKFM；對應 Delphi B301Base.MqyBeforeEdit / MqyAfterPost / CCButtonClick）
+
+**前端不感知鎖定，只呼叫業務語意 API**：
+| 動作 | API | Service 內 |
+|---|---|---|
+| 修改鈕 | `{form}_StartEdit` | `ChkLckFm`（A 查 + B 鎖） |
+| 取消鈕 | `{form}_CancelEdit` | `ProcLckFm` C 解鎖 |
+| 存檔成功 | `{form}_Save` | Save 內嵌 `ProcLckFm` C |
+| 狀態變更（確認/作廢/取消確認…） | 各自 mutation | DB 交易外 `ProcLckFm` A→B 上鎖、`finally` C 解鎖（實例 SAL067 CF/CC/CR） |
+
+- 一律用 `IKSERPAPI/Modules/FUNC/ERPFunc.cs`：`ERPFunc.SetLckFm(fmId, fmNo, usr)`（static，回 `LckFmRecord`）；`ChkLckFm`/`ProcLckFm` 為 instance 方法 → `new ERPFunc(_iksDbFunc)`。勿用舊 `IksDbFunc` 版。
+- `FMID`：查 `SS_FMCODE.FMID`（報價單 SA_QUOTM＝`B1`、出貨單＝`B7`…）。
+- `USR`：前端帶登入者 `EmplyId`（`details/page-shell.md`），勿寫死 `"00001"`；B 鎖與 C 解須同一 USR。
+
+## 後端分層（Query / Mutation 共用 Service、Repository）
+- 新 Mutation 只加薄 `Resolvers/{MOD}/{FORM}Mutation.cs`（只委派），方法追加在**既有** `{MOD}Service.{FORM}.cs` / `{MOD}Repository.{FORM}.cs` partial，不另建 Service/Repository 檔。
 
 ## 指路
 - 連動/計算 → `details/field-change.md`
 - DTO/存檔欄位 → `details/dto-display.md`
-- 後端 mutation 建法 → 記憶 `mutation_pattern`（Query/Mutation 共用 Service，薄 Resolver）
+- 後端 mutation 建法 → 本檔「後端分層」

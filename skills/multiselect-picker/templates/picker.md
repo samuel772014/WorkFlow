@@ -25,18 +25,6 @@
 
 <div style="display:flex; flex-direction:column; height:100%; padding:8px; gap:8px; box-sizing:border-box; overflow-y:auto;">
 
-    @* ── 篩選區（TODO：依實體加欄位；控件見 details/selection 無關，控件選擇同 page-migration）── *@
-    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:8px 12px; align-items:center; flex-shrink:0;
-                border:1px solid #e5e7eb; border-radius:6px; padding:8px;">
-        <div style="display:flex; align-items:center; gap:6px;">
-            <span style="font-weight:600; white-space:nowrap;">關鍵字</span>
-            @* TODO：文字用 IksTextBox；代碼用 IksCodeComboBox；多欄過濾用 EditPick *@
-            <TelerikTextBox @bind-Value="_keyword" Width="180px" />
-        </div>
-        <div style="display:flex; align-items:center; justify-content:center;">
-            <button type="button" class="iks-fbtn" @onclick="OnQuery" title="查詢"><i class="ti ti-search"></i><span>查詢</span></button>
-        </div>
-    </div>
 
     @* ── 清單（多選）── *@
     <div style="flex-shrink:0; display:flex; flex-direction:column;">
@@ -52,9 +40,28 @@
                      ShowSelectAll="false"
                      ShowFrameHeader="true"
                      HeaderButtons="@_headerButtons"
+                     ShowFilterButton="true" OnFilterClick="ToggleFilterPopup"
+                     FilterAnchorClass="xxxpicker-filter-popup-target"
                      OnRowClick="OnRowClick"
                      Height="360px" />
     </div>
+
+    @* ── 篩選：一律進階篩選 Popup（Grid 外部；page-migration/details/popup-filter.md）── *@
+    <TelerikPopup @ref="@FilterPopupRef" AnchorSelector=".xxxpicker-filter-popup-target" Width="430px">
+        <div class="iks-filter-popup">
+            <div class="iks-filter-popup-head"><span class="iks-filter-popup-title">進階篩選</span>
+                <button class="iks-fbtn ghost iks-filter-close" @onclick="ToggleFilterPopup" title="關閉篩選"><i class="ti ti-circle-x"></i></button></div>
+            <div class="iks-filter-popup-body"><div class="iks-filter-grid">
+                <div class="iks-filter-row"><IksLabel Key="Lb_F_KEYWORD" DefaultText="關鍵字" />
+                    @* TODO：文字用 IksTextBox；代碼用 IksCodeComboBox；多欄過濾用 EditPick（控件選擇同 page-migration） *@
+                    <IksTextBox @ref="_keywordCtrl" @bind-Value="_keyword" /></div>
+            </div></div>
+            <div class="iks-filter-popup-actions">
+                <button class="iks-fbtn" @onclick="ClearFilter"><i class="ti ti-trash"></i>清除</button>
+                <button class="iks-fbtn primary" @onclick="OnQuery"><i class="ti ti-search"></i>查詢</button>
+            </div>
+        </div>
+    </TelerikPopup>
 
     @* ── 底部按鈕 ── *@
     <div style="display:flex; justify-content:flex-end; gap:8px; flex-shrink:0;
@@ -77,6 +84,11 @@
     private string _url => iksService.ApiUrl;
 
     private string _keyword = "";                 // TODO：篩選條件依實體擴充
+    private IksTextBox<string>? _keywordCtrl;     // 每個篩選控件一個 @ref，清除時 Reset()
+    private TelerikPopup? FilterPopupRef;
+    private bool _filterPopupVisible = false;
+    private void ToggleFilterPopup() { _filterPopupVisible = !_filterPopupVisible; if (_filterPopupVisible) FilterPopupRef?.Show(); else FilterPopupRef?.Hide(); }
+    private void ClearFilter() { _keyword = ""; _keywordCtrl?.Reset(); }   // 只清非必填；批次帶值欄不清（details/selection）
 
     private IksGrid_vnq<PickRow>? _grid;
     private List<PickRow> _data = new();
@@ -108,7 +120,7 @@
         if (firstRender) await LoadAsync();
     }
 
-    private async Task OnQuery() => await LoadAsync();
+    private async Task OnQuery() { await LoadAsync(); _filterPopupVisible = false; FilterPopupRef?.Hide(); }
 
     // 查詢資料（TODO：接後端）→ 填 _data → 綁定
     private async Task LoadAsync()

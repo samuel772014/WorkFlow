@@ -18,7 +18,7 @@
 
 ## ⚠️ 核心陷阱：清除要各控件 `@ref` + `Reset()`
 
-**`TelerikPopup` 開啟後內容固定渲染**，父頁 `StateHasChanged()` / `FilterPopupRef.Refresh()` **都不重繪 popup 子樹** → `Filter = new()` 後畫面殘留（記憶 `telerikpopup_refresh`）。
+**`TelerikPopup` 開啟後內容固定渲染**，父頁 `StateHasChanged()` / `FilterPopupRef.Refresh()` **都不重繪 popup 子樹** → `Filter = new()` 後畫面殘留。
 
 **唯一可靠解**：popup 內**每個篩選控件**都 `@ref`，清除時呼叫各自 `Reset()`（控件內部對自身 `StateHasChanged`，繞過不重繪）。
 
@@ -46,6 +46,36 @@ private void ClearFilter()
     // 只清非必填欄位；必填欄位（Required=true）保留現值不動，勿用 Filter = new()
     Filter.{{非必填F}} = null;   _{{非必填f}}Ctrl?.Reset();   // 每個「非必填」欄位補一行
     // 必填欄位與其控件一律不碰
+}
+```
+
+---
+
+## ⚠️ 有預設篩選值 → 首次查詢前就要帶進條件字典
+
+篩選有預設值（單況預設 `OP`、日期區間預設本月/今日、年度預設今年…）時，**開頁第一次查詢就必須帶這些條件**。
+
+- **陷阱**：`IksGrid_Virtual` 首次 render 時 Telerik 就自動觸發 `OnRead`。若條件字典（`{{parameter}}`）此時還是空的，第一次查詢就**沒帶預設條件**（例：開頁查出全部單況）。在 `OnAfterRenderAsync(firstRender)` 才組條件、再 `Rebind()` 也救不了：換新字典要等父頁 re-render 才傳進 grid，兩次查詢會互相競速。
+- **作法**（比照 SAL079 `SetMqyFilter`）：
+  1. 預設值在**欄位宣告或 `OnInitializedAsync` 第一個 `await` 之前**就設好（例如 `firstRender` 才算的日期預設，改搬到這裡）。
+  2. 同樣在 `OnInitializedAsync` 第一個 `await` 之前呼叫 `SetFilter()`，把預設條件**原地寫進** grid 綁的那個字典（`Clear()` 後逐鍵寫入，不換新字典）。
+  3. **移除** `firstRender` 的主檔 `Rebind()`：首次 render 的自動查詢已經帶到預設條件（欄位設定由元件 `OnInitializedAsync` 載入，不靠這次 `Rebind`）。
+  4. `Query` 也用 `SetFilter()` 原地更新後再 `Rebind()`，不要 `{{parameter}} = BuildFilter()` 換新字典。
+- 篩選**沒有**預設值的頁面，首查本來就是不帶條件，不受此限。
+
+```csharp
+protected override async Task OnInitializedAsync()
+{
+    // 預設篩選須在首次 render 前備妥：grid 首次 render 即自動 OnRead
+    SetFilter();
+    await base.OnInitializedAsync();
+}
+
+// 原地更新 grid 持有的同一個字典：換新字典要等父頁 re-render 才傳進 grid
+private void SetFilter()
+{
+    {{parameter}}.Clear();
+    foreach (var kv in BuildFilter()) {{parameter}}[kv.Key] = kv.Value;
 }
 ```
 

@@ -1,6 +1,7 @@
-# 版型 B 完整範本：查詢型 inline 篩選（SAL046D 藍本）
+# 版型 B 完整範本：查詢型（篩選 Popup）
 
-> 工具列 Query + inline `iks-filter-grid`（≤2 欄）+ Grid + 套用/取消。
+> Grid frame-header 篩選鈕 → 進階篩選 Popup（清除/查詢）+ Grid + 套用/取消。篩選一律 Popup（`page-migration/details/popup-filter.md`），不用 inline 篩選。
+> 註：藍本 SAL046D 目前仍是舊 inline 寫法，已列入待改清單。
 
 ```razor
 @using Telerik.Blazor
@@ -16,25 +17,8 @@
 
 <div class="iks-edit-window" style="padding:8px;">
 
-    @* ── 工具列（查詢，固定頂部）── *@
-    <div class="toolbar toolbar-field" style="flex-shrink:0;">
-        <Toolbar OnAction="HandleToolbar">
-            <ToolbarGroup>
-                <ToolbarButton Action="Query" FontIcon="ti ti-search" Title="查詢">查詢</ToolbarButton>
-            </ToolbarGroup>
-        </Toolbar>
-    </div>
-
-    @* ── 可捲動內容（篩選 + Grid）── *@
+    @* ── 可捲動內容（Grid；篩選走 frame-header 篩選鈕 → Popup）── *@
     <div class="iks-edit-body" style="display:flex; flex-direction:column; gap:6px;">
-
-    @* ── Inline 篩選（≤2 欄時用此；否則改版型 C 進階篩選 Popup）── *@
-    <div class="iks-filter-grid">
-        <div class="iks-filter-row">
-            <IksLabel Key="Lb_F_{{F}}" DefaultText="{{中文}}" />
-            <{{控件}} @bind-Value="_filter.{{F}}" ... />
-        </div>
-    </div>
 
     @* ── Grid（成長填滿）── *@
     <div style="flex:1 1 auto; min-height:0;">
@@ -49,12 +33,30 @@
                      ShowSelectAll="false"
                      ShowFrameHeader="true"
                      HeaderButtons="@_headerButtons"
+                     ShowFilterButton="true" OnFilterClick="ToggleFilterPopup"
+                     FilterAnchorClass="sal0xxb-filter-popup-target"
                      Height="100%">
             <LeftColumnsTool></LeftColumnsTool>
         </IksGrid_vnq>
     </div>
 
     </div>@* /iks-edit-body *@
+
+    @* ── 進階篩選 Popup（Grid 外部；清除只清非必填、各控件 @ref+Reset()）→ page-migration/details/popup-filter.md ── *@
+    <TelerikPopup @ref="@FilterPopupRef" AnchorSelector=".sal0xxb-filter-popup-target" Width="{{組數×430}}px">
+        <div class="iks-filter-popup">
+            <div class="iks-filter-popup-head"><span class="iks-filter-popup-title">進階篩選</span>
+                <button class="iks-fbtn ghost iks-filter-close" @onclick="ToggleFilterPopup" title="關閉篩選"><i class="ti ti-circle-x"></i></button></div>
+            <div class="iks-filter-popup-body"><div class="iks-filter-grid">
+                <div class="iks-filter-row"><IksLabel Key="Lb_F_{{F}}" DefaultText="{{中文}}" />
+                    <{{控件}} @ref="_{{f}}Ctrl" @bind-Value="_filter.{{F}}" ... /></div>
+            </div></div>
+            <div class="iks-filter-popup-actions">
+                <button class="iks-fbtn" @onclick="ClearFilter"><i class="ti ti-trash"></i>清除</button>
+                <button class="iks-fbtn primary" @onclick="ApplyFilter"><i class="ti ti-search"></i>查詢</button>
+            </div>
+        </div>
+    </TelerikPopup>
 
     @* ── 底部動作列（套用/確認 + 取消，固定底部）── *@
     <div class="iks-edit-actions">
@@ -73,10 +75,7 @@
 
     protected override string FomId => "SAL0XX";
 
-    public class TItem : IKSERPSHARE.Models.{{EFModel}}, IDisplayResolvable
-    {
-        public bool _Selected { get; set; }
-    }
+    public class TItem : IKSERPSHARE.Models.{{EFModel}}, IDisplayResolvable { }   // 勾選狀態不放 DTO，一律讀 _grid.SelectedItems
 
     private MessageBox MsgBox = default!;
     private string _url => iksService.ApiUrl;
@@ -86,6 +85,11 @@
     // ── 篩選 ────────────────────────────────────────────────────────────────
     private class MyFilter { public string? {{F}} { get; set; } }
     private MyFilter _filter = new();
+    private TelerikPopup? FilterPopupRef;
+    private bool _filterPopupVisible = false;
+    private void ToggleFilterPopup() { _filterPopupVisible = !_filterPopupVisible; if (_filterPopupVisible) FilterPopupRef?.Show(); else FilterPopupRef?.Hide(); }
+    private void ClearFilter() { _filter.{{非必填F}} = null; _{{f}}Ctrl?.Reset(); }   // 只清非必填
+    private async Task ApplyFilter() { await Query(); _filterPopupVisible = false; FilterPopupRef?.Hide(); }
 
     // ── 全選 / 取消全選（HeaderButtons，放在 frameheader）────────────────────
     private List<IksGridHeaderButton> _headerButtons => new()
@@ -93,8 +97,8 @@
         new() { Text = "全選",     Icon = "ti ti-checks", OnClick = SelectAllAsync },
         new() { Text = "取消全選", Icon = "ti ti-square",  OnClick = ClearSelectAsync },
     };
-    private Task SelectAllAsync()  { _rows.ForEach(r => r._Selected = true);  _grid?.Rebind(_rows); return Task.CompletedTask; }
-    private Task ClearSelectAsync(){ _rows.ForEach(r => r._Selected = false); _grid?.Rebind(_rows); return Task.CompletedTask; }
+    private async Task SelectAllAsync()  { if (_grid != null) await _grid.SelectAll(); }        // 元件方法，對整份清單生效
+    private async Task ClearSelectAsync(){ if (_grid != null) await _grid.ClearSelection(); }
 
     // ── Columns ──────────────────────────────────────────────────────────────
     private Dictionary<string, GridColumnConfig> _columns => new()
@@ -107,12 +111,6 @@
     {
         await base.OnAfterRenderAsync(firstRender);
         if (firstRender) { await Query(); await InvokeAsync(StateHasChanged); }
-    }
-
-    // ── 工具列 ───────────────────────────────────────────────────────────────
-    private async Task HandleToolbar(string action)
-    {
-        if (action == "Query") await Query();
     }
 
     // ── 查詢 ──────────────────────────────────────────────────────────────────
@@ -129,7 +127,7 @@
     // ── 確認帶回 ──────────────────────────────────────────────────────────────
     private async Task ConfirmAsync()
     {
-        var selected = _rows.Where(r => r._Selected).ToList();
+        var selected = _grid?.SelectedItems.ToList() ?? new List<TItem>();   // 勾選來源＝元件 SelectedItems（同 SAL046D）
         if (!selected.Any()) { await MsgBox.Show("請先勾選資料", "{{功能}}", "warning"); return; }
         await OnConfirm.InvokeAsync(selected);
     }

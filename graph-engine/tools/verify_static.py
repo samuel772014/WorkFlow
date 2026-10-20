@@ -14,6 +14,16 @@ acceptance-criteria.md 覆核（見 nodes/static-verify.md）。
                        （找不到→跨模組查，建議正確模組；⚠同名≠同義，只建議不斷定）
   C4 display-wired     grid 綁 *_Display 欄，必有對應 *_Display 屬性且掛 transform
                        （運算式計算屬性 `=> ... switch` 視為已接，不誤報）
+  C5 css-class-defined razor 用到的 iks-* class 必須在 IKSERPUI 的 *.css 有定義
+                       （擋「自創 class」：如 SAL074-076 iks-single-frame 無定義 → grid 無 Y 捲軸）
+  C6 combobox-module   <IksCodeComboBox> 的 comboBoxCode 必須登記在所傳 module 的
+                       ComboBoxService _handlers<MODULE>（擋 SAL073 ShpidComboBox 傳 SAL 實為 COMMON → 下拉無資料）
+  C7 textbox           自閉合 <TelerikTextBox .../> 應改 IksTextBox（帶 SuffixTemplate 例外）   （CNV-03）
+  C8 hardcoded-emply   寫死 "00001" 當登入者，應用 EmplyId                                        （CNV-05）
+  C9 status-check      status == 0 / > 0 判成敗，成功一律 status == 1（PLAUSIBLE）                （CNV-07）
+  C10 hardcoded-url    string _url = "…" 寫死，應用 IksPageBase 提供值                             （CNV-08）
+  C11 deprecated       OnBeforeEdit、整表鎖欄樣板、JsonConverter(NewtonsoftDecimalToIntConverter)  （CNV-10）
+  C12 loading-msgbox   遮罩內 await MsgBox／遮罩未解除（呼叫 review-engine/tools/lint_loading.py）  （CNV-13）
 
 用法（repo 根執行）：
   py .claude/SelfFolder/graph-engine/tools/verify_static.py SAL084
@@ -21,6 +31,7 @@ acceptance-criteria.md 覆核（見 nodes/static-verify.md）。
 輸出：{"code","pass":bool,"findings":[{category,verdict,area,line,summary}]}
 verdict: CONFIRMED(機器可確定) | PLAUSIBLE(需人覆核)
 """
+import importlib.util
 import io
 import json
 import re
@@ -35,6 +46,29 @@ except Exception:
 ROOT = Path(__file__).resolve().parents[4]
 INDEX = Path(__file__).resolve().parents[1] / "index.json"
 PAGES = ROOT / "IKSERPPRJ" / "IKSERPUI" / "Components" / "Pages" / "SAL"
+UI_ROOT = ROOT / "IKSERPPRJ" / "IKSERPUI"
+COMBO_DIR = ROOT / "IKSERPPRJ" / "IKSERPAPI" / "Modules" / "COMMON"
+
+
+def css_defined_classes() -> set:
+    """IKSERPUI 下所有自有 *.css（排除 bin/obj/lib）中定義的 iks-* class。"""
+    out = set()
+    for f in UI_ROOT.rglob("*.css"):
+        if any(p in ("bin", "obj", "lib") for p in f.parts):
+            continue
+        out |= set(re.findall(r"\.(iks-[\w-]+)", f.read_text(encoding="utf-8", errors="replace")))
+    return out
+
+
+def combobox_registry() -> dict:
+    """解析 ComboBoxService*.cs 的 _handlers<MODULE> 字典 → {MODULE: {code,...}}。"""
+    reg = {}
+    for f in COMBO_DIR.glob("ComboBoxService*.cs"):
+        src = f.read_text(encoding="utf-8", errors="replace")
+        for m in re.finditer(r"_handlers(\w+)\s*=\s*new\(\)\s*\{(.*?)\n\s*\};", src, re.S):
+            reg.setdefault(m.group(1).upper(), set()).update(
+                re.findall(r'^\s*\["(\w+)"\]\s*=', m.group(2), re.M))
+    return reg
 
 
 def norm(s: str) -> str:
@@ -128,6 +162,75 @@ def main(argv):
             findings.append({"category": "display-wired", "verdict": "PLAUSIBLE", "area": "grid",
                              "line": lineno(text, gm.start()),
                              "summary": f'{fld} 屬性未掛 [DisplayTransform*]，恐顯示空/原碼'})
+
+    # ---- C5 iks-* class 必須在 css 有定義（擋自創 class）----
+    defined = css_defined_classes()
+    seen = set()
+    for cm in re.finditer(r'\b[cC]lass\s*=\s*"([^"]*)"', text):
+        for cls in re.findall(r"\biks-[\w-]+", cm.group(1)):
+            if cls in defined or cls in seen:
+                continue
+            seen.add(cls)
+            findings.append({"category": "css-class-undefined", "verdict": "CONFIRMED", "area": "layout",
+                             "line": lineno(text, cm.start()),
+                             "summary": f'class "{cls}" 在 IKSERPUI *.css 無定義（自創 class？版面不會生效'
+                                        + ('；單一清單頁外框應用 iks-master-frame > iks-master-grid' if 'frame' in cls else '')
+                                        + '）'})
+
+    # ---- C6 IksCodeComboBox 的 comboBoxCode 必須登記在所傳 module ----
+    reg = combobox_registry()
+    for tm in re.finditer(r"<IksCodeComboBox\b(.*?)/>", text, re.S):
+        attrs = tm.group(1)
+        cm_ = re.search(r'comboBoxCode\s*=\s*"(\w+)"', attrs)
+        mm_ = re.search(r'\bmodule\s*=\s*"(\w+)"', attrs)
+        if not cm_:
+            continue                                                # 動態 code（@變數）略過
+        ccode = cm_.group(1)
+        if not mm_:
+            findings.append({"category": "combobox-module", "verdict": "PLAUSIBLE", "area": "input",
+                             "line": lineno(text, tm.start()),
+                             "summary": f'IksCodeComboBox {ccode} 未傳 module（必傳路由）'})
+            continue
+        mod = mm_.group(1).upper()
+        if ccode in reg.get(mod, set()):
+            continue
+        where = [m for m, codes in reg.items() if ccode in codes]
+        hint = f"；實際登記於 {', '.join(where)} → 改 module=\"{where[0]}\"" if where else "；各模組皆未登記 → 需補 ComboBoxService"
+        findings.append({"category": "combobox-module", "verdict": "CONFIRMED", "area": "input",
+                         "line": lineno(text, tm.start()),
+                         "summary": f'comboBoxCode "{ccode}" 未登記在 module="{mm_.group(1)}"（下拉會無資料）{hint}'})
+
+    # ---- C7–C11 跨區通用慣例（review-conventions 可機械判的子集）----
+    conv_rules = [
+        ("textbox", "CONFIRMED", "input",
+         r"<TelerikTextBox\b(?:(?!SuffixTemplate)[^>])*/>", "自閉合 TelerikTextBox → 改用 IksTextBox"),
+        ("hardcoded-emply", "CONFIRMED", "shell",
+         r'"00001"', '寫死 "00001" 當登入者 → 用 EmplyId（OnInitializedAsync await base 之後）'),
+        ("status-check", "PLAUSIBLE", "logic",
+         r"\bstatus\s*(?:==\s*0|>\s*0)\b", "以 status == 0 / > 0 判成敗 → 成功一律 status == 1（2 需確認、3 部分成功）"),
+        ("hardcoded-url", "CONFIRMED", "shell",
+         r'string\s+_url\s*=\s*"', "寫死 _url → 用 IksPageBase 提供值"),
+        ("deprecated", "CONFIRMED", "grid",
+         r"\b(?:OnBeforeEdit|LockDqGridColumns|UnlockDqGridColumns|ApplyDqLock|SetDqColumnsLocked)\b",
+         "已淘汰寫法（OnBeforeEdit／整表鎖欄樣板）→ 全域閘門 EnterEdit/ExitEdit＋靜態 Editable=false"),
+        ("deprecated", "CONFIRMED", "dto",
+         r"JsonConverter\s*\(\s*typeof\s*\(\s*NewtonsoftDecimalToIntConverter",
+         "已淘汰 [JsonProperty]＋Converter 的 _Int → get/set 包裝 base（dto-display.md）"),
+    ]
+    for cat, verdict, area, pat, msg in conv_rules:
+        for m in re.finditer(pat, text):
+            findings.append({"category": cat, "verdict": verdict, "area": area,
+                             "line": lineno(text, m.start()), "summary": msg})
+
+    # ---- C12 遮罩內 await 訊息框／遮罩未解除（重用 lint_loading.scan）----
+    lint_path = Path(__file__).resolve().parents[2] / "review-engine" / "tools" / "lint_loading.py"
+    if lint_path.exists():
+        spec = importlib.util.spec_from_file_location("lint_loading", lint_path)
+        lint = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(lint)
+        for ln, kind, src in lint.scan(razor):
+            findings.append({"category": kind, "verdict": "CONFIRMED", "area": "shell", "line": ln,
+                             "summary": f"{kind}：{src[:80]}（遮罩蓋住訊息框→畫面卡死；見 page-shell.md）"})
 
     result = {"code": code, "pass": len(findings) == 0, "findings": findings}
     indent = 2 if "--pretty" in argv else None

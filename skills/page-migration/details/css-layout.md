@@ -1,7 +1,7 @@
 # 詳細規則：J. 畫面控件排版（CSS Grid，取代 TelerikGridLayout）
 
 > 骨架指標來源：`templates/*` J 區。
-> **CSS 一律進 `wwwroot/app.css`**，勿散落頁面 `<style>`（記憶 `shared_css_appcss`；IksPageBase 無法放 style）。
+> **CSS 一律進 `wwwroot/app.css`**，勿散落頁面 `<style>`（；IksPageBase 無法放 style）。
 > 來源：舊 skill `css-grid-layout` 彙整。
 
 ---
@@ -41,6 +41,21 @@
 | `RowSpan` | 移除，改全寬 `grid-column: 1 / -1` |
 
 > pair 數換算：原 ColumnSpan 欄數 ÷ 2（label+input 各 1 欄）。
+
+## 版面 class 只用既有定義（禁止自創）
+- 頁面用到的 `iks-*` class **必須已在 `wwwroot/app.css`（或元件 .razor.css）有定義**；寫之前先 grep app.css 確認，不得憑印象/類推命名。
+  未定義的 class 不會報錯、只是**靜默不生效**（SAL074–076 用了不存在的 `iks-single-frame` → 外框無高度、grid 無 Y 軸捲軸）。
+- 真的需要新樣式 → 先把 class 加進 app.css（共用樣式集中），再於頁面使用。
+- **單一清單頁（單檔維護、唯讀查詢）主表外框一律**：`<div class="iks-master-frame"><div class="iks-master-grid"> <IksGrid_Virtual … Height="100%" /> </div> …篩選 Popup… </div>`（參 SAL001；`templates/single-file.md` C 區）。
+- GATE1 `verify_static.py` C5 會機器檢查 razor 的 `iks-*` class 是否有定義。
+
+## 明細合計列（Delphi 唯讀 ButtonEdit 金額加總）
+明細 grid 下方放 `.iks-total-bar`（app.css 已定義：`.iks-total-bar`/`.iks-total-cell`/`.iks-total-label`/`.iks-total-value`，含 dark 主題）。值一律後端算、純顯示；主檔清單合計改放 `IksGrid_Virtual` 的 `FrameHeaderExtra`（`details/grid-virtual.md`）。
+```razor
+<div class="iks-total-bar">
+  <span class="iks-total-cell"><span class="iks-total-label">{{合計名}}</span><span class="iks-total-value">@{{_sumX}}.ToString("#,##0.######")</span></span>
+</div>
+```
 
 ## 眉角
 - **`<span>` 內不可放 `<div>`**（span 是 inline）。多元件並排時直接在 span 加 `style="display:flex; gap:4px; align-items:center;"`：

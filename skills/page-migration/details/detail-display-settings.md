@@ -14,7 +14,7 @@
 | 作用範圍 | 改變後端 WHERE 條件，需重新查詢 | 控制 UI 顯示或傳遞動作參數 |
 | 是否需重新查詢 | 是（有「查詢」動作按鈕） | **不需要**（無動作按鈕，勾選即時生效） |
 | Popup 寬度 | 依欄位組數 × 430px | 固定較窄（360px 左右） |
-| AnchorSelector class | `.popup-target` | `.popup-target-detail`（避免衝突） |
+| AnchorSelector class | `.{grid}-filter-popup-target`（`details/popup-filter.md`） | `.popup-target-detail`（避免衝突） |
 
 ---
 
@@ -150,8 +150,8 @@ var payload = new { ..., MOD2 = _mod2 ? "1" : "0", ITEMS = ... };
 
 當頁面同時有「進階篩選」與「明細顯示設定」兩個 Popup 時：
 
-- 進階篩選用 `.popup-target`，明細顯示設定用 `.popup-target-detail`，兩個 class 不重疊
-- 若進階篩選已被搬進 Grid 的 `HeaderButtons`（`Class = "popup-target"`），則 Toolbar 上只需放明細顯示設定按鈕
+- 進階篩選用 `.{grid}-filter-popup-target`，明細顯示設定用 `.popup-target-detail`，兩個 class 不重疊
+- 若進階篩選已被搬進 Grid 的 `HeaderButtons`（`Class = "{grid}-filter-popup-target"`），則 Toolbar 上只需放明細顯示設定按鈕
 - `ToggleFilterPopupAsync()` 需包成 `Task` 版本才能傳給 `HeaderButton.OnClick`（`Func<Task>` 型別）
 
 ---

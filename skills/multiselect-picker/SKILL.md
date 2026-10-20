@@ -1,6 +1,6 @@
 ---
 name: multiselect-picker
-description: 建立 IKSERP Blazor「多選選擇器」(picker) 的流程與規則。當使用者說「建立/做一個選擇器」「多選 picker」「參考 SAL027A 做選擇器」，或要「篩選 → 清單勾選多筆 → 確定帶回」的彈窗時觸發。以 SAL027A 穿梭頁左側結構為藍本（IksGrid_vnq 多選、OnRowClick+Shift 選取、載入遮罩、iks-fbtn、OnConfirm/OnClose）。
+description: 建立 IKSERP Blazor 多選選擇器（篩選→清單勾選多筆→確定帶回的彈窗）的流程與規則，以 SAL027A 為藍本。
 ---
 
 # IKSERP 多選選擇器（MultiSelect Picker）
@@ -24,7 +24,7 @@ description: 建立 IKSERP Blazor「多選選擇器」(picker) 的流程與規�
 > 完整可貼範本見 `templates/picker.md`。核心結構（由上而下）：
 
 1. `@inherits IksPageBase` + `<TelerikLoaderContainer Visible="@IsPageLoading">` 載入遮罩。
-2. **篩選區**（grid 版型 filter；控件依實體：`IksCodeComboBox` / `EditPick` / `IksTextBox`）+ `iks-fbtn` 查詢鈕。
+2. **篩選**：一律 Grid frame-header 篩選鈕 → 進階篩選 Popup（清除/查詢；`page-migration/details/popup-filter.md`），不用 inline 篩選區；控件依實體：`IksCodeComboBox` / `EditPick` / `IksTextBox`。
 3. **`IksGrid_vnq<TItem>`**：`ShowCheckbox="true"` `ShowSelectAll="false"`、`HeaderButtons`=全選/取消、`OnRowClick`=選取。
 4. **底部 `iks-fbtn`**：確定(`primary`)→ `OnConfirm` 回傳選取清單；取消 → `OnClose`。
 

@@ -26,8 +26,8 @@
 
 ## 眉角
 
-- 若欄位「可編輯 combobox」，用 `Field="X_Display"` + `EditorTemplate` 綁 `item.X`（代碼）——view 顯名稱、edit 選代碼。此時 InCell 更新的 `args.Field` 會是 `X_Display`（非 `X`），連動判斷要用它當 key。
+- 若欄位「可編輯 combobox」，字典 key 用 `"X_Display"`、**`Field="X"`（代碼）** + `EditorTemplate` 綁 `item.X`——view 由 grid 自動取 `X_Display` 顯名稱、edit 選代碼。InCell 更新的 `args.Field` 是 `X`，連動判斷用它當 key。⚠ 勿寫 `Field="X_Display"`：vnq OnUpdate 防護依 Field 比對，選新代碼時 `X_Display` 未變 → 更新被吞（2026-10-07 更正）。唯讀欄維持 `Field="X_Display"` 不受影響。
 - 編輯完代碼後 `_Display` 會過期 → 用 `RebindKeepState(_data)` 重新解析（它內部會 re-resolve）。
 - 純選擇器（唯讀）通常不含編輯，只要 DTO 有 `_Display` + 欄位 `Field` 指過去即可。
 
-> 對應記憶：`feedback_dto_inherit_model`、`reference_displaytransform_keycode_alias`。參考頁：SAL027A（PACKID_Display）、SAL025/046。
+> 對應規則：`page-migration/details/dto-display.md`（通則1、通則2）。

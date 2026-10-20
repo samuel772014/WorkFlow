@@ -67,7 +67,7 @@ private async Task NavigateRow(string direction) {
 ## 眉角
 - 導覽順序**依畫面 sort/filter**，不是原始 GridData 順序——排序/篩選後上下筆走的是可見順序。
 - `first`/`last` 也支援（跳首/尾筆），需要時直接傳。
-- master-detail 導覽到新主檔後，記得**重載明細並顯式 `Rebind`**（否則殘留上一筆，`details/grid-incell.md`、記憶 `detail_rebind_add_save`）。
+- master-detail 導覽到新主檔後，記得**重載明細並顯式 `Rebind`**（否則殘留上一筆，`details/grid-incell.md`、見 details/grid-incell.md 通則7）。
 - 與 `OnRowFocus`（鍵盤上下鍵 focus 即選取）互補：清單態用 OnRowFocus，編輯/檢視態用 NavigateRow（`details/grid-virtual.md`）。
 
 ## 指路

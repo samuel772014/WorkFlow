@@ -22,6 +22,11 @@
       "name": "handoff",
       "source": "./mods/handoff",
       "description": "交接按鈕：context 達 70% 時出現，按下寫交接摘要存檔、清空對話、以摘要開新對話"
+    },
+    {
+      "name": "retro-button",
+      "source": "./mods/retro-button",
+      "description": "回顧按鈕：有工作過後在輸入框上方出現，一鍵執行 /retro 回顧此 session"
     }
   ]
 }

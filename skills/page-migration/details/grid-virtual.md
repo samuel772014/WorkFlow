@@ -78,7 +78,7 @@ private async Task OnRowClick(GridRowClickEventArgs args)
 
 **眉角**
 - 讀取選取一律 `_grid.SelectedItems`（穿梭鈕/確認轉單）；勿依賴 `OnSelectedItemsChanged`（無法支援 Shift 區間）。
-- 有 InCell 可編欄時，`SelectedItems` 可能同時殘留「真實列」與「編輯複本」（同 key、不同參考）→ 確認轉單時以 **key 去重**並回 `_data` 取權威列（見 [[reference_vnq_incell_row_selection]]／`grid-incell.md`）。
+- 有 InCell 可編欄時，`SelectedItems` 可能同時殘留「真實列」與「編輯複本」（同 key、不同參考）→ 確認轉單時以 **key 去重**並回 `_data` 取權威列（見 ／`grid-incell.md`）。
 - InCell 改值回顯用 `_grid.GridRef.Rebind()`（**非**元件 `Rebind()`/`RebindKeepState()`，那些會清掉 `@bind-SelectedItems` 的勾選）。
 
 ---
@@ -116,12 +116,7 @@ private async Task OnRowClick(GridRowClickEventArgs args)
 
 **原理**：設 `RowKeyField`（列唯一鍵屬性名）+ `OnRowFocus` 後，**focus（鍵盤上下鍵移動 / 滑鼠）落到某列就回呼該列，不需點擊、不需進編輯**。元件自管 JS 監聽，頁面只給 handler。
 
-**內建機制**（`IksRowFocusTracker` + `wwwroot/js/pageJs.js` 的 `iksRowFocusInterop`）：
-- 每列 render 附 `iks-rk-{鍵值}` class（`OnRowRenderHandler`）；grid 根元素 `tabindex="0"`。
-- JS 監聽 zone 的 `focusin` → 解析 row-key → `[JSInvokable] OnFocus(key)` → 從 `GridData` 找列 → 呼叫 `OnRowFocus`。
-- 生命週期自管：`firstRender` `StartAsync()`、`Dispose` 釋放、**`Rebind()` 內自動 `ResetAsync()`**。
-
-**「focus＝選取」模式**（master-detail 主檔用）：在 `OnRowFocus` handler 內呼叫 `SelectRowAsync(row)` → 高亮 + 觸發 `OnSelect`。這樣**鍵盤上下鍵移動 = 移動即選取即載入明細**（記憶 `grid_focus_masterdetail`）。
+**「focus＝選取」模式**（master-detail 主檔用）：在 `OnRowFocus` handler 內呼叫 `SelectRowAsync(row)` → 高亮 + 觸發 `OnSelect`。這樣**鍵盤上下鍵移動 = 移動即選取即載入明細**。
 
 ```csharp
 private void OnMqySelect(Mqy item) => MqySelect = item;   // OnSelect
@@ -135,7 +130,7 @@ private async Task OnMqyRowFocus(Mqy row) {               // OnRowFocus
 **眉角**
 - **Rebind 去重**：Blazor 依位置重用 `<tr>`，主檔切換/重查後第一個 `<tr>` 仍是同一顆；不清除會讓點回該列被去重吃掉（OnRowFocus 第一次不觸發）→ 元件已在 `Rebind()` 內 `ResetAsync()`，頁面免處理。
 - **handler 內去重比對**：如上，`MqySelect` 與 row 主鍵相同就 return，避免重覆載入明細。
-- **虛擬捲動捲頂重置**：換較少列的查詢條件時，捲到底會卡列補骨架 → `Rebind` 前先 `scrollGridTopNow` 歸零（元件已內建；記憶 `grid_virtual_scroll_reset`；nq/一般捲動無此問題）。
+- **虛擬捲動捲頂重置**：換較少列的查詢條件時，捲到底會卡列補骨架 → `Rebind` 前先 `scrollGridTopNow` 歸零（元件已內建；；nq/一般捲動無此問題）。
 - 頁面**不需**寫 `[JSInvokable]` / 註冊監聽，只給 `RowKeyField` + `OnRowFocus`。
 
 ---
@@ -144,12 +139,13 @@ private async Task OnMqyRowFocus(Mqy row) {               // OnRowFocus
 
 > 統一慣例（參考 SAL021；SAL041/042/044 主明細、SAL045A/043A 彈窗附件已對齊）。目的：**自動欄寬正常 + 不重複綁定**。
 
-**兩種 Rebind 行為（記憶 `vnq_rebind_reload_colwidth`）**
+**兩種 Rebind 行為**
 - **無參數 `Rebind()`**：`firstLoad=true` → 下次 `OnRead` 重跑 `GetTableSetting()`，**重載欄位設定（含 ColWidth 自動欄寬）**。
 - **`Rebind(list)`**：只換 `GridData` 資料，**不重載欄位設定**。
 
 **規則**
 1. **master grid → 無參數 `Rebind()`**（firstRender、查詢 `Query`、CRUD 後）——靠它載欄位設定/自動欄寬。
+   - 例外：**篩選有預設值**的頁面，預設條件在 `OnInitializedAsync` 先寫進條件字典、**不在 firstRender `Rebind()`**（首次 render 的自動查詢就帶到條件），見 `details/popup-filter.md`「有預設篩選值」。
 2. **明細 / 附件 grid → `Rebind(list)`**（只換資料）。
 3. **`OnAfterRenderAsync` firstRender**：綁 master（無參數）＋**各明細一次**（`Rebind(list)`），讓明細首次渲染即取得欄寬：
    ```csharp
@@ -167,14 +163,13 @@ private async Task OnMqyRowFocus(Mqy row) {               // OnRowFocus
 
 ---
 
-## 其他 grid 眉角（彙整記憶，實作必看）
+## 其他 grid 眉角（實作必看）
 
-- **儲存格單行省略**：四個 grid 統一「單行 + `…` 省略、hover 顯示 `title`」——虛擬捲動固定列高必需，否則長字撐高列高會亂。CSS `.iks-grid-ellipsis`（含 `!important`）放 **app.css**，改後 Ctrl+F5。（原記憶 `grid_cell_ellipsis`）
-- **Virtual grid TItem 勿用 `[JsonProperty]` 改名**：`IksGrid_Virtual` 走 `ToList<T>()` 反射比對「屬性名」，不吃 `[JsonProperty]`；若用 JsonProperty 改名，數值欄 `_Int` 會恆為 0。改用 `get/set` 包裝 `base`（數值欄 `_Int`、日期直接綁 `DateTime?`）。（原記憶 `virtual_grid_no_jsonproperty`、`displaytransform_keycode_alias`）
-- **金額欄格式**：`TelerikNumericTextBox` 金額用 `Format="#,##0.######"`（千分位＋小數最多 6 位）；固定 6 位才用 `N6`。（原記憶 `numeric_format_money`）
-- **numeric(10,0) 整數欄**：JSON 轉換統一用 `IKSERPSHARE.Converters.NewtonsoftDecimalToIntConverter`，UI 層勿重複定義；`decimal?` nullable 不標記。（原記憶 `decimal_to_int_converter`）
+- **儲存格單行省略**：四個 grid 統一「單行 + `…` 省略、hover 顯示 `title`」——虛擬捲動固定列高必需，否則長字撐高列高會亂。CSS `.iks-grid-ellipsis`（含 `!important`）放 **app.css**，改後 Ctrl+F5。
+- **Virtual grid TItem 勿用 `[JsonProperty]` 改名**：`IksGrid_Virtual` 走 `ToList<T>()` 反射比對「屬性名」，不吃 `[JsonProperty]`；若用 JsonProperty 改名，數值欄 `_Int` 會恆為 0。改用 `get/set` 包裝 `base`（數值欄 `_Int`、日期直接綁 `DateTime?`）。（見 details/dto-display.md 3b、details/dto-display.md 通則2）
+- **金額欄格式**：`TelerikNumericTextBox` 金額用 `Format="#,##0.######"`（千分位＋小數最多 6 位）；固定 6 位才用 `N6`。
+- **numeric(10,0) 整數欄**：一律 `_Int` get/set 包裝 base（`details/dto-display.md` 3b），不用 `NewtonsoftDecimalToIntConverter` 獨立屬性。
 - **bool 欄鎖定**：`IksGrid_Virtual` 的 bool 欄 `Editable=false` 元件內部會覆蓋、無法真鎖（限制）；`IksGrid_vnq` 可用 `SetColumnEditable`。（→ `details/shared-input-components.md`）
-- **可編輯欄淡紫底 `HighlightEditableCells` 是 `IksGrid_vnq` 專屬**，`IksGrid_Virtual` 沒有此參數（Virtual 是唯讀清單，不需標示）。用法/開啟門檻 → `details/grid-incell.md` 通則 7。
 - **指令欄按鈕走純圖示 + Title**（同工具列 ribbon）：`GridCommandButton` 的 `Icon` 傳 Tabler class 字串（`Icon="@("ti ti-pencil")"`）、`Title` 當提示、**不放文字**；指令欄寬度可縮小（3 鈕≈130px、4 鈕≈170px）。
   - **tooltip 靠 `Title` 的原生 HTML tooltip 即可**（hover 顯示）。**勿**用廣義 `<TelerikTooltip TargetSelector=".k-grid [title]">`——儲存格單行省略會替每格加 `title`，廣義選擇器會掛滿整個 grid。要美化就把選擇器**限縮到指令欄**（如自訂 class）。
 

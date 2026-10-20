@@ -4,7 +4,7 @@
 >   - **主檔批次匯入**（直接寫某主檔 DB）：後端 `{form}_M_CheckImport`（只驗）＋ `{form}_M_Import`（單一交易批次寫 DB）；成功回父頁 `OnImportSuccess` → 重整主 Grid。參考 `SAL041A`（B210a 開發客戶＋聯絡人）、`SAL021A`。
 >   - **明細回填**（不直接寫 DB）：只做 `{form}_M_CheckImport` 驗證，通過後把列 `OnImportConfirmed` **回傳父頁灌進明細 grid**，隨主檔存檔才寫 DB。參考 `SAL025A`（B117 銷售明細）。
 > Delphi 對照：主檔 `B210a.pas`/`B11402a.pas`；明細 `B117`。來源：舊 skill `excel-import`。
-> ⚠️ **for_github 新 UI**：`iks-*` 語意 class、**CSS 一律進 app.css**（記憶 `shared_css_appcss`）；**元件頭列按鈕一律 `ToolbarButton`（圖示為主＋`Title` 提示，不放文字、不用 emoji）**，包一層 `<Toolbar OnAction="HandleToolbar">`，外層掛 `toolbar-field` class 取得 `.iks-toolbar` flex 版型（見 `details/toolbar.md`）。後端流程照舊。
+> ⚠️ **for_github 新 UI**：`iks-*` 語意 class、**CSS 一律進 app.css**（見 details/css-layout.md）；**元件頭列按鈕一律 `ToolbarButton`（圖示為主＋`Title` 提示，不放文字、不用 emoji）**，包一層 `<Toolbar OnAction="HandleToolbar">`，外層掛 `toolbar-field` class 取得 `.iks-toolbar` flex 版型（見 `details/toolbar.md`）。後端流程照舊。
 
 ---
 
@@ -177,7 +177,7 @@ private async Task LoadSheetData(string sheetName) {
 private async Task CheckImportData() {
     if (_previewData.Count == 0) return;
     var result = await gQL.ApiCallAsync(_url, "mutation", "{{form}}_M_CheckImport",
-        new() { ["rows"] = GraphQlArg.Encode(BuildPayload()) });   // Base64 傳列，含 " ' 換行的資料避免 HC0011（記憶 graphql_arg_base64）
+        new() { ["rows"] = GraphQlArg.Encode(BuildPayload()) });   // Base64 傳列，含 " ' 換行的資料避免 HC0011（見 `details/crud-handlers.md「GraphQL 呼叫參數」`）
     _errorList = new();
     if (result?.status == -1 && !string.IsNullOrEmpty(result.message)) {
         _isError = true;
@@ -245,7 +245,7 @@ private async Task ReCheck() { if (_grid != null) await _grid.ExitEditModeAsync(
 
 ### C-3. 預覽列直接刪除（選用；不必重新上傳檔案就移除錯誤/不要的列）
 
-預覽 grid 加「指令」`GridCommandColumn` + 刪除鈕（純圖示＋Title，記憶 `gridcommandbutton_style`）；直接從 `_previewData` 移除（記憶 `incell_delete_direct`），刪後重新驗證更新狀態/錯誤明細/匯入鈕。
+預覽 grid 加「指令」`GridCommandColumn` + 刪除鈕（純圖示＋Title，見 details/grid-incell.md 通則2）；直接從 `_previewData` 移除（見 details/grid-incell.md 通則5），刪後重新驗證更新狀態/錯誤明細/匯入鈕。
 
 ```razor
 <IksGrid_vnq @ref="_grid" TItem="ImportRow" GridData="@_previewData" ... Height="100%">
@@ -309,7 +309,7 @@ public async Task<(int inserted, int skipped)> BatchImport{{Form}}Async(List<Dic
 6. 匯入成功回父頁 `OnImportSuccess` → 父頁 Rebind 主 Grid（主檔模式）；明細模式改回 `OnImportConfirmed(rows)` 灌明細。
 7. Excel 讀取用 `iksExpOffice.LoadExcelWorkbookAsync` → `IksExcelWorkbook`（`SheetNames`/`GetSheet`/`GetHeaderRow`/`GetDataRows`）。
 8. **頭列按鈕一律 `ToolbarButton`（圖示為主＋`Title` 提示）**，包 `<Toolbar OnAction="HandleToolbar">`＋外層 `toolbar-field`；不放文字、不用 emoji、不用滿版 inline style（見 `details/toolbar.md`）。
-9. **rows 用 Base64**：`iksUiFunc.GraphQlArg.Encode`（前端）＋ `Modules.FUNC.GraphQlArg.DecodeArg`（後端）——客戶名稱/地址含 `" ' 換行` 直送會 HC0011 解析失敗（記憶 `graphql_arg_base64`）。
+9. **rows 用 Base64**：`iksUiFunc.GraphQlArg.Encode`（前端）＋ `Modules.FUNC.GraphQlArg.DecodeArg`（後端）——客戶名稱/地址含 `" ' 換行` 直送會 HC0011 解析失敗（見 `details/crud-handlers.md「GraphQL 呼叫參數」`）。
 10. **可編輯預覽（選用）**：`ImportRow` 用 `Data` 字典＋get/set＋`_rowId`；grid 綁 `OnUpdate` 依 `_rowId` 寫回，**⚠ OnUpdate 內勿呼叫 `ExitEditModeAsync`**（會遞迴 StackOverflow）；「重新檢查/匯入」等動作鈕才先 `ExitEditModeAsync` 提交（見 C-2 與 `details/grid-incell.md`）。
 11. **FK 代碼驗證用現行 schema 的表**，非 Delphi 舊表名（見 F 段警語）。
 12. **預覽列直接刪除（選用）**：「指令」`GridCommandColumn` + 刪除鈕直接從 `_previewData` 移除、重新驗證，不必重傳檔案（見 C-3；實例 `SAL050Import`）。

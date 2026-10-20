@@ -28,6 +28,11 @@
     }
     ```
   - ⚠️ 全域閘門放 `OnAfterRender` 每次渲染同步，不受 `Rebind` 時序影響——這正是**取代**舊「膠囊切換 handler 內 `SetColumnEditable`」的原因：後者若 `RebindAllDetail()` 是 `void`＋未 `await`，你設的 ColKey 鎖會被隨後才跑完的 `Rebind` 蓋掉（實際踩過：SAL044 產品/規格切換後誤可編輯）。閘門法無此問題。
+- **依業務條件切單欄可編性（唯一合法用 `SetColumnEditable` 的情境）**：如 SAL046 依含稅切 UP/TUP、SAL067 依 TP 切 BKREP、SAL082 切金額欄。元件陷阱：
+  - ⚠ **參數名與語意相反**：`SetColumnEditable(Field, isEditable)` 實作是 `ColKey = isEditable`，而 `ColKey=true` 代表**鎖定** → **傳 `true`＝鎖、`false`＝可編**（`IksGrid_vnq.razor` `SetColumnEditable`）。
+  - ⚠ **`Rebind()` 會依 `GridColumnConfig.Editable` 重建 ColKey** → 業務條件鎖要在每次重綁後、及條件欄變動時重套。
+  - ⚠ `ColSetting` 型別須限定 `iksBaseClass`（與 `IKSERPSHARE.Models.ColSetting` 同名，兩者都 import 會 CS0104）。
+- **依「每一列」條件唯讀**（同欄有的列可編、有的不可）→ 不用 `SetColumnEditable`（整欄），改在該欄 EditorTemplate 的 `Enabled` 依列資料判斷（參 SAL067）。
 
 ### 2. 按鈕分位
 - **針對「該列」的功能 → 寫在列指令欄 `GridCommandColumn`**（拷貝/修改/刪除/取消/選配…）。
@@ -35,31 +40,32 @@
 - **列指令鈕一律純圖示 + `Title`**（同工具列 ribbon，與 master 列一致）：`Icon` 傳 Tabler class 字串（`Icon="@("ti ti-pencil")"`）、`Title` 當提示、**不放文字**（勿用 `>拷貝</GridCommandButton>` 內文、勿用 `@FontIcon.X`）。`Command`（Edit/Delete/Cancel）/ `OnClick` 事件維持原樣——明細 InCell 用 `Command="Edit"` 走列內編輯，與 master 開窗的 `OnClick="@OnRowEdit"` 不同是正常的。常用對應：copy=`ti ti-copy`、pencil=`ti ti-pencil`、trash=`ti ti-trash`、cancel=`ti ti-circle-x`、tool=`ti ti-tool`。
 
 ### 3. 新增列（InCell）
-- 用 `ShowAddButton="true"` + `OnAdd`；**「+」AddNewRow 只觸發 `OnAdd`、不觸發 `OnCreate`** → `uState = UState.Insert` 必須寫在 `OnAdd`（記憶 `incell_ustate_onadd`）。
+- 用 `ShowAddButton="true"` + `OnAdd`；**「+」AddNewRow 只觸發 `OnAdd`、不觸發 `OnCreate`** → `uState = UState.Insert` 必須寫在 `OnAdd`。
 - 新增列帶主檔鍵、項次用 `GetNewItem` 對應邏輯（`ITM`/`QUOTITM` 遞增）。
 
 ### 4. 拷貝列
-- 用 `AddNewRow()` + `OnAdd` 帶入來源資料，grid 才會捲到新列（記憶 `incell_copy_pattern`）。
+- 用 `AddNewRow()` + `OnAdd` 帶入來源資料，grid 才會捲到新列。
 
 ### 5. 刪除列
-- **直接呼叫 API、與存檔分開**；存檔只管新增/修改（記憶 `incell_delete_direct`）。
+- **直接呼叫 API、與存檔分開**；存檔只管新增/修改。
+- **刪除鈕只在「非編輯態」可按**（瀏覽/詳細資料態可直接刪；點修改進 Add/Edit 後只開放新增與修改，編輯中不可刪）：用獨立旗標 `_dqDeleteEnabled`（btnControl 內 `= !editing`，與 `_dqEditEnabled` 分開），參 SAL028。列正在 InCell 編輯時刪除鈕未設 `ShowInEdit` 會自動隱藏。
 
 ### 6. 存檔
-- **Save() 送所有 Insert，再送所有 Update**（勿只取第一筆 Insert 就 return，記憶 `incell_save_insert_update`）。
+- **Save() 送所有 Insert，再送所有 Update**（勿只取第一筆 Insert 就 return）。
 - **明細主鍵重複雙重檢查**：前端先檢查（如 `QUOTITM`/`ITEM` 不重複），後端 mutation 內再檢查一次。
 - 主檔+各明細**同一 transaction 全成才 commit**（見 `details/crud-handlers.md`）。
 
 ### 7. 眉角
-- **各動作 handler 開頭先 `ExitEditModeAsync`**（提交當前儲存格，勿放 render 生命週期，記憶 `exit_edit_before_action`）。
+- **各動作 handler 開頭先 `ExitEditModeAsync`**（提交當前儲存格，勿放 render 生命週期）。
   - ⚠️ **例外：`OnUpdate` handler 內「絕對不可」呼叫 `ExitEditModeAsync`**。`ExitEditModeAsync` 內部會反過來 `InvokeAsync(OnUpdate)`，在 OnUpdate 裡再呼叫等於無窮遞迴 → **StackOverflow**（EditPick_Button 選料號帶回時最容易觸發，因為 `Apply` 會呼叫 `ExitEditModeAsync`→OnUpdate→…）。
   - 會呼叫 `ExitEditModeAsync` 的是**「使用者動作」handler**（拷貝/刪除/存檔的 `OnClick`、EditPick_Button 的 `Apply` callback…），提交當前格再做事；**`OnUpdate` 本身即是提交**，直接更新 GD 即可，不需也不能再 Exit（比照 SAL024 update handler）。
-- **`IksGrid_vnq` 不傳 `OnCheckBoxChange`**（會透傳崩潰）；bool 走 `OnBoolChanged→OnUpdate`（記憶 `vnq_no_oncheckboxchange`）；bool cell 鎖定用 `Editable=false`（記憶 `bool_column_lock`）。
-- **新增/存檔/取消換 pageStatus 時，明細 grid 要顯式 `Rebind`**，否則殘留上一筆（記憶 `detail_rebind_add_save`）。編輯態的開/關由 `OnAfterRender` 的 `EnterEdit/ExitEdit` 閘門依 `_dqEditEnabled` 自動同步，換態 handler 內**不需**再呼叫任何鎖/解欄方法。
-- 可編輯明細的 combobox 用單欄 `Field="X_Display"` + `EditorTemplate`（記憶 `dto_inherit_model`；EditorTemplate 寫法 → `details/editor-template.md`）。
+- **bool 欄變更一律走 `OnUpdate`**：`IksGrid_vnq` 已移除 `OnCheckBoxChange` 參數（舊版傳入會透傳崩潰），元件內 `OnBoolChanged→OnUpdate`；在 OnUpdate 設 uState、要拒絕則 `args.IsCancelled = true`（元件還原勾選）。bool cell 永遠不可編用 `Editable=false`。
+- **新增/存檔/取消換 pageStatus 時，明細 grid 要顯式 `Rebind`**，否則殘留上一筆。編輯態的開/關由 `OnAfterRender` 的 `EnterEdit/ExitEdit` 閘門依 `_dqEditEnabled` 自動同步，換態 handler 內**不需**再呼叫任何鎖/解欄方法。
+- 可編輯明細的 combobox 用單欄：字典 key `"X_Display"`、**`Field="X"`（綁代碼）** + `EditorTemplate`（編輯器 `@bind-Value="item.X"`）；grid 顯示時自動取 `X_Display` 名稱。⚠ 勿寫 `Field="X_Display"`：vnq `GridUpdateHandler` 依 Field 比對新舊值，選新代碼時 `X_Display` 未變 → OnUpdate 被吞、選值寫不回（2026-10-07，STK 模組寫法）。OnUpdate 內 `switch(args.Field)` 用 `"X"`。EditorTemplate 寫法 → `details/editor-template.md`。
 - **grid 內欄位要 pick（選代碼帶回）→ 一律用 `EditPick_Button` + 頁面層級 `@ref`（唯一做法）**：**禁止**在 `EditorTemplate` 內塞 `EditPick`（有狀態子元件在虛擬捲動/InCell 會 render diff 崩潰），也**禁止自創繞法**（純文字直輸／自寫外部彈窗等）。五步驟見 `details/editor-template.md`。`EditPick` 只用於 grid 外（篩選區/一般欄）。遇到不確定先查 skill/範例，不猜。
 - 金額等**計算一律走後端**（見 `details/field-change.md`）；Delphi `Calcu_MNYTAX` → 後端 `{form}_CalcMNY`。
 
-### 9. 鍵盤控制（`IksGrid_vnq` 內建，master/明細通用）
+### 8. 鍵盤控制（`IksGrid_vnq` 內建，master/明細通用）
 - **快捷鍵綁在元件本身**（`window.iksGridRegisterKey`，`wwwroot/js/pageJs.js`），**頁面不用寫任何 JS**；掛在 grid 容器元素的 `keydown`，回呼元件的 `[JSInvokable]` 方法：
 
   | 按鍵 | 回呼 | 行為 |
@@ -69,8 +75,7 @@
   | `Ctrl+C` | `OnCtrlC()` | 觸發 `OnCopy` |
   | `Ctrl+D` | `OnCtrlD()` | 保留（目前 no-op）|
 
-- ⚠️ **`↑`/`↓` 觸發的 `UpData`/`DownData` 呼叫 `OnRowClick` 時 `EventArgs` 為 `null`**（非 `MouseEventArgs`）。若頁面「選取只靠滑鼠」，`OnRowClick` handler 開頭要擋：`if (args.EventArgs is not MouseEventArgs mouse) return;`，否則鍵盤移動會誤選（記憶 `vnq_keyboard_nav_null_eventargs`）。
-- **綁定時序（元件已處理好，頁面免管，排查用）**：① `DotNetObjectReference` 必須以「欄位」持有（`_keyRef`）——只 `Create(this)` 傳 JS 而不保存會被 GC 回收 → 之後 `invokeMethodAsync` 靜默失敗。② 綁定**不能只在 `firstRender` 綁一次**（首次 render 時 DOM/interop 可能未就緒）；元件用 `_keyBound` 旗標，每次 render 未綁就重試（`iksGridRegisterKey` 回 `false` 代表元素還沒進 DOM、下次再試），成功才停。③ 以「字串 id」(`_gridElId`) 而非 `ElementReference` 傳 JS，避免 marshaling 卡住。
+- ⚠️ **`↑`/`↓` 觸發的 `UpData`/`DownData` 呼叫 `OnRowClick` 時 `EventArgs` 為 `null`**（非 `MouseEventArgs`）。若頁面「選取只靠滑鼠」，`OnRowClick` handler 開頭要擋：`if (args.EventArgs is not MouseEventArgs mouse) return;`，否則鍵盤移動會誤選。
 - **master-detail「移動即切換明細」用 `OnRowClick`（目前標準做法）**：`IksGrid_vnq` 的 `OnRowClick` **滑鼠點列與鍵盤 `↑`/`↓`（`UpData`/`DownData`，見上表）都會觸發**，因此單一 `OnRowClick` 即可同時支援點擊與鍵盤切換明細，**不需 `RowKeyField`、不需 `OnRowFocus`**。
   - 寫法（SAL025 Dq1 明細）：grid 設 `OnRowClick="SwitchDq1Detail"`；handler 收 `GridRowClickEventArgs`、以 `args.Item is not Dqn row` 取列並防 null／型別不符：
     ```csharp
@@ -82,34 +87,8 @@
         // 只重繪子明細 View、不動本 grid（避免打斷 InCell 編輯；切格會自動提交前一格）
     }
     ```
-  - ⚠️ **此處「不要」加通則 9 上面那條 `if (args.EventArgs is not MouseEventArgs) return;` 的 null 防呆**：那條是給「選取只靠滑鼠」的頁面擋鍵盤誤選用；master-detail 切換**正需要**鍵盤 `↑`/`↓`（EventArgs=null）也切換明細，加了反而讓鍵盤導覽失效。
-- **列 focus 追蹤（`OnRowFocus` + `RowKeyField`）是另一套舊機制**（`IksRowFocusTracker` + `iksRowFocusInterop`）：focus（鍵盤或滑鼠）落到某列即回呼該列，不需點擊或進編輯（記憶 `grid_focus_masterdetail`）。**明細切換已改用上面的 `OnRowClick`**（更單純、不需 RowKeyField、與鍵盤導覽同源）；`OnRowFocus` 保留給「純 focus、不靠點擊」的特殊需求。⚠ `Rebind` 會重用 `<tr>`，元件在 `Rebind` 內已 `Focus.ResetAsync()` 清 lastTr（避免點回同位置被去重吃掉），頁面不用管。
-
-### 9. 鍵盤控制（`IksGrid_vnq` 內建，master/明細通用）
-- **快捷鍵綁在元件本身**（`window.iksGridRegisterKey`，`wwwroot/js/pageJs.js`），**頁面不用寫任何 JS**；掛在 grid 容器元素的 `keydown`，回呼元件的 `[JSInvokable]` 方法：
-
-  | 按鍵 | 回呼 | 行為 |
-  |------|------|------|
-  | `↑` / `↓`（無 Ctrl）| `UpData()` / `DownData()` | 目前列（`CurrentItem`）依 index 上/下移一列，並 `OnRowClick.InvokeAsync(...)`。**不 `preventDefault`** → Telerik 內建 NavigateUp/Down 仍把焦點列捲進可視範圍，兩者同步上/下移一列 |
-  | `Ctrl+I` | `OnCtrlI()` | 新增列（唯讀 `_dataEditing=false` 時封鎖）|
-  | `Ctrl+C` | `OnCtrlC()` | 觸發 `OnCopy` |
-  | `Ctrl+D` | `OnCtrlD()` | 保留（目前 no-op）|
-
-- ⚠️ **`↑`/`↓` 觸發的 `UpData`/`DownData` 呼叫 `OnRowClick` 時 `EventArgs` 為 `null`**（非 `MouseEventArgs`）。若頁面「選取只靠滑鼠」，`OnRowClick` handler 開頭要擋：`if (args.EventArgs is not MouseEventArgs mouse) return;`，否則鍵盤移動會誤選（記憶 `vnq_keyboard_nav_null_eventargs`）。
-- **綁定時序（元件已處理好，頁面免管，排查用）**：① `DotNetObjectReference` 必須以「欄位」持有（`_keyRef`）——只 `Create(this)` 傳 JS 而不保存會被 GC 回收 → 之後 `invokeMethodAsync` 靜默失敗。② 綁定**不能只在 `firstRender` 綁一次**（首次 render 時 DOM/interop 可能未就緒）；元件用 `_keyBound` 旗標，每次 render 未綁就重試（`iksGridRegisterKey` 回 `false` 代表元素還沒進 DOM、下次再試），成功才停。③ 以「字串 id」(`_gridElId`) 而非 `ElementReference` 傳 JS，避免 marshaling 卡住。
-- **master-detail「移動即切換明細」用 `OnRowClick`（目前標準做法）**：`IksGrid_vnq` 的 `OnRowClick` **滑鼠點列與鍵盤 `↑`/`↓`（`UpData`/`DownData`，見上表）都會觸發**，因此單一 `OnRowClick` 即可同時支援點擊與鍵盤切換明細，**不需 `RowKeyField`、不需 `OnRowFocus`**。
-  - 寫法（SAL025 Dq1 明細）：grid 設 `OnRowClick="SwitchDq1Detail"`；handler 收 `GridRowClickEventArgs`、以 `args.Item is not Dqn row` 取列並防 null／型別不符：
-    ```csharp
-    private async Task SwitchDq1Detail(GridRowClickEventArgs args)
-    {
-        if (args.Item is not Dq1 row) return;
-        if (_currentDq1 != null && row.ITM_Int == _currentDq1.ITM_Int) return;   // 同列略過，不重查、不打斷編輯
-        _currentDq1 = row;
-        // 只重繪子明細 View、不動本 grid（避免打斷 InCell 編輯；切格會自動提交前一格）
-    }
-    ```
-  - ⚠️ **此處「不要」加通則 9 上面那條 `if (args.EventArgs is not MouseEventArgs) return;` 的 null 防呆**：那條是給「選取只靠滑鼠」的頁面擋鍵盤誤選用；master-detail 切換**正需要**鍵盤 `↑`/`↓`（EventArgs=null）也切換明細，加了反而讓鍵盤導覽失效。
-- **列 focus 追蹤（`OnRowFocus` + `RowKeyField`）是另一套舊機制**（`IksRowFocusTracker` + `iksRowFocusInterop`）：focus（鍵盤或滑鼠）落到某列即回呼該列，不需點擊或進編輯（記憶 `grid_focus_masterdetail`）。**明細切換已改用上面的 `OnRowClick`**（更單純、不需 RowKeyField、與鍵盤導覽同源）；`OnRowFocus` 保留給「純 focus、不靠點擊」的特殊需求。⚠ `Rebind` 會重用 `<tr>`，元件在 `Rebind` 內已 `Focus.ResetAsync()` 清 lastTr（避免點回同位置被去重吃掉），頁面不用管。
+  - ⚠️ **此處「不要」加本節上面那條 `if (args.EventArgs is not MouseEventArgs) return;` 的 null 防呆**：那條是給「選取只靠滑鼠」的頁面擋鍵盤誤選用；master-detail 切換**正需要**鍵盤 `↑`/`↓`（EventArgs=null）也切換明細，加了反而讓鍵盤導覽失效。
+- **依 grid 分工（實況：主檔明細頁 65 檔皆如此）**：**主檔 `IksGrid_Virtual` 切換明細＝`RowKeyField`＋`OnRowFocus`**（focus 即選取，見 `details/grid-virtual.md`）；**`IksGrid_vnq` 明細列切換子明細＝本節 `OnRowClick`**。兩者各用於自己的 grid，不互相取代。⚠ `Rebind` 會重用 `<tr>`，元件在 `Rebind` 內已 `Focus.ResetAsync()` 清 lastTr（避免點回同位置被去重吃掉），頁面不用管。
 
 ---
 
@@ -121,12 +100,12 @@
              ShowFrameHeader="true" ShowBuiltInToolbar="false"
              ShowAddButton="true" AddButtonEnabled="@_dqEditEnabled" HeaderButtons="@Dq1HeaderButtons"
              OnAdd="Dq1_OnAdd" OnUpdate="Dq1_UpdateHandler" OnDelete="Dq1_DeleteHandler"
-             OnSelect="Dq1_OnSelect" OnBeforeEdit="Dq1_OnBeforeEdit" OnCheckBoxChange="Dq1_OnCheckBoxChange">
+             OnSelect="Dq1_OnSelect">
     <LeftColumnsTool>
         @* 針對該列的功能都放這 *@
             <GridCommandButton Icon="@("ti ti-copy")"   OnClick="@(a => Dq1Copy((Dq1)a.Item))" ShowInEdit="false" Enabled="@_dqEditEnabled" Title="拷貝" />
             <GridCommandButton Command="Edit"   Icon="@("ti ti-pencil")"  Enabled="@_dqEditEnabled" Title="修改" />
-            <GridCommandButton Command="Delete" Icon="@("ti ti-trash")"   Enabled="@_dqEditEnabled" Title="刪除" />
+            <GridCommandButton Command="Delete" Icon="@("ti ti-trash")"   Enabled="@_dqDeleteEnabled" Title="刪除" />  @* 非編輯態才可刪 *@
             <GridCommandButton Command="Cancel" Icon="@("ti ti-circle-x")" ShowInEdit="true" Title="取消" />
             <GridCommandButton Icon="@("ti ti-tool")" OnClick="@(async a => await Bom((Dq1)a.Item))" ShowInEdit="false" Title="選配" />
     </LeftColumnsTool>
@@ -162,18 +141,6 @@ private async Task Dqn_Delete(GridCommandEventArgs a) { /* 直接呼叫 API 刪�
 ```
 
 ---
-
-## B301Base → 明細對應
-
-`FormCreate` 5 個 `AddDetail`（先看 DFM 有無 grid，nil 者問操作者，但**物件一律建立**）：
-
-| Delphi | 明細鍵 | grid | 去向 |
-|--------|--------|------|------|
-| Dq1 | QUOTITM | DDBGrid | Tab「明細」InCell |
-| Dq2 | ITEM | DDBGrid2 | Tab「外銷資料」grid |
-| DqSPEC | SITM | nil | 規格明細 **Window** |
-| Dq3 | QUOTITM;SITM | nil | 背景關聯（DTO 仍建立） |
-| Dq4 | QUOTNO;ITM | DDBGrid4 | Tab「備註資料」grid |
 
 ## 指路
 - 連動/計算 → `details/field-change.md`

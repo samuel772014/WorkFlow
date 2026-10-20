@@ -33,6 +33,7 @@ plan（本 node，第一步）           gen-*（第二步）
 | 寫 | `skeleton`（骨架藍圖，見下）、`acceptance_claims`（S1–S9 逐項聲明）、`artifacts.plan`（=`plans/<code>.md`） |
 | runner | `thinking-planner` |
 | rules_ref | `skills/page-migration/templates/<mode>.md` ＋ `details/page-shell.md` |
+| 完成條件 | 分層／分頁／分功能三問全答（含 `view_mode`）；`manifest.fields` 每個 grid 都對應到 `skeleton.pages.panes` 一格與一個 fragment；pas 每個工具列指令與事件都列在 `skeleton.functions`；S1–S9 九項 `acceptance_claims` 都有聲明 |
 
 > `manifest.fields`（dfm 欄位/欄序）與 `manifest.facts`（名稱/keycode/reuse_funcs）已是事實層；plan **在其上做結構決策**，不重查、不推測；缺事實者已在 `open_questions`（會被 extract 擋在 plan 之前）。
 

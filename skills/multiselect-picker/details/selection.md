@@ -43,7 +43,7 @@ private async Task OnRowClick(GridRowClickEventArgs args)
 - 重新查詢/rebind 後把 `_anchor = null`（避免指向已不存在的列；`IndexOf` 回 -1 也會自動退回單列 toggle）。
 - `List.Remove`/`Contains`/`IndexOf` 走參考相等；`args.Item` 與 `_data`/`SelectedItems` 是同一批實例，比對沒問題。
 
-> 對應記憶：`reference_vnq_incell_row_selection`。
+> 對應規則：`page-migration/details/grid-virtual.md`「點列多選 + Shift 區間」。
 
 ## 批次帶值 / 清除篩選 時的選取保留
 

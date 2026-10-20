@@ -1,6 +1,6 @@
 ---
 name: popup-window
-description: 建立 IKSERP Blazor「彈出視窗子元件」的骨架與規則。當使用者說「建立彈出視窗」「做一個 popup」「做一個 SAL0XXA/B 子視窗」，或需要在 TelerikWindow 內嵌的子元件（非獨立頁面）時觸發。以 SAL055A（純編輯型）/ SAL046D（查詢型）為藍本。
+description: 建立 IKSERP Blazor 彈出視窗子元件（TelerikWindow 內嵌、非獨立頁，如 SAL0XXA/B）的骨架與規則，以 SAL055A（編輯型）／SAL046D（查詢型）為藍本。
 ---
 
 # IKSERP 彈出視窗子元件（Popup Window Component）
@@ -16,12 +16,12 @@ description: 建立 IKSERP Blazor「彈出視窗子元件」的骨架與規則�
 
 ---
 
-## 三種版型
+## 兩種版型
 
 | 版型 | 特徵 | 參考頁 |
 |------|------|--------|
 | **A - 純編輯型** | 唯讀表頭 + Grid，無查詢工具列 | SAL055A |
-| **B - 查詢型（內嵌篩選）** | 工具列 Query + inline `iks-filter-grid`，篩選欄不多 | SAL046D |
+| **B - 查詢型（篩選 Popup）** | Grid frame-header 篩選鈕 → 進階篩選 Popup（清除/查詢） | SAL046D（現行仍為舊 inline，待改） |
 
 ---
 
@@ -31,10 +31,10 @@ description: 建立 IKSERP Blazor「彈出視窗子元件」的骨架與規則�
 
 ```
 存檔 / 套用 / 確認 / 取消 → <div class="iks-edit-actions">（固定在底部）
-查詢                       → <Toolbar> 工具列（頂部，版型 B 才有）
+篩選 / 查詢                → Grid frame-header 篩選鈕 → 進階篩選 Popup（版型 B）
 ```
 
-⚠ **存檔/執行與查詢絕對不共存同一列**——查詢只在有主動觸發查詢的版型（B）出現。
+⚠ **存檔/執行與查詢絕對不共存同一列**——查詢只在版型 B 的篩選 Popup 內。
 
 ### Grid 進階篩選
 
@@ -82,27 +82,24 @@ iks-edit-window (padding:8px)
 
 ---
 
-## 版型 B 骨架（查詢型 inline 篩選，SAL046D 藍本）
+## 版型 B 骨架（查詢型，篩選 Popup）
 
 完整範本見 `templates/type-b.md`。
 
 ```
 iks-edit-window (padding:8px)
-├── toolbar toolbar-field (flex-shrink:0)  ← 查詢工具列
-│   └── Toolbar > ToolbarButton Action="Query"
 ├── iks-edit-body (flex column, gap:6px)
-│   ├── iks-filter-grid                   ← inline 篩選（≤2 欄）
 │   └── div (flex:1 1 auto; min-height:0)
 │       └── IksGrid_vnq Height="100%"
 │           ShowCheckbox / ShowSelectAll="false"
 │           HeaderButtons（全選/取消全選）
+│           ShowFilterButton + FilterAnchorClass  ← 開進階篩選 Popup
+├── TelerikPopup（iks-filter-popup：篩選欄位 + 清除/查詢；在 Grid 外部）
 └── iks-edit-actions
     └── [套用/確認] [取消]
 ```
 
 ---
-
-#
 
 ## @code 宣告位置
 

@@ -1,9 +1,4 @@
----
-name: popuptext
-description: IKSERP Blazor 共用元件 PopUpText 的使用規則。當使用者要在頁面（尤其是 Grid 明細列）新增「彈出大字文字編輯視窗」來編輯長文字欄位（如備註 REMARK、說明），或說「加 PopUpText」「用彈窗編輯備註」「文字視窗」時觸發。以 STK012 的備註欄用法為藍本。
----
-
-# PopUpText 彈出文字編輯視窗 Skill（IKSERP Blazor）
+# 詳細規則：PopUpText 彈出文字編輯視窗（Delphi EditMemo）
 
 ## 觸發時機
 
@@ -22,7 +17,7 @@ description: IKSERP Blazor 共用元件 PopUpText 的使用規則。當使用者
 設計重點：**開窗、初始文字、回寫邏輯全部由呼叫端透過 `@ref` 指令式（imperative）設定，不走 `[Parameter]` 綁定。**
 原因是這個元件常被放在 **Grid EditorTemplate** 內觸發，此時父層不一定會重繪本元件，因此 `Visible` 的 setter 自己驅動 `StateHasChanged`，不依賴父層重繪。
 
-> 與 [[feedback_editpick_button_pattern]] 同一原則：Grid 內開視窗的元件，一律在**頁面層級**用 `@ref` 宣告，不可 inline 寫在 grid template 裡。
+> 與 `details/editor-template.md`（EditPick_Button）同一原則：Grid 內開視窗的元件，一律在**頁面層級**用 `@ref` 宣告，不可 inline 寫在 grid template 裡。
 
 ---
 
@@ -121,10 +116,10 @@ public void Dq1_REMARK_Click(Dq1 data)
 
 ## 關鍵要點
 
-- **`OnApply` 內回寫套用既有存檔流程**：更新列值 → 依 `uState`（非 Insert 就設 Update）標記 → 併入該明細的 `Update_XXX` 清單，與同頁 NSN／SLocation 等 Apply 寫回一致（參 [[feedback_incell_save_insert_update]]、[[feedback_detail_rebind_add_save]]）。
+- **`OnApply` 內回寫套用既有存檔流程**：更新列值 → 依 `uState`（非 Insert 就設 Update）標記 → 併入該明細的 `Update_XXX` 清單，與同頁 NSN／SLocation 等 Apply 寫回一致（參 見 details/grid-incell.md 通則6、見 details/grid-incell.md 通則7）。
 - **每次開窗都重設 `OnApply`**：因為 handler 內用閉包綁定當前 `data`，不同列要指向不同的回寫目標，不可共用一份 OnApply。
 - **不可 inline 宣告**：`<PopUpText @ref="PText">` 只放頁面層級一份，多列共用同一實例，靠 handler 每次重設 `Value`/`OnApply`。
-- **查看（唯讀）模式**：開窗前設 `PText.ReadOnly = true`（或用 `Enabled=false`）即可只顯示不可改，配合 [[feedback_detail_readonly_reuse_edit]] 的唯讀重用原則。
+- **查看（唯讀）模式**：開窗前設 `PText.ReadOnly = true`（或用 `Enabled=false`）即可只顯示不可改，配合 見 details/edit-window.md 通則5 的唯讀重用原則。
 - **`Value` 是 public 屬性非 nullable 綁定**：TextArea 直接 `@bind-Value="Value"`，開窗前務必先給值（`?? ""`）避免殘留上一列內容。
 
 ---

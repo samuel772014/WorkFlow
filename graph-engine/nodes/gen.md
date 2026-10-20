@@ -41,6 +41,7 @@ gen-backend + assemble 完成 → join → static-verify (GATE 1)
 | scope | `migration-executor scope=backend` |
 | 特性 | `idempotent`（worktree 隔離，重跑不汙染）；三檔天然獨立,**一個 node 一次產出、免拼裝** |
 | rules_ref | `details/crud-handlers.md`、`details/backend-sql.md`、`details/business-logic.md` |
+| 完成條件 | 三檔都已寫出；`skeleton.functions` 中每個需後端的 handler，都有 Resolver 端點 → Service → Repository 的完整方法鏈 |
 
 「一檔」＝後端這一支 node 一次把三檔都產完（非分三個 node）；業務邏輯一律落在此層（鐵則1）。
 
@@ -55,6 +56,8 @@ gen-backend + assemble 完成 → join → static-verify (GATE 1)
 | `gen-ui.toolbar` | `fragments.toolbar` | 工具列 ribbon ToolbarGroup 指令 + 按鈕權限閘門 | `details/toolbar.md`、`details/btn-control.md` |
 | `gen-ui.grid`    | `fragments.grid`    | 主 grid：**filter 區** + 欄位顯示 + InCell 編輯（含選單/連動）；**非 tab 模式時宣告主表 DTO** | `details/grid-virtual.md`、`details/grid-incell.md`、`details/input-component-choice.md`、`details/field-change.md` |
 | `gen-ui.detail`  | `fragments.detail`  | 明細 grid + InCell + 明細 DTO（多組明細**於 node 內部依序**產）；`no_detail` 時不啟動 | `details/grid-incell.md`、`details/detail-display-settings.md` |
+
+**完成條件（gen-ui.* 各片段 node 共通）**：`skeleton.fragments.<自己那格>` 列出的每一項（工具列指令／欄位／filter 欄／明細 grid／子視窗）都已在片段中實作，逐項可對回。
 
 ## 前端 map（呈現模式類，條件邊擇一）— `editwindow` / `tabview`
 
@@ -113,6 +116,7 @@ gen-backend + assemble 完成 → join → static-verify (GATE 1)
 | 讀 | `fragments`（三格）、`manifest`、`skeleton.layers.ui_shell` |
 | 寫 | `artifacts.ui`（`SAL<code>.razor`） |
 | rules_ref | `details/final-dfm-check.md`、`details/page-shell.md` |
+| 完成條件 | 本頁每個已啟動的片段都已拼入 `artifacts.ui`；下列拼裝一致性 checklist 四項全數通過 |
 
 把片段拼進骨架外殼成完整 razor。**拼裝一致性 checklist（必核）**：
 - 欄位順序依 dfm `Top` 座標

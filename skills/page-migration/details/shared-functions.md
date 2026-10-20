@@ -1,7 +1,7 @@
 # 詳細規則：共用函式庫（FUNC）轉換查詢
 
-> 給後端邏輯轉譯用。**Delphi 參考函式先查 `Modules/FUNC` 是否已有 C# 共用函式，勿重寫 SQL**（記憶 `reuse_func_modules`）。
-> 來源：舊 `shared-functions`（共用function.xlsx，500+ 函式；完整表在 Desktop 備份，本檔只放方法與常用）。
+> 給後端邏輯轉譯用。**Delphi 參考函式先查 `Modules/FUNC` 是否已有 C# 共用函式，勿重寫 SQL**。
+> 來源：舊 `shared-functions`（共用function.xlsx）；完整對照表見 `.claude/SelfFolder/共用函式對照表.md`。
 
 ---
 
@@ -34,22 +34,11 @@
 | `作廢` | 不實作；舊呼叫加註說明已廢 |
 | `TBD` | `// TODO:` 標記 |
 
-## 常用（SAL 相關，轉 SAL301 類報價/訂單常見）
-| 函式 | 用途 | 處理方式 |
-|------|------|---------|
-| `Calcu_MNYTAX` | 金額稅額計算（前端用版本） | 改寫（→ 後端 `{form}_CalcMNY`，計算一律後端） |
-| `CalcNTMNY` | 依幣別取本幣小數位 | 改寫（Calcu_MNYTAX* 系列併入） |
-| `Get_MRATE` | 取匯率 | ✅ 已改寫 `ERPFunc.GetMRateAsync`；各頁走共用 `SALService.GetSALCurMrateAsync` 轉發（見下方實例二） |
-| `GetTaxRate` | 取稅率 | 改寫（SalFunc 版併入 ERPFUNC） |
-| `Get_PAYTERM` | 依付款條件算預計付款日/票期 | 改寫 |
-| `GetCUSTNSN` / `CUSTNSNGetNSN` | 客戶品號↔料號互查 | ✅ 已抽共用 `SALService.GetSALCustNsnInfoAsync`（見下方實例一） |
-| `SALGetUp` / `SALGetYRQTY` | 取銷售價格 / 基本購量 | 改寫 |
-| `Calc_CRMNY_INSMNY` | 計算運費保費 | 改寫 |
-| `Calc_Master_MNY` | 彙算主檔總金額並調明細 | 改寫 |
-| `ProcLCKFM` / `chkSTATUS1` | 單據鎖定 / 檢查最新單況 | 重新設計（見記憶 `doc_lock_pattern`） |
-| `Get_Round/Round1/Round2` | 四捨五入/捨去/進位 | 改 C# 原生 |
+## 常用函式對照
 
-> 完整 500+ 函式表在 `C:\Users\samuel\Desktop\.claude\skills\delphi-to-csharp\references\shared-functions.md`（共用function.xlsx）。
+> 函式名 → C# 方法名/狀態**一律查權威表 `.claude/SelfFolder/共用函式對照表.md`**（本檔不重抄，狀態以 `func_status_scan.py` 依程式碼重掃）。
+> 計算類（如 `Calcu_MNYTAX`→`CalcuMnyTaxAsync`）由後端 `{form}_CalcMNY` 呼叫共用函式，前端不算（`details/field-change.md`）。
+> 單據鎖定 `ProcLCKFM`→`ERPFunc.ProcLckFm`（A=查/B=鎖/C=解，於 DB 交易外上鎖、finally 解鎖；實例 SAL067 CF/CC/CR）。
 
 ---
 
@@ -69,7 +58,7 @@
 - **resolver 各頁獨立、不共用**：每頁保留自己的 GraphQL resolver（`sal046_GetCUSTNSN_Info` / `sal044_GetCUSTNSN_Info`；`sal045_/sal046_/sal025_GetCUR_MRATE`），**只做薄層轉發**，不含 SQL/邏輯。
 - **共用抽在 service 層**：多頁重用的實作放共用 `SALService`（必要時 `SALRepository`）方法，各頁 resolver 都轉發同一份。
 - **service 呼叫共用 FUNC**：service 方法內再呼叫 `Modules/FUNC`（`ERPFunc`/`SALFunc`）的共用函式（如 `ERPFunc.GetMRateAsync`）。
-- 即：**各頁獨立 resolver → 模組共用 service → 共用 FUNC**（呼應記憶 `mutation_pattern`：只加薄 Resolver 層）。
+- 即：**各頁獨立 resolver → 模組共用 service → 共用 FUNC**（見 details/crud-handlers.md「後端分層」：只加薄 Resolver 層）。
 
   ```
   sal046_GetCUSTNSN_Info ─┐
@@ -101,4 +90,4 @@
 - 商業邏輯四類決策樹（含第 1 類入 log 佔位） → `details/business-logic.md`
 - 後端 SQL/交易 → `details/backend-sql.md`
 - 金額計算一律後端 → `details/field-change.md`
-- 單號鎖定 → 記憶 `doc_lock_pattern`（ERPFunc.ChkLckFm/ProcLckFm）
+- 單號鎖定 → 見 details/crud-handlers.md「單據鎖定」（ERPFunc.ChkLckFm/ProcLckFm）

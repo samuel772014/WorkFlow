@@ -103,9 +103,9 @@
                                      Table_Name="{{Grid}}" Columns="{{ColConfig}}" WhereParameters="{{parameter}}"
                                      sortKey="{{KEY}}" RowKeyField="{{KEY}}" Height="100%" ShowAdd="false"
                                      ShowFrameHeader="true" ShowFilterButton="true" ShowBuiltInToolbar="false"
-                                     FilterAnchorClass="mqy-filter-popup-target" OnFilterClick="ToggleFilterPanel"
+                                     FilterAnchorClass="mqy-filter-popup-target" OnFilterClick="ToggleFilterPopup"
                                      OnHeightChanged="OnMqyHeightChanged"
-                                     OnRowClick="OnMqyRowClick">
+                                     OnSelect="OnMqySelect" OnRowFocus="OnMqyRowFocus">  @* 主檔 Virtual：focus＝選取→載明細（details/grid-virtual.md） *@
                         <LeftColumnsTool></LeftColumnsTool>
                     </IksGrid_Virtual>
                   </div>
@@ -145,12 +145,10 @@
                   @if (ActiveDetailTabId == "d1")
                   {
                     <div class="iks-detail-panel">
-                      @* HighlightEditableCells 只在「可編輯欄 ≤ 全欄 1/3」時才加 → details/grid-incell.md 通則 7 *@
                       <IksGrid_vnq @ref="{{Dq1}}" GridData="{{Dq1_GD}}" TItem="Dq1" ApiUrl="@_url"
                                    Columns="{{dq1Cols}}" Table_Name="{{Dq1}}" Height="250px"
                                    ShowFrameHeader="true" ShowBuiltInToolbar="false"
                                    ShowAddButton="true" AddButtonEnabled="@_dqEditEnabled" HeaderButtons="@Dq1HeaderButtons"
-                                   HighlightEditableCells="true"
                                    OnAdd="Dq1_OnAdd" OnUpdate="Dq1_Update" OnDelete="Dq1_Delete">
                           <LeftColumnsTool>
                               @* 針對列：拷貝/Edit/Delete/Cancel/特殊；Enabled 綁 _dqEditEnabled *@
@@ -189,7 +187,7 @@
     private string ActiveDetailTabId = "d1";          // 明細頁籤
     private bool _showDetail = true;                   // 明細區顯示
     private string _mqyHeight = "250px";               // 主檔 frame 高度（由「設定高度」combo 控制）
-    private string pageStatus = "query";              // query|Add|Edit|View|Copy
+    private string pageStatus = "query";              // query|Add|Edit|View（拷貝走 Add）
     private MessageBox MsgBox = default!;
 
     @* ── B/G. 工具列旗標 ──  details/btn-control.md ── *@
@@ -201,6 +199,8 @@
     private IksGrid_Virtual<Mqy>? {{Grid}};
     private Mqy? MqySelect;
     private Dictionary<string, object> {{parameter}} = new();
+    private void OnMqySelect(Mqy item) => MqySelect = item;          // OnSelect：記選取 → 載明細 + Rebind
+    private async Task OnMqyRowFocus(Mqy row) { }                     // focus＝選取（去重後 SelectRowAsync）→ details/grid-virtual.md
 
     @* ── D. 篩選 ──  details/popup-filter.md ── *@
     private TelerikPopup? FilterPopupRef;
@@ -247,25 +247,9 @@
     private async Task Dq1_Update(GridCommandEventArgs a) { }
     private async Task Dq1_Delete(GridCommandEventArgs a) { }
 
-    @* ── F. 明細鎖定有「兩層」（統一用 grid API；比照 SAL025/MPS021）──
-       ① 哪些欄可編（per-column）＝ ColKey，用 SetColumnEditable（LockDqGridColumns/UnlockDqGridColumns，下方）。
-       ② 這個 grid 整體能不能編（全域閘門）＝ _dataEditing，用 grid.EnterEdit()/ExitEdit()；_dataEditing 預設 true。
-       明細平常唯讀、Add/Edit 才可編輯。①掛點：明細載入/Rebind 後 + Cancel → Lock；Add/Copy/Edit → Unlock。
-       ⚠ IksGrid.Rebind() 會「重置」ColKey（回到 !Editable＝預設可編輯，GridColumnConfig.Editable 預設 true）
-         → 每次載入/重綁後都要重新套用（多明細/延遲載入頁把重綁點統一改 async，尾端 await ApplyDqLock）。
-       ⚠ SetColumnEditable(field, locked)：locked=true→鎖定唯讀、false→可編輯（參數即 ColKey）。
-       ⚠ 膠囊切換 @if 重建 grid → 兩層都預設可編；②的全域閘門在 OnAfterRenderAsync 每次渲染冪等同步最穩（見上方 OnAfterRenderAsync），
-         別只靠切換 handler 內 SetColumnEditable（會被未 await 的 Rebind 蓋掉，SAL044 踩過）。
-       淘汰 OnBeforeEdit 回呼設 ColKey（只在進儲存格瞬間才改、平常渲染仍可編輯）。*@
-    private async Task ApplyDqLock()  // 依 pageStatus 自動鎖/解（多明細/延遲載入頁掛在每個載入點最省事）
-        { if (pageStatus is "Add" or "Edit") await UnlockDqGridColumns(); else await LockDqGridColumns(); }
-    private async Task LockDqGridColumns()   => await SetDqColumnsLocked(true);
-    private async Task UnlockDqGridColumns() => await SetDqColumnsLocked(false);
-    private async Task SetDqColumnsLocked(bool locked)
-    {   // 每組明細 grid × 其可編輯欄逐一套用（唯讀對照 grid 欄位 Editable=false 會被 .Where 濾掉，不受影響）
-        foreach (var c in {{dq1Cols}}.Where(kv => kv.Value.Editable).Select(kv => kv.Key)) if ({{Dq1}} != null) await {{Dq1}}.SetColumnEditable(c, locked);
-        // {{其餘明細 grid 同樣一行}}
-    }
+    @* ── F. 明細鎖定 ── details/grid-incell.md 通則1：
+       整表能不能編＝OnAfterRenderAsync 的 EnterEdit/ExitEdit 全域閘門（見上方）；永遠不可編欄＝GridColumnConfig.Editable=false。
+       不寫整表鎖欄樣板；SetColumnEditable 只用於「依業務條件切單欄」。*@
 
     @* ── J. 連動/計算（一律後端）──  details/field-change.md ── *@
     @* ── I. DTO ──  details/dto-display.md ──
@@ -277,7 +261,7 @@
 ```text
 L. CSS —— → details/css-layout.md：cd-body（flex-column + overflow-y:auto）/ cd-stack-top /
    cd-stack-bottom / iks-mode-switch（含 iks-detail-switch）/ iks-detail-body / iks-detail-panel /
-   iks-detail-stacked …進 app.css（記憶 shared_css_appcss）。
+   iks-detail-stacked …進 app.css（見 details/css-layout.md）。
    ⚠ 堆疊模式下主檔 `.iks-master-frame` 掛 inline `height:@_mqyHeight`（確定高度）+ grid `Height="100%"`；
    勿把 frame/grid 改成 auto 高度（Virtual 會算不出視窗、列渲染成空白但可點）。見 iks-scroll-modes skill。
 ```
@@ -289,13 +273,13 @@ L. CSS —— → details/css-layout.md：cd-body（flex-column + overflow-y:aut
 1. **模式膠囊 `iks-mode-switch`**（瀏覽 query / 表單 edit）在工具列 ToolbarGroup。
 2. **主檔/明細垂直堆疊（不用 `TelerikSplitter`）**：`.cd-stack-top` = 主檔清單/主表單（隨 `ActiveTabId`）、`.cd-stack-bottom` = 明細（`_showDetail` 控制）；`.cd-body` 為捲動擁有者，過高自動出捲軸。
 3. **工具列擺全部主檔操作**（含存檔/取消），順序 模式→CRUD→查詢→延伸（`details/toolbar.md`）。
-4. **明細 = `IksGrid_vnq` InCell**，多組用切換膠囊（`iks-mode-switch`）+ `@if` 面板切換（**取代 `TabStrip`**，`details/grid-incell.md`）；明細 grid 用固定 px Height；**只有少數欄可編輯時加 `HighlightEditableCells="true"`**（門檻見 `details/grid-incell.md` 通則 7）。⚠ `_dqEditEnabled` 只鎖「列指令鈕/新增鈕」，**欄位本身的可編輯要另用 `SetColumnEditable` 鎖**（見第 11 點）。
+4. **明細 = `IksGrid_vnq` InCell**，多組用切換膠囊（`iks-mode-switch`）+ `@if` 面板切換（**取代 `TabStrip`**，`details/grid-incell.md`）；明細 grid 用固定 px Height。`_dqEditEnabled` 同時驅動「列指令鈕/新增鈕 Enabled」與 `OnAfterRenderAsync` 的全域閘門（見第 11 點）。
 5. **疊放式明細 Tab**（`iks-detail-stacked`）：上半主檔欄位（綁 current 主檔）+ 下半明細 grid。
 6. **金額加總（Delphi 唯讀 ButtonEdit）不做成表單欄位**：明細合計→明細 grid 下方 `.iks-total-bar`；主檔清單合計→`IksGrid_Virtual` 的 `FrameHeaderExtra`（`details/grid-virtual.md`）。值一律後端算、前端純顯示。
-7. **btnControl 是 pageStatus × ActiveTabId 雙態**；換態時明細顯式 `Rebind`（記憶 `detail_rebind_add_save`）。
+7. **btnControl 是 pageStatus × ActiveTabId 雙態**；換態時明細顯式 `Rebind`（見 details/grid-incell.md 通則7）。
 8. **存檔＝主表 + 各明細同一 transaction，全成才 commit**；主鍵前+後端雙重檢查。
 9. **明細對應非 1:1**：`AddDetail` 先看 DFM 有無 grid，無者問操作者，但**背景明細 DTO 仍要建立**。
 10. **Mode C 巢狀捲動（堆疊式）**：`#local-content` 加 `iks-scroll-layout iks-scroll--nested`；**不用 Splitter**，`.cd-body`（flex-column + overflow-y:auto）為捲動擁有者、`.cd-stack-top/-bottom` 垂直堆疊；主檔 `.iks-master-frame` 掛確定高度 `style="height:@_mqyHeight"`、grid 用 `Height="100%"`（Virtual 需祖先鏈確定高度，直接給 grid `@_mqyHeight` 會列空白）、明細 grid 固定 px。⚠ 舊 for_github 固定 px Splitter 機制已淘汰（撐捲軸→Telerik resize 在電路連上前回呼→卡載入）。**單檔範本不套**。細節見 `iks-scroll-modes` skill。
-11. **明細欄位鎖定（瀏覽唯讀 / Add·Edit 才可編輯）＝統一用 `grid.SetColumnEditable(field, locked)`**（`locked=true` 鎖定、`false` 可編輯；即設 `iksBaseClass.ColSetting.ColKey`）。寫一對 `LockDqGridColumns()/UnlockDqGridColumns()`（迴圈各明細 ColConfig 的 `Editable` 欄逐一套用），多明細/延遲載入頁用 `ApplyDqLock()` 依 `pageStatus` 自動選。**掛點**：明細載入/Rebind 後 + Cancel → Lock；Add/Copy/Edit → Unlock。⚠ **`IksGrid.Rebind()` 會重置欄位可編輯性**（回到 `!Editable`，而 `GridColumnConfig.Editable` 預設 `true`）→ **每次載入/重綁後都要重新套用**（把重綁點改 async、尾端 `await ApplyDqLock()`）。已淘汰 `OnBeforeEdit` 設 ColKey 的舊法。⚠ `ColSetting` 型別須限定 `iksBaseClass`（與 `IKSERPSHARE.Models.ColSetting` 同名，兩者都 import 會 CS0104）。細節見記憶 `reference_grid_onbeforeedit_colkey_lock`。
+11. **明細欄位鎖定（瀏覽唯讀 / Add·Edit 才可編輯）＝全域閘門一層**：`OnAfterRenderAsync` 每次渲染依 `_dqEditEnabled` 對各明細呼叫 `EnterEdit()`/`ExitEdit()`；永遠不可編欄在 `GridColumnConfig` 設 `Editable=false`。**不寫整表鎖欄樣板**（`LockDqGridColumns`/`ApplyDqLock` 等，程式碼已 0 處使用）、不用已淘汰的 `OnBeforeEdit`。依業務條件切單欄可編性才用 `SetColumnEditable`，其陷阱見 `details/grid-incell.md` 通則1。
 
 > Delphi 邏輯在 base（`B301Base`），繼承鏈先問操作者（SKILL 來源讀取原則）。

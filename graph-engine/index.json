@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-09-30T04:00:49+00:00",
+    "generated_at": "2026-10-19T01:48:02+00:00",
     "generator": "graph-engine/tools/build_index.py",
     "repo_root": "D:\\demo_repository",
     "note": "事實地基，供 extract.fact-resolve 查詢；勿手改，重跑本 script 重建。"
@@ -568,7 +568,7 @@
     },
     {
       "sal": "SAL082",
-      "b_code": "B710/B701Base",
+      "b_code": "B710/B710Base",
       "name": "銷貨發票維護",
       "parent": "銷貨發票作業",
       "ui_type": "M/D*4"
@@ -1789,6 +1789,12 @@
           "note": "",
           "file": "DisplayTransformService.SAL.cs"
         },
+        "SALEM_CTAXTP": {
+          "table": "SA_SALEM",
+          "field": "CTAXTP",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
         "ARTERM": {
           "table": "SA_QUOTM",
           "field": "ARTERM",
@@ -1864,6 +1870,12 @@
         "INVCFG_TP": {
           "table": "SA_INVCFG",
           "field": "TP",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "SRC": {
+          "table": "SA_SALED1",
+          "field": "SRC",
           "note": "",
           "file": "DisplayTransformService.SAL.cs"
         },
@@ -1963,6 +1975,12 @@
           "note": "",
           "file": "DisplayTransformService.SAL.cs"
         },
+        "ARTP": {
+          "table": "SA_ARPLN",
+          "field": "ARTP",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
         "INVM_TP": {
           "table": "SA_INVM",
           "field": "TP",
@@ -2003,6 +2021,54 @@
           "table": "SA_INVD1",
           "field": "FMTP",
           "note": "預收扣抵 Dq2 來源別（Dq2GetText GetKeyCodeDESCPT(DataSet=SA_INVD1,'FMTP',True)）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INVM_APLYRTN": {
+          "table": "SA_INVM",
+          "field": "APLYRTN",
+          "note": "申請回覆",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INVM_ZOPEN": {
+          "table": "SA_INVM",
+          "field": "ZOPEN",
+          "note": "開立方式（MqyGetText 以 Mqy 表 SA_INVM 取 ZOPEN）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INVM_CUSTP": {
+          "table": "SA_INVM",
+          "field": "CUSTP",
+          "note": "買受人類別",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INVM_DONATE": {
+          "table": "SA_INVM",
+          "field": "DONATE",
+          "note": "捐贈註記",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INVM_BAC": {
+          "table": "SA_INVM",
+          "field": "BAC",
+          "note": "通關方式",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INVM_EINVTP": {
+          "table": "SA_INVM",
+          "field": "EINVTP",
+          "note": "交換或存證",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INVM_BUYRMK": {
+          "table": "SA_INVM",
+          "field": "BUYRMK",
+          "note": "買受人註記",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "INVM_ESTATUS": {
+          "table": "SA_INVM",
+          "field": "ESTATUS",
+          "note": "電子發票單況",
           "file": "DisplayTransformService.SAL.cs"
         },
         "BKREP": {
@@ -3463,6 +3529,13 @@
           "note": "",
           "file": "DisplayTransformService.SAL.cs"
         },
+        "CLASID": {
+          "table": "SA_PRCLAS",
+          "keyField": "CLASID",
+          "nmField": "CLASNM",
+          "note": "價格類別（B420a MqyGetText CLASID→SA_PRCLAS.CLASNM；SAL056A）",
+          "file": "DisplayTransformService.SAL.cs"
+        },
         "BPORTID": {
           "table": "SA_PORT",
           "keyField": "PORTID",
@@ -3831,6 +3904,34 @@
           "table": "AC_INVID",
           "keyField": "INVID",
           "nmField": "INVNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "CARRIERTP": {
+          "table": "SA_EINVCARRIERTP",
+          "keyField": "CARRIERTP",
+          "nmField": "TPNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "NPOBAN": {
+          "table": "SA_EINVNPOBAN",
+          "keyField": "NPOBAN",
+          "nmField": "NPOBANNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "EXTP": {
+          "table": "TA_EXTP",
+          "keyField": "EXTP",
+          "nmField": "EXTPNM",
+          "note": "",
+          "file": "DisplayTransformService.SAL.cs"
+        },
+        "EXCLAS": {
+          "table": "TA_EXCLAS",
+          "keyField": "EXCLAS",
+          "nmField": "EXCLASNM",
           "note": "",
           "file": "DisplayTransformService.SAL.cs"
         },
@@ -4586,6 +4687,7 @@
       "methods": [
         "CalcCriSumNyAsync",
         "CalcSA_INVMAsync",
+        "CalcSA_ORDERDDAsync",
         "Check_CARRIERTPAsync",
         "CsProcAsync",
         "UpdateArPrrMnyAsync",
@@ -4834,6 +4936,14 @@
         "WDWDetailDto",
         "WDWMasterDto"
       ]
+    },
+    "TurnkeyFunc.cs": {
+      "methods": [
+        "AttachAsync",
+        "IsEnabledAsync",
+        "StatusText"
+      ],
+      "records": []
     }
   },
   "existing_pages": [
@@ -4916,6 +5026,7 @@
     "SAL054",
     "SAL055",
     "SAL055A",
+    "SAL055B",
     "SAL055C",
     "SAL055D",
     "SAL055Import",
@@ -4944,17 +5055,26 @@
     "SAL069B",
     "SAL070",
     "SAL071",
+    "SAL071A",
     "SAL072",
+    "SAL072A",
     "SAL073",
     "SAL074",
     "SAL075",
     "SAL076",
     "SAL077",
     "SAL078",
+    "SAL078A",
+    "SAL078B",
     "SAL079",
+    "SAL079A",
     "SAL080",
     "SAL081",
+    "SAL081B",
     "SAL082",
+    "SAL082A",
+    "SAL082B",
+    "SAL082D",
     "SAL082E",
     "SAL083",
     "SAL084",

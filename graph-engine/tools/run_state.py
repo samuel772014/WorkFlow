@@ -58,7 +58,9 @@ def cmd_show(path: Path):
             if e:
                 mark = {"done": "✓", "failed": "✗", "running": "▶",
                         "pending": "·", "blocked": "!", "skipped": "-"}.get(e.group(2), "?")
-                print(f"  {mark} {e.group(1):<28} {e.group(2)} (attempts={e.group(3)})")
+                note = re.search(r'resume_note:\s*"([^"]*)"', ln)
+                print(f"  {mark} {e.group(1):<28} {e.group(2)} (attempts={e.group(3)})"
+                      + (f"  ↳ {note.group(1)}" if note else ""))
     # 待決摘要
     for ch in ("open_questions", "open_decisions"):
         m = re.search(rf"^{ch}:\s*(.+)$", fm, re.M)

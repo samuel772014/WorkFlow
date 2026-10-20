@@ -41,7 +41,7 @@ route-mode
 
 | id | kind | 職責 | 對應現有資產 |
 |---|---|---|---|
-| `route-mode` | agent | 判範本模式，提案＋理由 | SKILL.md 步驟1 |
+| `route-mode` | agent | 判範本模式，提案＋理由 | SKILL.md 範本清單 |
 | `extract.dfm-decode` | pure | DFM 解碼：欄位/欄序/寬/標題 | `tools/dfm_decode.py` |
 | `extract.field-cross-check` | pure | dfm × SQL × gettext 三方交叉 | `details/delphi-reading.md` |
 | `extract.fact-resolve` | agent | 查知識圖譜：名稱/keycode/name-map/FUNC | Step 2 的 `index.json` |
@@ -107,7 +107,7 @@ nodes:
     kind: agent
     reads: [code, sources]
     writes: [mode, mode_confirmed, open_questions]
-    rules_ref: skills/page-migration/SKILL.md#步驟1-選擇使用範本
+    rules_ref: skills/page-migration/SKILL.md#範本清單
     note: 依鐵則「一律問使用者選範本」：產出候選模式＋理由，最終選擇走 human-review 確認。契約見 nodes/route-mode.md。
 
   - id: extract.dfm-decode

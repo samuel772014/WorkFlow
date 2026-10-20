@@ -21,6 +21,8 @@
 | `decisions` | 使用者裁決：`[{id, choice, date}]` |
 | `skill_diff_candidates` | 從本次學到、可回饋 page-migration/index 的候選精進，待核可 |
 
+**完成條件**：本次呈報的每一條 findings／compile_errors／open_questions／open_decisions 都有裁決（採納／park／駁回）寫入 `decisions`。
+
 ---
 
 ## 流程

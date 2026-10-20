@@ -123,5 +123,5 @@ PY
 
 ## 收尾
 
-- 每支頁面把上面 ①②③④ 的偏差改完後，做 `SKILL.md`「交付前檢查」的 UI 編譯掃描與存檔欄位對照。
+- 每支頁面把上面 ①②③④ 的偏差改完後，做 `SKILL.md`「交付前檢查」的存檔欄位對照，並請使用者以 IDE 編譯回報 CS/RZ 錯誤（不得 shell build，鐵則6）。
 - 若 `_Display` 需新增 `DisplayTransformService.SAL.cs` 的 map，記得該註冊是共用檔，用別名避開既有 key 衝突（見檔內既有註解慣例）。

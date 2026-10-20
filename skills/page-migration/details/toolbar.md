@@ -17,13 +17,13 @@
 | 動作 | 放哪 |
 |------|------|
 | 新增、查詢 | **工具列 Toolbar**（非單列操作） |
-| 修改、刪除 | **GridView 指令欄** GridCommandColumn（針對單一資料列） |
+| 拷貝（Delphi 有才放）、修改、刪除 | **GridView 指令欄** GridCommandColumn（針對單一資料列） |
 | **詳細資料（查看）** | **GridView 指令欄，排在 CRUD（修改/刪除）之後**（查詢查看群） |
 | 存檔、取消 | 編輯 **Window 內** |
 | 上/下一筆 | 編輯 / 詳細資料 **Window 內右側** |
 
-- 單檔模式：工具列＝`新增 → 查詢`；指令欄＝`修改 → 刪除 → 詳細資料(查看)`（CRUD → 查看）。
-- **「詳細資料」鈕**：重用同一個編輯 Window，以**唯讀模式**開啟（所有輸入框 `Enabled="false"` / readonly），不另做檢視畫面。見記憶 `detail_readonly_reuse_edit`。
+- 單檔模式：工具列＝`新增 → 查詢`；指令欄＝`拷貝 → 修改 → 刪除 → 詳細資料(查看)`（CRUD → 查看；**拷貝只在 Delphi 有拷貝功能時才放**）。
+- **「詳細資料」鈕**：重用同一個編輯 Window，以**唯讀模式**開啟（所有輸入框 `ReadOnly`，不支援者才 `Enabled=false`；見 `details/edit-window.md` 通則5），不另做檢視畫面。見見 details/edit-window.md 通則5。
 
 ### 明細模式（master-detail 範本）
 - **主檔（Mqy）所有操作**（新增/修改/刪除/存檔/取消…）**全部放工具列**，依 `CRUD → 查詢查看 → 特殊功能` 排序。

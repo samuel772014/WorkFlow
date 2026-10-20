@@ -106,4 +106,4 @@ public async Task<mutationResult?> {{form}}_UpdateAttach(string arg, [Service] D
 
 ## 指路
 - 按鈕啟用（_UploadEnabled 等）→ `details/btn-control.md`
-- 上傳回寫走 mutation → `details/crud-handlers.md`（記憶 `mutation_pattern`）
+- 上傳回寫走 mutation → `details/crud-handlers.md`「後端分層」

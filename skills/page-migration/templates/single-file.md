@@ -2,8 +2,8 @@
 
 > 適用：**單一主表維護**。主查詢 Grid 點列開 `TelerikWindow` 單筆編輯（含上/下一筆）。
 > 參考頁面：`SAL001`。排版標準：for_github 新 UI（ToolbarGroup ribbon、Grid frame-header、篩選 popup）。
-> ⚠️ 單一主表維護**不用 InCell 批次編輯**（記憶 `deprecate_incell_single_master`）；InCell 只用於主檔明細範本的明細 grid。
-> ⚠️ 因此**單檔無「明細 grid 欄位鎖定」需求**：編輯走 `TelerikWindow` 表單、主 Grid 唯讀。若某特例頁確有可編輯 grid（瀏覽唯讀／Add·Edit 才可編），一律用 `grid.SetColumnEditable(field, locked)` 鎖欄（寫 `LockDqGridColumns/UnlockDqGridColumns`，**每次 Rebind 後重套**）——做法見 `master-detail.md` 第 11 點與記憶 `reference_grid_onbeforeedit_colkey_lock`；勿用已淘汰的 `OnBeforeEdit`。
+> ⚠️ 單一主表維護**不用 InCell 批次編輯**；InCell 只用於主檔明細範本的明細 grid。
+> ⚠️ 因此**單檔無「明細 grid 欄位鎖定」需求**：編輯走 `TelerikWindow` 表單、主 Grid 唯讀。若某特例頁確有可編輯 grid（瀏覽唯讀／Add·Edit 才可編），比照 `details/grid-incell.md` 通則1 用全域閘門 `EnterEdit()/ExitEdit()`＋靜態 `Editable=false`；不寫整表鎖欄樣板、勿用已淘汰的 `OnBeforeEdit`。
 > ⚠️ **單檔一律不套 Mode C 巢狀捲動**：外層就是純 `<div id="local-content">`（不加 `iks-scroll--nested`、不包 `cd-body`、不設 `--iks-layout-total-height`），由 Grid 自己捲。Mode C 只屬於主檔明細範本（`master-detail.md`）。誤把 Mode C 套到單檔會讓外層被固定高度撐開（如 1200px）。
 
 ---
@@ -62,11 +62,10 @@
     <TelerikTooltip TargetSelector=".toolbar-field [title]" Position="@TooltipPosition.Bottom" />
 
     @* ══ C. 主表 Grid frame ══  詳細規則 → details/grid-virtual.md *@
-    @* frame 掛 inline height:@_mqyHeight（確定高度）、grid 維持 Height="100%"：虛擬捲動才算得出視窗高度、
-       正確畫列（否則列空白但可點）。高度由 frame-header「高度」combo 經 OnMqyHeightChanged 回寫（見 app.css:846）。
-       @code 需宣告： private string _mqyHeight = "550px";
-                      private void OnMqyHeightChanged(string h) => _mqyHeight = h; *@
-    <div class="iks-master-frame" style="height:@_mqyHeight">
+    @* frame 不設 inline 高度：#local-content 為 flex column（app.css:817），.iks-master-frame 為 flex:1 撐滿剩餘高度
+       （app.css:954），.iks-master-grid 讓 grid（Height="100%"）取得確定高度、內部出 Y 捲軸。
+       ⚠ 固定 height:@_mqyHeight＋OnHeightChanged 只用於主檔明細 Mode C（cd-body 內堆疊，見 master-detail.md）。 *@
+    <div class="iks-master-frame">
         <div class="iks-master-grid">
             <IksGrid_Virtual @ref="{{Grid}}" TItem="Mqy"
                              ApiName="{{查詢endpoint}}" ApiUrl="@_url" Table_Name="{{Grid}}"
@@ -74,10 +73,9 @@
                              Height="100%" ShowAdd="false"
                              ShowFrameHeader="true" ShowFilterButton="true" ShowBuiltInToolbar="false"
                              FilterAnchorClass="{{grid}}-filter-popup-target" OnFilterClick="ToggleFilterPopup"
-                             OnHeightChanged="OnMqyHeightChanged"
                              OnSelect="OnMqySelect" RowKeyField="{{KEY}}" OnRowFocus="OnMqyRowFocus">
                 <LeftColumnsTool>
-                    @* 指令欄按鈕順序：CRUD(拷貝/修改/刪除) → 查詢(詳細資料)；純圖示+Title，不放文字 → details/grid-virtual.md *@
+                    @* 指令欄按鈕順序：CRUD(拷貝/修改/刪除) → 查詢(詳細資料)；拷貝只在 Delphi 有拷貝功能時才放；純圖示+Title，不放文字 → details/grid-virtual.md *@
                     <GridCommandButton Icon="@("ti ti-copy")"   OnClick="@OnRowCopy"   Title="拷貝" />
                     <GridCommandButton Icon="@("ti ti-pencil")" OnClick="@OnRowEdit"   Title="修改" />
                     <GridCommandButton Icon="@("ti ti-trash")"  OnClick="@OnRowDelete" Title="刪除" />
@@ -96,7 +94,7 @@
 @* ══ E. 編輯表單 Window ══  詳細規則 → details/edit-window.md
    （表單本體 = iks-edit-grid 輸入欄位；含存檔/取消；右側 F. 上/下一筆） *@
 <TelerikWindow Visible="@_editWindowVisible" VisibleChanged="@OnEditWindowClose" Modal="true">
-    <WindowTitle>@(pageStatus == "Add" ? "新增{{X}}" : "修改{{X}}")</WindowTitle>
+    <WindowTitle>@(pageStatus switch { "Add" => "新增{{X}}", "View" => "檢視{{X}}", _ => "修改{{X}}" })</WindowTitle>
     <WindowContent>
         @* {{iks-edit-grid + iks-edit-row 欄位；存檔 Save()/取消 Cancel()}} *@
         @* F. 上/下一筆 → details/row-navigate.md：NavigateRow("prev"/"next") *@
@@ -108,7 +106,7 @@
 @code {
     @* ── A. 狀態/宣告 ──  details/page-shell.md ── *@
     protected override string FomId => "{{FORM}}";
-    private string pageStatus = "query";              // "query" | "Add" | "Edit"
+    private string pageStatus = "query";              // "query" | "Add" | "Edit" | "View"（拷貝走 Add）
     private MessageBox MsgBox = default!;
 
     @* ── B/G. 工具列旗標 ──  details/btn-control.md ── *@
@@ -178,10 +176,8 @@
 ```text
 J. CSS —— 詳細規則 → details/css-layout.md
    版面 class（.toolbar-field / .iks-master-frame / .iks-filter-popup / .iks-edit-grid …）
-   一律進 wwwroot/app.css，勿散落頁面 <style>（記憶 shared_css_appcss）。
+   一律進 wwwroot/app.css，勿散落頁面 <style>（見 details/css-layout.md）。
 ```
 
 ---
 
-> 📌 **下一步**：本骨架的 `details/*.md` 逐支補齊（各含：大原則/使用規則 + 範例碼 + 眉角 + 參考控件 skill）。
-> 需要做哪一區才寫哪一支，維持漸進式揭露、不一次灌爆。

@@ -1,0 +1,7 @@
+{
+  "name": "retro-button",
+  "version": "0.1.0",
+  "description": "在提示框上方顯示「回顧此 session」按鈕，一鍵執行 /retro",
+  "author": { "name": "samuel772014", "email": "samuel772014@iks.com.tw" },
+  "types": "./types/index.d.ts"
+}

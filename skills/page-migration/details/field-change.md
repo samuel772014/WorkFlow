@@ -8,16 +8,16 @@
 ## 連動處理通則
 
 1. **前端觸發用 `@bind-Value:after="XxxChanged"`** 指派方法（ComboBox/KeyCodeComboBox/數值框皆是）。
-2. **凡「計算」一律打後端 API 計算**（金額、小計、稅額、匯率換算…都送後端算，前端不做算術）。
+2. **凡「計算」一律打後端 API 計算**（金額、小計、稅額、匯率換算…都送後端算，前端不做算術）。唯一例外：不存檔、非金額稅額數量的顯示便利計算（判準見 `details/business-logic.md` 第 2 類）。
 3. **帶值連動分兩種來源**：
    - **EditPick 多欄** → pick 已回傳所需欄位，直接用 **`Apply` 回呼的 row 在前端指派**，**免再打 API**。
    - **ComboBox（只回代碼+名稱）** → 要帶其他欄位就 `@bind-Value:after` **打後端查**。
 4. **純畫面異動走前端**：清空相依欄位（上層改→下層 `=null`）、控制 Tab/欄位顯示、`StateHasChanged`。
 5. **handler 開頭防呆**：`if (string.IsNullOrEmpty(來源值)) return;`。
 6. **後端連動 endpoint 命名**：`{form}_Get{來源}_{目標}`（如 `sal001_GetDEPID_SMANAGER`、`sal046_GetCUSTMER_Info`）。
-7. **相依 ComboBox 用 `Args` 動態帶條件**做連動過濾（記憶 `dependent_editpick_rebind`；SAL046 CUSTMER 帶 OBJTP、SPRCID 帶 FLDT）。
+7. **相依 ComboBox 用 `Args` 動態帶條件**做連動過濾（見 details/shared-input-components.md EditPick；SAL046 CUSTMER 帶 OBJTP、SPRCID 帶 FLDT）。
 8. **連鎖連動抽共用方法**：一個 change 可再觸發其他，抽 `RefreshXxx()` 重用（SAL046 `RefreshMRATE`/`RefreshTaxRate`）。
-9. **GridView 儲存格 change 同通則**：`ValueChanged="@(v => _ = OnXxxChanged(item, v))"` 傳 item+value；指派後**計算送後端**。
+9. **InCell 儲存格連動走 `OnUpdate`，依 `args.Field` 分派**：`args.Item` 是編輯複本 → 先用鍵值到 GD 找回實際列再寫回，計算送後端後 `RebindKeepState`（範例 SAL058 `Cd2_UpdateHandler`）。⚠ OnUpdate 內不可呼叫 `ExitEditModeAsync`（遞迴）。EditorTemplate 的 `ValueChanged` 只限「不打 API、不 Rebind」的純賦值（否則遞迴 StackOverflow，見 `details/editor-template.md`）。
 10. **任何不確定 → 詢問轉譯操作者**。
 
 > ⚠️ 註：`SAL046` 明細金額目前是**前端算術**（`Dq1_CalcMNYAsync`），屬舊例外。**新規則以「計算一律後端」為準**，勿再照抄前端算術。
@@ -76,17 +76,6 @@ private async Task On{{SRC}}_Apply(IDictionary<string, object?> row) {
 // 計算一律後端
 private async Task Recalc() { /* gQL.ApiCallAsync(..., "{{form}}_CalcXxx", ...) → 回填欄位 */ }
 ```
-
----
-
-## B101 兩條連動的對應
-
-| Delphi (MqyChange) | 來源控件 | 走法 | endpoint |
-|--------------------|---------|------|----------|
-| SALEREP → SARPNM + DEPID | EditPick 3 欄（回 EMPLYNM/DEPID） | **前端** Apply row 帶（EMPLYNM→SARPNM、DEPID→DEPID） | 免 |
-| DEPID → SMANAGER | ComboBox 2 欄（只回 DEPID/DEPNM） | **後端** `@bind-Value:after` 查 | `sal001_GetDEPID_SMANAGER` |
-
-> DEPID→SMANAGER 是 SAL001 註解掉、依「以 Delphi 為準」要補回的連動。
 
 ---
 

@@ -33,6 +33,7 @@ manifest:
 | 工具 | `.claude/skills/page-migration/tools/dfm_decode.py` |
 | 寫 | `manifest.fields`（主 grid + 每個子 grid 的 field/欄序/寬/中文標題） |
 | 快取 | dfm 內容未變 → `cache_hit: true`，跳過重跑 |
+| 完成條件 | dfm 每個 grid（主＋每個子 grid）都在 `manifest.fields` 有一筆，每欄都有 field／欄序／寬／中文標題，無殘留 `#NNNN` 亂碼 |
 
 指令：
 ```
@@ -49,6 +50,7 @@ PYTHONIOENCODING=utf-8 py .claude/skills/page-migration/tools/dfm_decode.py <dfm
 | 讀 | `manifest.fields` + `sources.pas_path` |
 | 依據 | `details/delphi-reading.md` Step 2.0/2.1（三方交叉） |
 | 寫 | `manifest.crosscheck`（逐欄：dfm × SQL select × gettext(`_Display`)） |
+| 完成條件 | `manifest.fields` 每一欄都有 `in_dfm`／`in_sql`／`in_gettext` 三方結果；每個 grid 都已歸屬到一個 Dq，或已列入 `open_questions` |
 
 **做什麼**：每個 grid（主檔＋每個 Dq）逐欄比對三來源，決定「顯示/不顯示」：
 - `in_dfm`：dfm 有此欄且 `Visible`
@@ -76,6 +78,7 @@ PYTHONIOENCODING=utf-8 py .claude/skills/page-migration/tools/dfm_decode.py <dfm
 | 工具 | `.claude/SelfFolder/graph-engine/tools/query_index.py` |
 | 寫 | `manifest.facts`（命中者）、`open_questions`（查無者） |
 | 規則 | `CLAUDE.md#鐵則4-禁止推測` |
+| 完成條件 | 程式身分已 resolve；`manifest.crosscheck` 中每個要顯示名稱的代碼欄，都已落在 `manifest.facts` 或 `open_questions` 其一（無遺漏、無原碼當名稱） |
 
 **流程（查表，不猜）**：
 1. 程式身分：`query_index.py resolve <code>` → 取 b_code/正式名/ui_type。查無 → `open_questions`。

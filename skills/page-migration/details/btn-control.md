@@ -53,6 +53,7 @@ private async Task btnControl() {
 private bool _ReadEnabled, _DetailReadEnabled, _AddEnabled, _CopyEnabled,
              _EditEnabled, _SaveEnabled, _CancelEnabled, _QueryEnabled;
 private bool _dqEditEnabled => pageStatus is "Add" or "Edit";   // 明細 grid 編輯鎖定
+private bool _dqDeleteEnabled => !_dqEditEnabled;                 // 明細刪除：非編輯態才可刪（grid-incell 通則5）
 ```
 **btnControl（pageStatus × ActiveTabId 雙態）**
 ```csharp
@@ -94,11 +95,6 @@ private async Task HandleToolbar(string action) {
 ```
 
 ---
-
-## B101 / B301 對應
-- Delphi `ToggleControl` → `btnControl()`（狀態驅動旗標）。
-- 單檔 B101：只 新增/查詢兩顆需控。
-- 明細 B301：完整按鈕 + 模式膠囊；`_EditEnabled` 等帶單況業務條件（`STATUS`）。
 
 ## 指路
 - 工具列/按鈕位置 → `details/toolbar.md`

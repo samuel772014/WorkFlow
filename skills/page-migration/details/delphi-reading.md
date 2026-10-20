@@ -1,15 +1,9 @@
 # 詳細規則：Delphi 來源逐層讀法 ＋ 後端產出順序
 
 > Phase 0 讀來源用。搭配 SKILL「來源檔讀取原則」（繼承鏈先問、DFM 權威）。
-> 來源：舊 `delphi-to-csharp` SKILL 的非衝突部分彙整（前端規則以本專案 for_github 新 UI 為準，見末段衝突註記）。
+> 來源：舊 `delphi-to-csharp` SKILL 的非衝突部分彙整（前端規則一律以 for_github 新 UI 為準：templates/* 與各 details）。
 
 ---
-
-## Step 1 — 開始前必問操作者
-1. C# 功能代碼？（如 SAL302）→ 影響所有檔名
-2. Razor 路由？（如 /SAL/SAL302）
-3. 子表命名：沿用 Dq1/Dq2… 還是語意命名？
-（＋ 有繼承鏈 / 有明細去向不明 / 特殊情況，一律先問——見 SKILL 來源讀取原則）
 
 ## Step 2 — 先讀 `.dfm`，再讀 `.pas`
 **`.dfm` 必確認**（DFM 是版面權威）：
@@ -63,9 +57,9 @@ PYTHONIOENCODING=utf-8 py .claude/skills/page-migration/tools/dfm_decode.py <來
 ② {MOD}Service.{FORM}.cs      參數解析 + 呼叫 Repository（try-catch 包覆）
 ③ Resolvers/{FORM}Query.cs    GraphQL Query 薄層
 ④ Resolvers/{FORM}Mutation.cs GraphQL Mutation 薄層
-⑤ Models/{FORM}Dto.cs         DTO + _Display（partial : EFModel, IDisplayResolvable）
-⑥ {FORM}.razor                UI 頁面（骨架 → templates/*）
+⑤ {FORM}.razor                UI 頁面（骨架 → templates/*）；DTO + _Display 宣告在本頁 @code 內（details/dto-display.md 1b）
 ```
+> **不建獨立 `Models/{FORM}Dto.cs`**（專案 0 支，101 支 razor 皆 @code 宣告）。確有需要時屬特例：標註原因、經人工審核後才可建。
 
 ## Service 層範本（try-catch 必包）
 ```csharp
@@ -81,10 +75,3 @@ public async Task<queryResult> Get{Form}MqyAsync(string arg, DapperContext conte
 ```
 > 後端方法/交易細節 → `details/backend-sql.md`；命名 → `details/naming.md`。
 
----
-
-## 前端一律以 for_github 新 UI 為準
-舊 delphi-to-csharp SKILL 的**後端流程照用**；**前端一律用 for_github 新 UI，舊寫法已淘汰、不採用**：
-- master-detail 明細切換與 query/edit 切換都用 `iks-mode-switch` 膠囊 + `@if` 面板（**已淘汰 `TelerikTabStrip`**；`templates/master-detail.md`）。
-- grid 新行初始化直接用 `OnAdd`/`OnUpdate`/`OnDelete` 參數，uState=Insert 寫在 `OnAdd`（`details/grid-incell.md`）。
-- 工具列純 Tabler 圖示+tooltip；單檔修改/刪除在 grid 指令欄（`details/toolbar.md`）。

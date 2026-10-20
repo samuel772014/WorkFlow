@@ -78,7 +78,7 @@
   - fact-resolve（用 query_index.py 查 index.json）→ `manifest.facts` / `open_questions`
   - 查詢：`py tools/query_index.py <prog|keycode|name|func|page|resolve> args`（回 UTF-8 JSON）
 - **Step 4 ✅ `static-verify`（GATE 1）**：契約 `nodes/static-verify.md` + 機器判工具 `tools/verify_static.py`
-  - C1 route/title、C2 標題=對照表名、C3 xform KEY 已註冊、C4 grid _Display 已接上
+  - C1 route/title、C2 標題=對照表名、C3 xform KEY 已註冊、C4 grid _Display 已接上、C5 iks-* class 有定義、C6 下拉 module 登記正確
   - S2–S8 由 agent 覆核、執行期/人眼留 human-review
   - 用法：`py tools/verify_static.py <SALxxx> [--pretty]` → findings JSON
   - 實測即抓到 SAL095/096/099/100 標題非對照表正式名（人工複查漏掉者）

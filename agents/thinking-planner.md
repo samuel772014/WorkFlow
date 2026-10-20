@@ -1,7 +1,7 @@
 ---
 name: thinking-planner
-description: 專門負責「思考與規劃」的 agent，用 Opus 4.8。當主 session（Sonnet 4.6）遇到需要深度推理、架構取捨、遷移策略規劃、疑難排解思路、或「先想清楚再動手」的情境時委派給它。它只產出思路與計畫，不改動任何檔案。觸發語如「先規劃一下」「幫我想清楚怎麼做」「這個要怎麼設計」。
-model: claude-opus-4-8
+description: 專門負責「思考與規劃」的 agent，用 Opus 5.5。當主 session（Sonnet 4.6）遇到需要深度推理、架構取捨、遷移策略規劃、疑難排解思路、或「先想清楚再動手」的情境時委派給它。它只產出思路與計畫，不改動任何檔案。觸發語如「先規劃一下」「幫我想清楚怎麼做」「這個要怎麼設計」。
+model: claude-opus-5-5
 effort: high
 tools: Read, Grep, Glob
 memory: local

@@ -61,6 +61,8 @@ nodes:                          # 每 node 的狀態機
   compile-gate:              {status: pending, attempts: 0}   # GATE 2
   human-review:              {status: pending, attempts: 0}   # GATE 3 + interrupt
 # status 值域: pending | running | done | failed | blocked | skipped
+# resume_note（選填）：node 內部有多個單位時（如 gen-ui.detail 多組明細、gen-ui.subwindow 多個子視窗），
+#   中途 checkpoint 寫「已完成哪些／下一個做什麼」，例：{status: running, attempts: 1, resume_note: "dq1/dq2 done，續 dq3"}；node done 時清掉。
 
 # ===== 這一段是「萃取產物 manifest」：事實層，擋「推測」=====
 manifest:

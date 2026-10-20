@@ -25,7 +25,7 @@
 10. 回到步驟 2
 ```
 
-**續跑**：任何時候中斷（429、關機、被打斷）→ 重新載入 state、從 `state.stage` 接著跑。因為每個 node 完成即 checkpoint，最多重做「當前這一個」node。
+**續跑**：任何時候中斷（429、關機、被打斷）→ 重新載入 state、從 `state.stage` 接著跑。因為每個 node 完成即 checkpoint，最多重做「當前這一個」node；該 node 若有 `resume_note`（多單位 node 的中途進度，見 `state-schema.md`），從 note 指的下一個單位接著做，不重做已完成單位。
 
 ---
 

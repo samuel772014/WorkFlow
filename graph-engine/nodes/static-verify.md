@@ -29,6 +29,10 @@ findings:
 | S9 | 標題＝對照表正式名 | **機器** | `verify_static.py` C2（PLAUSIBLE） |
 | （bug類）| DisplayTransform 屬性 KEY 已註冊 | **機器** | `verify_static.py` C3 |
 | （bug類）| grid *_Display 有接上屬性 | **機器** | `verify_static.py` C4 |
+| （bug類）| razor 的 `iks-*` class 在 css 有定義（禁自創 class） | **機器** | `verify_static.py` C5 |
+| （bug類）| `IksCodeComboBox` 的 comboBoxCode 登記在所傳 module | **機器** | `verify_static.py` C6 |
+| （慣例類）| 自閉合文字輸入用 IksTextBox、不寫死 `"00001"`／`_url`、status 以 `== 1` 判成功、無已淘汰寫法 | **機器** | `verify_static.py` C7–C11（C9 PLAUSIBLE；對應 review-conventions CNV-03/05/07/08/10） |
+| （慣例類）| 遮罩內不 await 訊息框、遮罩必解除 | **機器** | `verify_static.py` C12（呼叫 `review-engine/tools/lint_loading.py`；CNV-13） |
 | S2 | 欄位/欄序對 dfm（Top 座標） | **agent** | 對 `manifest.fields` 覆核 |
 | S3/S5/S7/S8 | 工具列/grid 指令/按鈕順序 | **agent** | 依 toolbar/grid-incell details |
 | S4 | 新增/編輯/刪除 handler 存在＋位置 | **agent** | 依 crud-handlers |
@@ -42,7 +46,7 @@ findings:
 ## 執行流程
 
 1. **機器層**：`py .claude/SelfFolder/graph-engine/tools/verify_static.py <code>`
-   → 得 C1–C4 findings（route/title/title-name/xform/display-wired）。
+   → 得 C1–C12 findings（route/title/title-name/xform/display-wired/css-class-undefined/combobox-module/textbox/hardcoded-emply/status-check/hardcoded-url/deprecated/msgbox-under-loading/loading-not-released）。
 2. **agent 層**：讀 `manifest`＋`acceptance_claims`，對 S2–S8 逐項判，追加 findings（附 area）。
 3. 合併寫入 `state.findings`。
 
@@ -57,4 +61,6 @@ findings:
 
 ## verify_static.py 現況
 
-已實作 C1–C4（本輪四類重複 bug）。實測（SAL083–100）**立即抓到 SAL095/096/099/100 四支標題非對照表正式名**——人工複查漏掉、機器一次揪出，即本 node 的價值證明。
+已實作 C1–C6（C5/C6 於 2026-10-06 補：SAL074–076 自創 class `iks-single-frame`、SAL073 下拉 module 傳錯，皆為 C1–C4 漏網）。實測（SAL083–100）**立即抓到 SAL095/096/099/100 四支標題非對照表正式名**——人工複查漏掉、機器一次揪出，即本 node 的價值證明。
+
+2026-10-20 補 C7–C12：把 review-conventions 可機械判的 CNV 項前移到實作階段。對 140 支 SAL razor 試跑：C7 13 處／8 頁、C9 5 處／4 頁、C11 1 處（SAL046 OnBeforeEdit）、C12 3 處（SAL055 等），C8/C10 0 處。既有頁面於下次轉譯／修正跑 GATE1 時才會浮出。`class XxxDto` 需看上下文（API payload 輔助類別不算違規），不機械判，留 review CNV-02。

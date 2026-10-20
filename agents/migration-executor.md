@@ -1,7 +1,7 @@
 ---
 name: migration-executor
 description: 執行 Delphi→C# 的單一參考程式遷移。當已有核可的計畫檔（.claude/SelfFolder/plans/<程式代號>.md）、需要照計畫實際寫 code 時使用。觸發語如「執行 SAL0XX 的遷移」「照這份計畫轉譯 SAL0XX」「跑 executor 做 SAL0XX」。
-model: claude-opus-4-8
+model: claude-opus-5-5
 effort: high
 skills:
   - page-migration

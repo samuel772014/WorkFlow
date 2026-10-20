@@ -31,4 +31,4 @@ if (_grid != null) await _grid.Rebind(); // 重載欄寬
 
 資料由多變少時（重查/移除），rebind 帶 `keepScrollTop: true`，重讀前先把捲動歸零，避免「捲軸還在但沒資料、上方補空骨架」。純 picker 每次重查用 `Rebind(_data, keepScrollTop: true)` 或無參數 `Rebind()` 皆可視情況。
 
-> 對應記憶：`reference_vnq_rebind_reload_colwidth`、`reference_grid_virtual_scroll_reset`、`reference_vnq_no_oncheckboxchange`。
+> 對應規則：`page-migration/details/grid-virtual.md`「Grid 生命週期綁定」與虛擬捲動眉角。

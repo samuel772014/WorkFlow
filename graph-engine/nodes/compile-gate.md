@@ -32,7 +32,9 @@ compile_errors:
 py .claude/SelfFolder/graph-engine/tools/compile_gate.py build IKSERPUI --files \
    IKSERPPRJ/IKSERPUI/Components/Pages/SAL/SAL084.razor
 ```
-需 `dotnet` + 可達內部 nuget feed（192.168.3.31:5555）。`--files` 帶入本次 gen-* 產出的檔（自 `state.artifacts`）。
+`--files` 帶入本次 gen-* 產出的檔（自 `state.artifacts`）；或用 `--changed` 疊入 git 工作區全部改動（修正輪建議用此，避免漏帶共用檔）。
+- **預設離線**：複製 gitignore 的 `nuget.config` 與主 checkout 各專案 `obj/` 還原資產（project.assets.json 等）進 worktree，跑 `--no-restore`，不需連內部 feed／Telerik feed。目標專案從未在 IDE restore 過（無 project.assets.json）才自動走線上 restore；`--restore` 可強制線上。
+- **結束碼把關**：dotnet 結束碼非 0 但抽不到 CS/RZ（如 NU1301 feed 不通、NETSDK1004）一律判失敗（`file:"-"`、code 取原錯誤碼），輸出帶 `exit_code`。2026-10-16 前的版本不檢查結束碼且不帶 nuget.config，UI 會因 restore 401 失敗卻誤判 pass。
 
 **模式 2 — 解析既有 log（備援）**
 ```
@@ -51,4 +53,4 @@ IDE build 後貼出 log、或 CI 產物，只做錯誤過濾。當隔離 build �
 ---
 
 ## 現況
-`compile_gate.py` 已實作 build/parse 兩模式；**錯誤過濾邏輯已用樣本驗證**（正確保留 CS/RZ、忽略 MSB302x、去重）。實際隔離 build 依賴使用者機器的 dotnet + nuget feed，故 CI/本機執行、graph 只讀其輸出。
+`compile_gate.py` 已實作 build/parse 兩模式；**錯誤過濾邏輯已用樣本驗證**（正確保留 CS/RZ、忽略 MSB302x、去重；非 CS/RZ 的 NU/NETSDK 於結束碼非 0 時採計）。2026-10-16 以 SAL055 實測：`build IKSERPAPI --changed`、`build IKSERPUI --changed` 離線 `--no-restore` 皆 exit_code=0。
